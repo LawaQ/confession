@@ -3,43 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pulau 1 🏝️</title>
+  <title>Pulau 1 - Surat dari Sirkuit 🏎️</title>
   <style>
-    /* Style dasar laut sama seperti map.html */
+    /* ===== TEMA F1 ===== */
     :root {
-      --deep-sea-1: #0a1c2e;
-      --deep-sea-2: #0d2b45;
-      --deep-sea-3: #0f3b5c;
-      --gold-light: #FFE44D;
-      --text-light: #e0f0ff;
-      --accent-pink: #ff8fab;
+      --merah: #e10600;
+      --putih: #f5f5f5;
+      --emas: #ffd700;
+      --gelap: #111;
+      --card-bg: rgba(20, 20, 20, 0.85);
+      --card-border: rgba(255, 255, 255, 0.15);
     }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
     }
+
     body {
-      min-height: 100vh;
-      background: linear-gradient(180deg, var(--deep-sea-1), var(--deep-sea-2), var(--deep-sea-3));
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      /* ===== BACKGROUND KUSTOM =====
+         Ganti 'assets/circuit-bg.jpg' dengan path gambar kamu.
+         Contoh:
+           - Untuk lokal: url('assets/background.jpg')
+           - Untuk GitHub: url('assets/background.jpg')
+           - Jika ingin warna polos sementara: hapus baris url() dan gunakan background: #1a1a1a;
+      */
+      background-image: url('assets/circuit-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #1a1a1a; /* fallback bila gambar belum ada */
+      color: var(--putih);
+      overflow-x: hidden;
       position: relative;
-      padding: 20px;
-      overflow: hidden;
+      min-height: 100vh;
     }
+
+    /* Overlay gelap agar konten tetap terbaca di atas gambar */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5); /* bisa diubah sesuai kebutuhan */
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Tombol kembali */
     .back-btn {
       position: fixed;
       top: 20px;
       left: 20px;
-      z-index: 10;
+      z-index: 20;
       padding: 10px 20px;
       border: 2px solid rgba(255,255,255,0.3);
       border-radius: 50px;
-      background: rgba(0,0,0,0.4);
-      color: var(--text-light);
+      background: rgba(0,0,0,0.5);
+      color: var(--putih);
       font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
@@ -51,83 +76,287 @@
       backdrop-filter: blur(10px);
     }
     .back-btn:hover {
-      background: rgba(0,0,0,0.6);
-      transform: translateX(-3px);
-      border-color: var(--accent-pink);
+      background: rgba(0,0,0,0.7);
+      border-color: var(--merah);
     }
-    .island-content {
-      text-align: center;
-      color: var(--text-light);
-      max-width: 400px;
-      z-index: 2;
+
+    /* Konten utama */
+    .scroll-container {
       position: relative;
+      z-index: 2;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 80px 20px 100px;
     }
-    .island-content h1 {
+
+    /* Header */
+    .race-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .race-title {
       font-size: 2rem;
-      margin-bottom: 20px;
-      text-shadow: 0 0 20px rgba(255,255,255,0.3);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 0 0 20px rgba(225, 6, 0, 0.5);
     }
-    .island-content .island-emoji {
-      font-size: 5rem;
-      display: block;
-      margin-bottom: 20px;
-      animation: float 3s ease-in-out infinite;
+    .race-subtitle {
+      color: #ccc;
+      margin-top: 10px;
+      font-size: 0.95rem;
     }
-    @keyframes float {
+
+    /* Lampu start */
+    .start-lights {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 30px 0;
+    }
+    .start-light {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #333;
+    }
+    .start-light.on {
+      background: var(--merah);
+      box-shadow: 0 0 15px rgba(225,6,0,0.8);
+    }
+
+    /* Mobil F1 */
+    .f1-car-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .f1-car {
+      width: 150px;
+      max-width: 100%;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+      animation: carGlide 3s ease-in-out infinite;
+    }
+    @keyframes carGlide {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
-    .island-content p {
-      color: #c2d8e8;
-      line-height: 1.7;
-      margin-bottom: 25px;
+
+    /* Garis pembatas */
+    .divider {
+      text-align: center;
+      margin: 40px 0;
+      font-size: 1.5rem;
+      letter-spacing: 5px;
+      opacity: 0.5;
+    }
+
+    /* Bagian cerita (muncul saat discroll) */
+    .story-section {
+      margin-bottom: 50px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .story-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .story-section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--emas);
+      letter-spacing: 0.5px;
+    }
+    .story-section p {
+      color: #ddd;
+      line-height: 1.8;
+      font-size: 0.95rem;
+      background: rgba(255,255,255,0.03);
+      padding: 20px;
+      border-left: 3px solid var(--merah);
+      border-radius: 0 10px 10px 0;
+    }
+
+    /* Kunci di akhir */
+    .key-reward {
+      text-align: center;
+      margin-top: 60px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .key-reward.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .key-emoji {
+      font-size: 4rem;
+      filter: drop-shadow(0 0 15px rgba(255,215,0,0.8));
+      animation: keyFloat 3s ease-in-out infinite;
+    }
+    @keyframes keyFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .key-text {
+      color: var(--emas);
+      font-weight: 600;
+      margin-top: 10px;
+      letter-spacing: 1px;
     }
     .btn-next {
-      padding: 15px 35px;
-      border: none;
-      border-radius: 50px;
-      background: linear-gradient(135deg, #2d8ba8, #1a6b8a);
-      color: white;
-      font-size: 1.1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
-      letter-spacing: 0.5px;
-      box-shadow: 0 8px 20px rgba(26, 107, 138, 0.5);
-      text-decoration: none;
       display: inline-block;
+      margin-top: 20px;
+      padding: 15px 35px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, var(--merah), #ff4444);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(225, 6, 0, 0.4);
     }
     .btn-next:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 25px rgba(26, 107, 138, 0.7);
+      box-shadow: 0 12px 25px rgba(225, 6, 0, 0.6);
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .race-title { font-size: 1.5rem; }
+      .f1-car { width: 100px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- TOMBOL KEMBALI KE PETA -->
+  <!-- TOMBOL KEMBALI -->
   <a href="map.html" class="back-btn">⬅️ Kembali ke Peta</a>
 
-  <div class="island-content">
-    <span class="island-emoji">🏝️</span>
-    <h1>Pulau 1</h1>
-    <p>Ini adalah pulau pertama. Setelah selesai di sini, pulau 2 akan terbuka.</p>
+  <!-- KONTEN SCROLL -->
+  <div class="scroll-container">
 
-    <!-- Tombol untuk menyelesaikan pulau 1 dan membuka pulau 2 -->
-    <button class="btn-next" id="btnCompletePulau1">Selesaikan Pulau 1 ✓</button>
+    <!-- HEADER -->
+    <div class="race-header">
+      <div class="race-title">🏁 Pulau 1: Surat dari Sirkuit</div>
+      <div class="race-subtitle">Tempat semuanya dimulai: dari F1 hingga Ratu Kucing Duyung</div>
+
+      <!-- Lampu start menyala otomatis saat halaman dimuat -->
+      <div class="start-lights">
+        <div class="start-light"></div>
+        <div class="start-light"></div>
+        <div class="start-light"></div>
+        <div class="start-light"></div>
+        <div class="start-light"></div>
+      </div>
+
+      <!-- Mobil F1 -->
+      <div class="f1-car-container">
+        <img src="assets/f1-car.png" alt="Mobil F1" class="f1-car" id="f1Car">
+      </div>
+    </div>
+
+    <div class="divider">•••</div>
+
+    <!-- BAGIAN CERITA (PLACEHOLDER) -->
+    <section class="story-section" id="section1">
+      <h2>Lap 1: Awal Mula</h2>
+      <p>
+        Dulu, obrolan kita dimulai dari hal yang sederhana: balapan. Kamu suka F1, aku pun tertarik.
+        Dari situ, kita mulai sering chat, bertukar pendapat soal tim, pembalap, dan momen-momen seru.
+      </p>
+    </section>
+
+    <section class="story-section" id="section2">
+      <h2>Lap 2: Makin Jauh</h2>
+      <p>
+        Tapi entah kenapa, obrolan kita nggak cuma soal F1. Kita mulai ngomongin banyak hal lain.
+        Dari yang serius sampai yang absurd. Dari balapan sampai ke cerita-cerita acak.
+      </p>
+    </section>
+
+    <section class="story-section" id="section3">
+      <h2>Lap 3: Ratu Kucing Duyung</h2>
+      <p>
+        Sampai suatu hari, munculah "Ratu Kucing Duyung". Sebuah nama yang lahir dari obrolan random kita.
+        Aku yang membuat "Kucing Duyung", kamu yang menambahkan "Ratu".
+      </p>
+    </section>
+
+    <section class="story-section" id="section4">
+      <h2>Lap 4: Kenangan</h2>
+      <p>
+        Dan sekarang, aku menulis ini untuk kamu. Bukan untuk balapan, bukan untuk kemenangan,
+        tapi untuk mengingatkan bahwa semua ini dimulai dari F1, dan aku masih di sini.
+      </p>
+    </section>
+
+    <!-- KUNCI PULAU 2 -->
+    <div class="key-reward" id="keyReward">
+      <span class="key-emoji">🔑</span>
+      <div class="key-text">KUNCI PULAU 2 DITEMUKAN!</div>
+      <a href="island-2.html" class="btn-next">Lanjut ke Pulau 2 →</a>
+    </div>
+
   </div>
 
   <script>
-    document.getElementById('btnCompletePulau1').addEventListener('click', function() {
-      // Buka pulau 2 di localStorage
-      let unlockedIslands = JSON.parse(localStorage.getItem('unlockedIslands')) || [];
-      if (!unlockedIslands.includes('island2')) {
-        unlockedIslands.push('island2');
-        localStorage.setItem('unlockedIslands', JSON.stringify(unlockedIslands));
+    // ===== ANIMASI LAMPU START =====
+    const startLights = document.querySelectorAll('.start-light');
+    let lightIndex = 0;
+    function lightUp() {
+      if (lightIndex < startLights.length) {
+        startLights[lightIndex].classList.add('on');
+        lightIndex++;
+        setTimeout(lightUp, 500);
+      } else {
+        // Semua menyala sebentar lalu mati
+        setTimeout(() => {
+          startLights.forEach(light => light.classList.remove('on'));
+        }, 800);
       }
-      // Kembali ke peta
-      window.location.href = "map.html";
+    }
+    window.addEventListener('load', () => {
+      setTimeout(lightUp, 500);
     });
+
+    // ===== INTERSECTION OBSERVER UNTUK MUNCULKAN CERITA =====
+    const sections = document.querySelectorAll('.story-section');
+    const keyReward = document.getElementById('keyReward');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // Kunci muncul setelah section terakhir terlihat
+    const lastSection = document.getElementById('section4');
+    const keyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            keyReward.classList.add('visible');
+            // Simpan status pulau 2 terbuka
+            let unlockedIslands = JSON.parse(localStorage.getItem('unlockedIslands')) || [];
+            if (!unlockedIslands.includes('island2')) {
+              unlockedIslands.push('island2');
+              localStorage.setItem('unlockedIslands', JSON.stringify(unlockedIslands));
+            }
+          }, 1000);
+          keyObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    keyObserver.observe(lastSection);
+
   </script>
 </body>
 </html>
