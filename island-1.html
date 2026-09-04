@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulau 1 🏝️</title>
+  <style>
+    /* Style dasar laut sama seperti map.html */
+    :root {
+      --deep-sea-1: #0a1c2e;
+      --deep-sea-2: #0d2b45;
+      --deep-sea-3: #0f3b5c;
+      --gold-light: #FFE44D;
+      --text-light: #e0f0ff;
+      --accent-pink: #ff8fab;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(180deg, var(--deep-sea-1), var(--deep-sea-2), var(--deep-sea-3));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 20px;
+      overflow: hidden;
+    }
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      padding: 10px 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      background: rgba(0,0,0,0.4);
+      color: var(--text-light);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(10px);
+    }
+    .back-btn:hover {
+      background: rgba(0,0,0,0.6);
+      transform: translateX(-3px);
+      border-color: var(--accent-pink);
+    }
+    .island-content {
+      text-align: center;
+      color: var(--text-light);
+      max-width: 400px;
+      z-index: 2;
+      position: relative;
+    }
+    .island-content h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+    .island-content .island-emoji {
+      font-size: 5rem;
+      display: block;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .island-content p {
+      color: #c2d8e8;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+    .btn-next {
+      padding: 15px 35px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #2d8ba8, #1a6b8a);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 20px rgba(26, 107, 138, 0.5);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-next:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(26, 107, 138, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOMBOL KEMBALI KE PETA -->
+  <a href="map.html" class="back-btn">⬅️ Kembali ke Peta</a>
+
+  <div class="island-content">
+    <span class="island-emoji">🏝️</span>
+    <h1>Pulau 1</h1>
+    <p>Ini adalah pulau pertama. Setelah selesai di sini, pulau 2 akan terbuka.</p>
+
+    <!-- Tombol untuk menyelesaikan pulau 1 dan membuka pulau 2 -->
+    <button class="btn-next" id="btnCompletePulau1">Selesaikan Pulau 1 ✓</button>
+  </div>
+
+  <script>
+    document.getElementById('btnCompletePulau1').addEventListener('click', function() {
+      // Buka pulau 2 di localStorage
+      let unlockedIslands = JSON.parse(localStorage.getItem('unlockedIslands')) || [];
+      if (!unlockedIslands.includes('island2')) {
+        unlockedIslands.push('island2');
+        localStorage.setItem('unlockedIslands', JSON.stringify(unlockedIslands));
+      }
+      // Kembali ke peta
+      window.location.href = "map.html";
+    });
+  </script>
+</body>
+</html>
