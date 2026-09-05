@@ -13,8 +13,6 @@
       --gold-light: #FFE44D;
       --text-light: #e0f0ff;
       --accent-pink: #ff8fab;
-      --card-bg: rgba(10, 25, 40, 0.75);
-      --card-border: rgba(255, 255, 255, 0.15);
     }
 
     * {
@@ -268,7 +266,9 @@
       z-index: 5;
       pointer-events: none;
       opacity: 0;
+      transform: translate(-50%, -100%);
       filter: drop-shadow(0 0 15px rgba(255, 80, 120, 0.8));
+      transition: opacity 0.5s ease;
     }
     .duyung-walker.show {
       opacity: 1;
@@ -355,39 +355,38 @@
     <div class="map-subtitle">Jelajahi pulau-pulau untuk mengumpulkan kunci dan membuka misteri</div>
 
     <div class="map-area" id="mapArea">
-      <!-- SVG Pathway (meliuk acak) -->
+      <!-- SVG Pathway (meliuk acak, tidak nanjak) -->
       <svg class="snake-path" viewBox="0 0 800 600" preserveAspectRatio="none">
-        <path id="snakePath" d="M120,520 
-                 C180,440 220,480 280,420 
-                 C330,370 300,390 370,330 
-                 C430,280 420,350 480,300 
-                 C540,250 530,210 600,160 
-                 C650,120 680,90 720,70" />
+        <path id="snakePath" d="M400,540 
+                 C300,520 180,460 120,420 
+                 C200,360 240,330 280,300 
+                 C350,260 400,240 480,210 
+                 C530,190 580,140 640,90" />
       </svg>
 
       <!-- Island 1 -->
-      <div class="island unlocked" id="island1" style="left:12%; top:80%;" data-target="island-1.html">
+      <div class="island unlocked" id="island1" style="left:15%; top:70%;" data-target="island-1.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 1</div>
         <span class="key-indicator">🔑</span>
       </div>
 
       <!-- Island 2 -->
-      <div class="island locked" id="island2" style="left:35%; top:62%;" data-target="island-2.html">
+      <div class="island locked" id="island2" style="left:35%; top:50%;" data-target="island-2.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 2</div>
         <span class="key-indicator">🔑</span>
       </div>
 
       <!-- Island 3 -->
-      <div class="island locked" id="island3" style="left:58%; top:45%;" data-target="island-3.html">
+      <div class="island locked" id="island3" style="left:60%; top:35%;" data-target="island-3.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 3</div>
         <span class="key-indicator">🔑</span>
       </div>
 
       <!-- Island 4 -->
-      <div class="island locked" id="island4" style="left:82%; top:18%;" data-target="island-4.html">
+      <div class="island locked" id="island4" style="left:80%; top:15%;" data-target="island-4.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 4</div>
         <span class="key-indicator">🔑</span>
@@ -418,17 +417,14 @@
 
     // ===== Status pulau dari localStorage =====
     let unlockedIslands = JSON.parse(localStorage.getItem('unlockedIslands')) || [];
-    // Jika kosong, set default hanya island1
     if (unlockedIslands.length === 0) {
       unlockedIslands = ['island1'];
       localStorage.setItem('unlockedIslands', JSON.stringify(unlockedIslands));
     }
 
-    // Terapkan class unlocked/locked
     const islandElements = document.querySelectorAll('.island');
     islandElements.forEach(island => {
-      const id = island.id;
-      if (unlockedIslands.includes(id)) {
+      if (unlockedIslands.includes(island.id)) {
         island.classList.remove('locked');
         island.classList.add('unlocked');
       } else {
@@ -443,44 +439,48 @@
     const duyungWalker = document.getElementById('duyungWalker');
     const mapMessage = document.getElementById('mapMessage');
     let isAnimating = false;
+    let currentProgress = 0; // start di titik awal (bawah tengah)
 
-    // Progress pulau di sepanjang path (0 = awal, 1 = akhir)
+    // Progress pulau di sepanjang path (0 = start, 1 = akhir)
     const islandProgress = {
-      island1: 0.1,
-      island2: 0.35,
-      island3: 0.6,
-      island4: 0.9
+      island1: 0.15,
+      island2: 0.40,
+      island3: 0.70,
+      island4: 0.95
     };
 
-    // Fungsi konversi koordinat path ke posisi di map-area
+    // Fungsi untuk mendapatkan posisi duyung berdasarkan progress path (0-1)
     function getDuyungPosition(progress) {
       const totalLength = snakePath.getTotalLength();
       const point = snakePath.getPointAtLength(totalLength * progress);
-
-      // Konversi viewBox 800x600 ke ukuran mapArea
       const mapRect = mapArea.getBoundingClientRect();
       const scaleX = mapRect.width / 800;
       const scaleY = mapRect.height / 600;
-
       return {
         left: point.x * scaleX,
         top: point.y * scaleY
       };
     }
 
-    // Fungsi animasi duyung bergerak mengikuti path
+    // Set posisi awal duyung (progress = 0)
+    function setDuyungInitial() {
+      const pos = getDuyungPosition(0);
+      duyungWalker.style.left = pos.left + 'px';
+      duyungWalker.style.top = pos.top + 'px';
+      duyungWalker.classList.add('show');
+    }
+    setDuyungInitial();
+
+    // Animasi duyung bergerak mengikuti path
     function animateDuyung(startProgress, endProgress, callback) {
-      const totalLength = snakePath.getTotalLength();
       const duration = 1500; // ms
       const startTime = performance.now();
-
       duyungWalker.classList.add('show');
 
       function step(currentTime) {
         const elapsed = currentTime - startTime;
         const t = Math.min(elapsed / duration, 1);
-        // easing sederhana
-        const eased = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+        const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
         const progress = startProgress + (endProgress - startProgress) * eased;
 
         const pos = getDuyungPosition(progress);
@@ -490,7 +490,7 @@
         if (t < 1) {
           requestAnimationFrame(step);
         } else {
-          duyungWalker.classList.remove('show');
+          currentProgress = endProgress;
           if (callback) callback();
         }
       }
@@ -513,7 +513,7 @@
         const target = this.getAttribute('data-target');
         const islandId = this.id;
         const endProgress = islandProgress[islandId];
-        const startProgress = islandId === 'island1' ? 0 : (islandProgress[Object.keys(islandProgress).find(key => islandProgress[key] < endProgress)] || 0);
+        const startProgress = currentProgress;
 
         mapMessage.textContent = `⛵ Ratu Kucing Duyung berlayar ke ${this.querySelector('.island-label').textContent}...`;
         isAnimating = true;
