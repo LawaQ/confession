@@ -5,14 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Peta Kepulauan Ratu Kucing Duyung 🏝️</title>
   <style>
-    /* ===== DASAR LAUT ===== */
     :root {
       --deep-sea-1: #0a1c2e;
       --deep-sea-2: #0d2b45;
       --deep-sea-3: #0f3b5c;
       --gold-1: #FFD700;
       --gold-light: #FFE44D;
-      --glow-gold: 0 0 25px rgba(255, 215, 0, 0.7);
       --text-light: #e0f0ff;
       --accent-pink: #ff8fab;
       --card-bg: rgba(10, 25, 40, 0.75);
@@ -37,7 +35,7 @@
       align-items: center;
     }
 
-    /* ===== GELEMBUNG ===== */
+    /* Gelembung */
     .bubbles {
       position: fixed;
       width: 100%;
@@ -60,7 +58,7 @@
       100% { transform: translateY(-110vh) scale(1.4); opacity: 0; }
     }
 
-    /* ===== IKON LAUT MENGAPUNG ===== */
+    /* Dekorasi ikon laut */
     .floating-icons {
       position: fixed;
       width: 100%;
@@ -83,7 +81,7 @@
       50% { transform: translateY(-25px) rotate(8deg); }
     }
 
-    /* ===== DASAR LAUT ===== */
+    /* Dasar laut */
     .sea-floor {
       position: fixed;
       bottom: 0;
@@ -110,12 +108,12 @@
       50% { transform: rotate(6deg); }
     }
 
-    /* ===== TOMBOL KEMBALI ===== */
+    /* Tombol kembali */
     .back-btn {
       position: fixed;
       top: 20px;
       left: 20px;
-      z-index: 10;
+      z-index: 20;
       padding: 10px 20px;
       border: 2px solid rgba(255,255,255,0.3);
       border-radius: 50px;
@@ -125,7 +123,6 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
-      letter-spacing: 0.5px;
       text-decoration: none;
       display: flex;
       align-items: center;
@@ -138,27 +135,27 @@
       border-color: var(--accent-pink);
     }
 
-    /* ===== KONTEN UTAMA ===== */
+    /* Konten peta */
     .map-container {
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 700px;
+      max-width: 800px;
       text-align: center;
       margin-top: 40px;
     }
 
     .map-title {
       color: var(--text-light);
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
       text-shadow: 0 0 20px rgba(255,255,255,0.3);
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       animation: fadeInDown 1s ease;
     }
     .map-subtitle {
       color: #c2d8e8;
-      font-size: 0.95rem;
+      font-size: 1rem;
       margin-bottom: 30px;
       animation: fadeInDown 1s ease 0.2s both;
     }
@@ -167,15 +164,15 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ===== AREA PETA ===== */
+    /* Area peta */
     .map-area {
       position: relative;
       width: 100%;
-      height: 500px;
+      height: 600px;
       margin: 0 auto;
     }
 
-    /* Garis meliuk (SVG) */
+    /* Garis pathway */
     .snake-path {
       position: absolute;
       top: 0;
@@ -186,18 +183,18 @@
     }
     .snake-path path {
       fill: none;
-      stroke: rgba(255, 215, 0, 0.55);
-      stroke-width: 3;
-      stroke-dasharray: 10 8;
+      stroke: rgba(255, 215, 0, 0.6);
+      stroke-width: 4;
+      stroke-dasharray: 12 10;
       stroke-linecap: round;
       animation: dashMove 2s linear infinite;
     }
     @keyframes dashMove {
       0% { stroke-dashoffset: 0; }
-      100% { stroke-dashoffset: -18; }
+      100% { stroke-dashoffset: -22; }
     }
 
-    /* ===== PULAU ===== */
+    /* Pulau */
     .island {
       position: absolute;
       z-index: 2;
@@ -222,7 +219,7 @@
     }
 
     .island-emoji {
-      font-size: 4rem;
+      font-size: 5rem;  /* diperbesar */
       line-height: 1;
       transition: transform 0.3s;
     }
@@ -231,26 +228,26 @@
     }
     @keyframes islandFloat {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+      50% { transform: translateY(-10px); }
     }
 
     .island-label {
       color: var(--text-light);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-top: 5px;
-      background: rgba(0,0,0,0.5);
-      padding: 3px 12px;
-      border-radius: 20px;
-      letter-spacing: 0.5px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-top: 6px;
+      background: rgba(0,0,0,0.6);
+      padding: 4px 18px;
+      border-radius: 30px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
-    /* Indikator kunci */
     .key-indicator {
       position: absolute;
-      top: -10px;
-      right: -15px;
-      font-size: 1.8rem;
+      top: -15px;
+      right: -25px;
+      font-size: 2.2rem;
       animation: keyBounce 2s ease-in-out infinite;
       filter: drop-shadow(0 0 8px rgba(255,215,0,0.8));
       display: none;
@@ -263,13 +260,34 @@
       50% { transform: translateY(-5px); }
     }
 
-    /* ===== PESAN ===== */
+    /* Karakter duyung */
+    .duyung-walker {
+      position: absolute;
+      width: 80px;
+      height: auto;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      filter: drop-shadow(0 0 15px rgba(255, 80, 120, 0.8));
+    }
+    .duyung-walker.show {
+      opacity: 1;
+      animation: duyungWalk 1.2s ease-in-out forwards;
+    }
+    @keyframes duyungWalk {
+      0% { transform: translate(-50%, -100%) scale(0.7); }
+      50% { transform: translate(-50%, -120%) scale(1); }
+      100% { transform: translate(-50%, -100%) scale(0.9); }
+    }
+
+    /* Pesan */
     .map-message {
       margin-top: 25px;
-      min-height: 30px;
+      min-height: 35px;
       color: var(--text-light);
-      font-size: 0.95rem;
-      font-weight: 500;
+      font-size: 1rem;
+      font-weight: 600;
       letter-spacing: 0.5px;
       animation: fadeInUp 0.5s ease;
     }
@@ -278,16 +296,28 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* Responsif */
     @media (max-width: 600px) {
       .map-area {
-        height: 400px;
+        height: 480px;
       }
       .island-emoji {
-        font-size: 3rem;
+        font-size: 3.5rem;
+      }
+      .island-label {
+        font-size: 0.85rem;
+        padding: 3px 12px;
+      }
+      .key-indicator {
+        font-size: 1.8rem;
+        right: -18px;
+        top: -10px;
       }
       .map-title {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
+      }
+      .duyung-walker {
+        width: 60px;
       }
       .back-btn {
         top: 10px;
@@ -300,10 +330,10 @@
 </head>
 <body>
 
-  <!-- GELEMBUNG -->
+  <!-- Gelembung -->
   <div class="bubbles" id="bubbles"></div>
 
-  <!-- IKON LAUT -->
+  <!-- Ikon laut -->
   <div class="floating-icons">
     <span class="float-icon" style="top:8%; left:7%;">🐠</span>
     <span class="float-icon" style="top:25%; right:10%; animation-delay:2s;">🪼</span>
@@ -318,70 +348,66 @@
     <span class="float-icon" style="bottom:25%; left:5%; animation-delay:0.8s;">🪸</span>
   </div>
 
-  <!-- DASAR LAUT -->
+  <!-- Dasar laut -->
   <div class="sea-floor">
-    <span>🌿</span>
-    <span>🪸</span>
-    <span>🌿</span>
-    <span>🐚</span>
-    <span>🪸</span>
-    <span>🌿</span>
-    <span>⭐</span>
+    <span>🌿</span><span>🪸</span><span>🌿</span><span>🐚</span><span>🪸</span><span>🌿</span><span>⭐</span>
   </div>
 
-  <!-- TOMBOL KEMBALI -->
+  <!-- Tombol kembali -->
   <a href="index.html" class="back-btn">⬅️ Kembali</a>
 
-  <!-- PETA -->
+  <!-- Peta -->
   <div class="map-container">
     <div class="map-title">🗺️ Peta Kepulauan Ratu Kucing Duyung</div>
     <div class="map-subtitle">Jelajahi pulau-pulau untuk mengumpulkan kunci dan membuka misteri</div>
 
     <div class="map-area">
-
-      <!-- SVG GARIS MELIUK SEPERTI ULAR -->
-      <svg class="snake-path" viewBox="0 0 700 500" preserveAspectRatio="none">
-        <path d="M100,400 
-                 C150,250 200,350 280,250 
-                 C360,150 380,300 470,200 
-                 C540,120 570,250 620,150" />
+      <!-- SVG Pathway (disesuaikan posisi baru) -->
+      <svg class="snake-path" viewBox="0 0 800 600" preserveAspectRatio="none">
+        <path d="M120,520 
+                 C180,430 220,470 300,380 
+                 C380,290 350,350 450,260 
+                 C530,190 540,230 620,140 
+                 C650,110 670,90 700,80" />
       </svg>
 
-      <!-- PULAU 1 -->
-      <div class="island unlocked" id="island1" style="left:8%; top:65%;" data-target="island-1.html">
+      <!-- Island 1 -->
+      <div class="island unlocked" id="island1" style="left:8%; top:75%;" data-target="island-1.html">
         <div class="island-emoji">🏝️</div>
-        <div class="island-label">Pulau 1</div>
+        <div class="island-label">Island 1</div>
         <span class="key-indicator">🔑</span>
       </div>
 
-      <!-- PULAU 2 -->
-      <div class="island locked" id="island2" style="left:32%; top:38%;" data-target="island-2.html">
+      <!-- Island 2 -->
+      <div class="island locked" id="island2" style="left:30%; top:55%;" data-target="island-2.html">
         <div class="island-emoji">🏝️</div>
-        <div class="island-label">Pulau 2</div>
+        <div class="island-label">Island 2</div>
         <span class="key-indicator">🔑</span>
       </div>
 
-      <!-- PULAU 3 -->
-      <div class="island locked" id="island3" style="left:58%; top:25%;" data-target="island-3.html">
+      <!-- Island 3 -->
+      <div class="island locked" id="island3" style="left:55%; top:38%;" data-target="island-3.html">
         <div class="island-emoji">🏝️</div>
-        <div class="island-label">Pulau 3</div>
+        <div class="island-label">Island 3</div>
         <span class="key-indicator">🔑</span>
       </div>
 
-      <!-- PULAU 4 -->
-      <div class="island locked" id="island4" style="left:80%; top:12%;" data-target="island-4.html">
+      <!-- Island 4 -->
+      <div class="island locked" id="island4" style="left:80%; top:15%;" data-target="island-4.html">
         <div class="island-emoji">🏝️</div>
-        <div class="island-label">Pulau 4</div>
+        <div class="island-label">Island 4</div>
         <span class="key-indicator">🔑</span>
       </div>
 
+      <!-- Karakter Duyung (akan ditampilkan saat klik pulau) -->
+      <img src="assets/duyung.png" alt="Ratu Kucing Duyung" class="duyung-walker" id="duyungWalker">
     </div>
 
-    <div class="map-message" id="mapMessage">Klik pulau yang sudah terbuka untuk memulai.</div>
+    <div class="map-message" id="mapMessage">Klik pulau yang sudah terbuka untuk berlayar.</div>
   </div>
 
   <script>
-    // ===== GELEMBUNG =====
+    // ===== Gelembung =====
     const bubblesContainer = document.getElementById('bubbles');
     const bubbleCount = 30;
     for (let i = 0; i < bubbleCount; i++) {
@@ -396,42 +422,65 @@
       bubblesContainer.appendChild(bubble);
     }
 
-    // ===== LOCALSTORAGE UNTUK STATUS PULAU =====
-    // Cek apakah sudah ada data tersimpan
+    // ===== Status pulau dari localStorage =====
     let unlockedIslands = JSON.parse(localStorage.getItem('unlockedIslands')) || [];
-
-    // Jika belum ada data sama sekali (baru pertama kali), buka pulau 1
+    // Jika kosong, set default hanya island1
     if (unlockedIslands.length === 0) {
       unlockedIslands = ['island1'];
       localStorage.setItem('unlockedIslands', JSON.stringify(unlockedIslands));
     }
 
-    // Terapkan status unlocked
-    unlockedIslands.forEach(id => {
-      const island = document.getElementById(id);
-      if (island) {
+    // Terapkan class unlocked/locked
+    const islandElements = document.querySelectorAll('.island');
+    islandElements.forEach(island => {
+      const id = island.id;
+      if (unlockedIslands.includes(id)) {
         island.classList.remove('locked');
         island.classList.add('unlocked');
+      } else {
+        island.classList.add('locked');
+        island.classList.remove('unlocked');
       }
     });
 
-    // ===== INTERAKSI PULAU =====
-    const islands = document.querySelectorAll('.island');
+    // ===== Interaksi pulau =====
     const mapMessage = document.getElementById('mapMessage');
+    const duyungWalker = document.getElementById('duyungWalker');
+    let isAnimating = false;
 
-    islands.forEach(island => {
+    islandElements.forEach(island => {
       island.addEventListener('click', function() {
+        if (isAnimating) return;
+
         if (this.classList.contains('locked')) {
-          mapMessage.textContent = "🔒 Pulau ini masih terkunci. Selesaikan pulau sebelumnya dulu!";
+          mapMessage.textContent = "🔒 Island ini masih terkunci. Selesaikan island sebelumnya dulu!";
+          // Efek getar
           this.style.animation = 'shake 0.5s ease';
           setTimeout(() => { this.style.animation = ''; }, 500);
-        } else {
-          const target = this.getAttribute('data-target');
-          mapMessage.textContent = `⛵ Berlayar ke ${this.querySelector('.island-label').textContent}...`;
-          setTimeout(() => {
-            window.location.href = target;
-          }, 800);
+          return;
         }
+
+        // Island terbuka
+        const target = this.getAttribute('data-target');
+        const islandLabel = this.querySelector('.island-label').textContent;
+        mapMessage.textContent = `⛵ Ratu Kucing Duyung berlayar ke ${islandLabel}...`;
+
+        // Tampilkan duyung di dekat pulau yang diklik
+        const islandRect = this.getBoundingClientRect();
+        const mapAreaRect = document.querySelector('.map-area').getBoundingClientRect();
+
+        // Posisi duyung di atas pulau (center)
+        const x = islandRect.left - mapAreaRect.left + islandRect.width / 2;
+        const y = islandRect.top - mapAreaRect.top;
+        duyungWalker.style.left = x + 'px';
+        duyungWalker.style.top = y + 'px';
+        duyungWalker.classList.add('show');
+        isAnimating = true;
+
+        // Redirect setelah animasi selesai (1.5 detik)
+        setTimeout(() => {
+          window.location.href = target;
+        }, 1500);
       });
     });
 
