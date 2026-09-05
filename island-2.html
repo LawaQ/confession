@@ -213,10 +213,11 @@
       opacity: 1;
     }
 
+    /* Bubble ladybug dengan bintik lebih besar */
     .ladybug-bubble {
       background-color: var(--bubble-bg);
-      background-image: radial-gradient(circle, rgba(0,0,0,0.15) 3px, transparent 4px);
-      background-size: 40px 40px;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.35) 10px, transparent 11px);
+      background-size: 60px 60px;
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px);
       border-radius: 30px;
@@ -224,6 +225,26 @@
       border: 2px solid var(--bubble-border);
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       position: relative;
+    }
+
+    /* Dekorasi di pinggir bubble */
+    .bubble-decor {
+      position: absolute;
+      width: 80px;
+      max-width: 30%;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+      pointer-events: none;
+      z-index: 3;
+    }
+    .bubble-decor-left {
+      top: -25px;
+      left: -25px;
+      transform: rotate(-15deg);
+    }
+    .bubble-decor-right {
+      bottom: -25px;
+      right: -25px;
+      transform: rotate(15deg);
     }
 
     .letter-header {
@@ -340,6 +361,9 @@
       .letter-title { font-size: 1.8rem; }
       .ladybug-earring-img { width: 70px; }
       .transform-earring-img { width: 120px; }
+      .bubble-decor { width: 60px; }
+      .bubble-decor-left { top: -15px; left: -15px; }
+      .bubble-decor-right { bottom: -15px; right: -15px; }
     }
   </style>
 </head>
@@ -353,7 +377,7 @@
     <div class="transform-section" id="transformSection">
       <div class="ladybug-title">🐞 Pulau 2: Miraculous Ladybug</div>
       <div class="ladybug-subtitle">Saatnya bertransformasi untuk membuka surat</div>
-      <!-- Ganti src dengan file anting yang sudah diupload -->
+      <!-- Ganti src jika masih pakai .jpg: assets/earrings.jpg -->
       <img src="assets/earrings.png" alt="Earrings" class="ladybug-earring-img">
       <button class="btn-transform" id="btnTransform">Transform!</button>
     </div>
@@ -367,6 +391,10 @@
     <!-- BAGIAN SURAT -->
     <div class="letter-section" id="letterSection">
       <div class="ladybug-bubble">
+        <!-- Dekorasi pinggir bubble -->
+        <img src="assets/island2-kiri.png" alt="" class="bubble-decor bubble-decor-left">
+        <img src="assets/island2-kanan.png" alt="" class="bubble-decor bubble-decor-right">
+
         <div class="letter-header">
           <div class="letter-tag">🐞 Miraculous</div>
           <h1 class="letter-title">Surat dari Ladybug</h1>
