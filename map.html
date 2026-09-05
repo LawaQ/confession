@@ -10,383 +10,93 @@
       --deep-sea-2: #0d2b45;
       --deep-sea-3: #0f3b5c;
       --gold-1: #FFD700;
-      --gold-light: #FFE44D;
       --text-light: #e0f0ff;
       --accent-pink: #ff8fab;
     }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
-    }
-
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
     body {
-      min-height: 100vh;
-      background: linear-gradient(180deg, var(--deep-sea-1) 0%, var(--deep-sea-2) 40%, var(--deep-sea-3) 100%);
-      overflow-x: hidden;
-      position: relative;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      min-height:100vh;
+      background:linear-gradient(180deg,var(--deep-sea-1),var(--deep-sea-2),var(--deep-sea-3));
+      display:flex; justify-content:center; align-items:center;
+      padding:20px; position:relative; overflow-x:hidden;
     }
-
-    /* Gelembung */
-    .bubbles {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .bubble {
-      position: absolute;
-      bottom: -80px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 50%;
-      animation: rise linear infinite;
-    }
-    @keyframes rise {
-      0% { transform: translateY(0) scale(1); opacity: 0.6; }
-      100% { transform: translateY(-110vh) scale(1.4); opacity: 0; }
-    }
-
-    /* Dekorasi ikon laut */
-    .floating-icons {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 0;
-      font-size: 2rem;
-      user-select: none;
-    }
-    .float-icon {
-      position: absolute;
-      animation: floatAround 10s ease-in-out infinite;
-      opacity: 0.4;
-      filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
-    }
-    @keyframes floatAround {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-25px) rotate(8deg); }
-    }
-
-    /* Dasar laut */
-    .sea-floor {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 120px;
-      pointer-events: none;
-      z-index: 0;
-      display: flex;
-      justify-content: space-around;
-      align-items: flex-end;
-      font-size: 2.5rem;
-      opacity: 0.6;
-      padding-bottom: 10px;
-      user-select: none;
-    }
-    .sea-floor span {
-      display: inline-block;
-      animation: sway 4s ease-in-out infinite;
-      transform-origin: bottom center;
-    }
-    @keyframes sway {
-      0%, 100% { transform: rotate(-6deg); }
-      50% { transform: rotate(6deg); }
-    }
-
-    /* Tombol kembali */
     .back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 20;
-      padding: 10px 20px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 50px;
-      background: rgba(0,0,0,0.4);
-      color: var(--text-light);
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      backdrop-filter: blur(10px);
+      position:fixed; top:20px; left:20px; z-index:20;
+      padding:10px 20px; border-radius:50px; background:rgba(0,0,0,0.5);
+      color:#fff; text-decoration:none; font-weight:600;
+      border:2px solid rgba(255,255,255,0.3); backdrop-filter:blur(10px);
     }
-    .back-btn:hover {
-      background: rgba(0,0,0,0.6);
-      transform: translateX(-3px);
-      border-color: var(--accent-pink);
-    }
-
-    /* Konten peta */
-    .map-container {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 850px;
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    .map-title {
-      color: var(--text-light);
-      font-size: 2rem;
-      font-weight: 700;
-      text-shadow: 0 0 20px rgba(255,255,255,0.3);
-      margin-bottom: 5px;
-      animation: fadeInDown 1s ease;
-    }
-    .map-subtitle {
-      color: #c2d8e8;
-      font-size: 1rem;
-      margin-bottom: 20px;
-      animation: fadeInDown 1s ease 0.2s both;
-    }
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Area peta */
-    .map-area {
-      position: relative;
-      width: 100%;
-      height: 600px;
-      margin: 0 auto;
-    }
-
-    /* Garis pathway */
-    .snake-path {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
+    .map-container { position:relative; z-index:2; width:100%; max-width:850px; text-align:center; }
+    .map-title { color:#fff; font-size:2rem; text-shadow:0 0 20px rgba(255,255,255,0.3); }
+    .map-subtitle { color:#c2d8e8; font-size:1rem; margin-bottom:20px; }
+    .map-area { position:relative; width:100%; height:600px; margin:0 auto; }
+    .snake-path { position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; }
     .snake-path path {
-      fill: none;
-      stroke: rgba(255, 215, 0, 0.6);
-      stroke-width: 4;
-      stroke-dasharray: 12 10;
-      stroke-linecap: round;
-      animation: dashMove 2s linear infinite;
+      fill:none; stroke:rgba(255,215,0,0.6); stroke-width:4;
+      stroke-dasharray:12 10; stroke-linecap:round;
+      animation:dashMove 2s linear infinite;
     }
-    @keyframes dashMove {
-      0% { stroke-dashoffset: 0; }
-      100% { stroke-dashoffset: -22; }
-    }
-
-    /* Pulau */
+    .snake-path-hidden path { stroke:none; } /* tidak terlihat */
+    @keyframes dashMove { 0% {stroke-dashoffset:0;} 100% {stroke-dashoffset:-22;} }
     .island {
-      position: absolute;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-      transition: transform 0.3s, filter 0.3s;
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.5));
-      user-select: none;
+      position:absolute; z-index:2; display:flex; flex-direction:column; align-items:center;
+      cursor:pointer; transition:transform 0.3s, filter 0.3s; filter:drop-shadow(0 6px 10px rgba(0,0,0,0.5));
     }
-    .island:hover:not(.locked) {
-      transform: scale(1.1);
-    }
-    .island.locked {
-      opacity: 0.5;
-      filter: grayscale(0.6) drop-shadow(0 4px 6px rgba(0,0,0,0.5));
-      cursor: not-allowed;
-    }
-    .island.locked:hover {
-      transform: none;
-    }
-
-    .island-emoji {
-      font-size: 4.5rem;
-      line-height: 1;
-      transition: transform 0.3s;
-    }
-    .island.unlocked .island-emoji {
-      animation: islandFloat 3s ease-in-out infinite;
-    }
-    @keyframes islandFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .island-label {
-      color: var(--text-light);
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-top: 6px;
-      background: rgba(0,0,0,0.6);
-      padding: 4px 18px;
-      border-radius: 30px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .key-indicator {
-      position: absolute;
-      top: -15px;
-      right: -25px;
-      font-size: 2.2rem;
-      animation: keyBounce 2s ease-in-out infinite;
-      filter: drop-shadow(0 0 8px rgba(255,215,0,0.8));
-      display: none;
-    }
-    .island.unlocked .key-indicator {
-      display: block;
-    }
-    @keyframes keyBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-
-    /* Karakter duyung */
-    .duyung-walker {
-      position: absolute;
-      width: 80px;
-      height: auto;
-      z-index: 5;
-      pointer-events: none;
-      opacity: 0;
-      transform: translate(-50%, -100%);
-      filter: drop-shadow(0 0 15px rgba(255, 80, 120, 0.8));
-      transition: opacity 0.5s ease;
-    }
-    .duyung-walker.show {
-      opacity: 1;
-    }
-
-    /* Pesan */
-    .map-message {
-      margin-top: 20px;
-      min-height: 35px;
-      color: var(--text-light);
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      animation: fadeInUp 0.5s ease;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Responsif */
-    @media (max-width: 600px) {
-      .map-area {
-        height: 480px;
-      }
-      .island-emoji {
-        font-size: 3.2rem;
-      }
-      .island-label {
-        font-size: 0.85rem;
-        padding: 3px 12px;
-      }
-      .key-indicator {
-        font-size: 1.8rem;
-        right: -18px;
-        top: -10px;
-      }
-      .map-title {
-        font-size: 1.6rem;
-      }
-      .duyung-walker {
-        width: 60px;
-      }
-      .back-btn {
-        top: 10px;
-        left: 10px;
-        padding: 8px 15px;
-        font-size: 0.8rem;
-      }
+    .island:hover:not(.locked) { transform:scale(1.1); }
+    .island.locked { opacity:0.5; filter:grayscale(0.6) drop-shadow(0 4px 6px rgba(0,0,0,0.5)); cursor:not-allowed; }
+    .island-emoji { font-size:4.5rem; line-height:1; }
+    .island.unlocked .island-emoji { animation:islandFloat 3s ease-in-out infinite; }
+    @keyframes islandFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+    .island-label { color:#fff; font-weight:700; margin-top:6px; background:rgba(0,0,0,0.6); padding:4px 18px; border-radius:30px; text-transform:uppercase; letter-spacing:1px; }
+    .key-indicator { position:absolute; top:-15px; right:-25px; font-size:2.2rem; animation:keyBounce 2s ease-in-out infinite; filter:drop-shadow(0 0 8px rgba(255,215,0,0.8)); display:none; }
+    .island.unlocked .key-indicator { display:block; }
+    @keyframes keyBounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-5px);} }
+    .duyung-walker { position:absolute; width:80px; z-index:5; pointer-events:none; opacity:0; transform:translate(-50%,-100%); filter:drop-shadow(0 0 15px rgba(255,80,120,0.8)); transition:opacity 0.5s; }
+    .duyung-walker.show { opacity:1; }
+    .map-message { margin-top:20px; color:#fff; font-weight:600; }
+    @media (max-width:600px) {
+      .map-area { height:480px; }
+      .island-emoji { font-size:3.2rem; }
+      .island-label { font-size:0.85rem; }
+      .duyung-walker { width:60px; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Gelembung -->
-  <div class="bubbles" id="bubbles"></div>
-
-  <!-- Ikon laut -->
-  <div class="floating-icons">
-    <span class="float-icon" style="top:8%; left:7%;">🐠</span>
-    <span class="float-icon" style="top:25%; right:10%; animation-delay:2s;">🪼</span>
-    <span class="float-icon" style="top:55%; left:12%; animation-delay:4s;">🐡</span>
-    <span class="float-icon" style="top:70%; right:15%; animation-delay:1s;">🦑</span>
-    <span class="float-icon" style="top:15%; left:60%; animation-delay:3s;">🐳</span>
-    <span class="float-icon" style="top:40%; right:25%; animation-delay:5s;">🐬</span>
-    <span class="float-icon" style="top:80%; left:30%; animation-delay:2.5s;">🦀</span>
-    <span class="float-icon" style="top:65%; left:45%; animation-delay:3.5s;">🐚</span>
-    <span class="float-icon" style="top:30%; left:20%; animation-delay:1.5s;">⭐</span>
-    <span class="float-icon" style="top:50%; right:5%; animation-delay:4.5s;">💎</span>
-    <span class="float-icon" style="bottom:25%; left:5%; animation-delay:0.8s;">🪸</span>
-  </div>
-
-  <!-- Dasar laut -->
-  <div class="sea-floor">
-    <span>🌿</span><span>🪸</span><span>🌿</span><span>🐚</span><span>🪸</span><span>🌿</span><span>⭐</span>
-  </div>
-
-  <!-- Tombol kembali -->
   <a href="index.html" class="back-btn">⬅️ Kembali</a>
 
-  <!-- Peta -->
   <div class="map-container">
     <div class="map-title">🗺️ Peta Kepulauan Ratu Kucing Duyung</div>
     <div class="map-subtitle">Jelajahi pulau-pulau untuk mengumpulkan kunci dan membuka misteri</div>
 
     <div class="map-area" id="mapArea">
-      <!-- SVG Pathway (meliuk acak, tidak nanjak) -->
-      <svg class="snake-path" viewBox="0 0 800 600" preserveAspectRatio="none">
-        <path id="snakePath" d="M400,540 
-                 C300,520 180,460 120,420 
-                 C200,360 240,330 280,300 
-                 C350,260 400,240 480,210 
-                 C530,190 580,140 640,90" />
+      <!-- Path tersembunyi start -> island1 (tidak digambar) -->
+      <svg class="snake-path snake-path-hidden" viewBox="0 0 800 600" preserveAspectRatio="none">
+        <path id="snakePathHidden" d="M400,540 C300,450 200,250 120,120" />
       </svg>
 
-      <!-- Island 1 -->
-      <div class="island unlocked" id="island1" style="left:15%; top:70%;" data-target="island-1.html">
+      <!-- Path terlihat island1 -> island2 -> island3 -> island4 -->
+      <svg class="snake-path" viewBox="0 0 800 600" preserveAspectRatio="none">
+        <path id="snakePathVisible" d="M120,120 C180,200 250,350 280,390 C350,450 450,350 520,300 C580,250 650,400 704,510" />
+      </svg>
+
+      <!-- Pulau-pulau -->
+      <div class="island unlocked" id="island1" style="left:15%; top:20%;" data-target="island-1.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 1</div>
         <span class="key-indicator">🔑</span>
       </div>
-
-      <!-- Island 2 -->
-      <div class="island locked" id="island2" style="left:35%; top:50%;" data-target="island-2.html">
+      <div class="island locked" id="island2" style="left:35%; top:65%;" data-target="island-2.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 2</div>
         <span class="key-indicator">🔑</span>
       </div>
-
-      <!-- Island 3 -->
-      <div class="island locked" id="island3" style="left:60%; top:35%;" data-target="island-3.html">
+      <div class="island locked" id="island3" style="left:65%; top:50%;" data-target="island-3.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 3</div>
         <span class="key-indicator">🔑</span>
       </div>
-
-      <!-- Island 4 -->
-      <div class="island locked" id="island4" style="left:80%; top:15%;" data-target="island-4.html">
+      <div class="island locked" id="island4" style="left:88%; top:85%;" data-target="island-4.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 4</div>
         <span class="key-indicator">🔑</span>
@@ -400,20 +110,19 @@
   </div>
 
   <script>
-    // ===== Gelembung =====
-    const bubblesContainer = document.getElementById('bubbles');
-    const bubbleCount = 30;
-    for (let i = 0; i < bubbleCount; i++) {
+    // ===== Gelembung (opsional) =====
+    const bubblesContainer = document.createElement('div');
+    bubblesContainer.style.cssText = 'position:fixed;width:100%;height:100%;top:0;left:0;pointer-events:none;z-index:0;';
+    document.body.appendChild(bubblesContainer);
+    for (let i = 0; i < 30; i++) {
       const bubble = document.createElement('div');
-      bubble.classList.add('bubble');
-      const size = Math.random() * 50 + 20;
-      bubble.style.width = size + 'px';
-      bubble.style.height = size + 'px';
-      bubble.style.left = Math.random() * 100 + '%';
-      bubble.style.animationDuration = Math.random() * 8 + 6 + 's';
-      bubble.style.animationDelay = Math.random() * 5 + 's';
+      const size = Math.random()*50+20;
+      bubble.style.cssText = `position:absolute;bottom:-80px;width:${size}px;height:${size}px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:50%;animation:rise ${Math.random()*8+6}s linear infinite;animation-delay:${Math.random()*5}s;left:${Math.random()*100}%;`;
       bubblesContainer.appendChild(bubble);
     }
+    const style = document.createElement('style');
+    style.textContent = '@keyframes rise{0%{transform:translateY(0) scale(1);opacity:0.6}100%{transform:translateY(-110vh) scale(1.4);opacity:0}}';
+    document.head.appendChild(style);
 
     // ===== Status pulau dari localStorage =====
     let unlockedIslands = JSON.parse(localStorage.getItem('unlockedIslands')) || [];
@@ -421,7 +130,6 @@
       unlockedIslands = ['island1'];
       localStorage.setItem('unlockedIslands', JSON.stringify(unlockedIslands));
     }
-
     const islandElements = document.querySelectorAll('.island');
     islandElements.forEach(island => {
       if (unlockedIslands.includes(island.id)) {
@@ -433,68 +141,87 @@
       }
     });
 
-    // ===== Peta dan animasi =====
-    const mapArea = document.getElementById('mapArea');
-    const snakePath = document.getElementById('snakePath');
+    // ===== Posisi duyung =====
+    const pathHidden = document.getElementById('snakePathHidden');
+    const pathVisible = document.getElementById('snakePathVisible');
     const duyungWalker = document.getElementById('duyungWalker');
+    const mapArea = document.getElementById('mapArea');
     const mapMessage = document.getElementById('mapMessage');
     let isAnimating = false;
-    let currentProgress = 0; // start di titik awal (bawah tengah)
 
-    // Progress pulau di sepanjang path (0 = start, 1 = akhir)
-    const islandProgress = {
-      island1: 0.15,
-      island2: 0.40,
-      island3: 0.70,
-      island4: 0.95
-    };
+    // Simpan posisi duyung di localStorage
+    let duyungState = JSON.parse(localStorage.getItem('duyungState')) || { path: 'hidden', progress: 0 };
 
-    // Fungsi untuk mendapatkan posisi duyung berdasarkan progress path (0-1)
-    function getDuyungPosition(progress) {
-      const totalLength = snakePath.getTotalLength();
-      const point = snakePath.getPointAtLength(totalLength * progress);
+    // Fungsi konversi koordinat path ke layar
+    function getScreenPosition(path, progress) {
+      const totalLength = path.getTotalLength();
+      const point = path.getPointAtLength(totalLength * progress);
       const mapRect = mapArea.getBoundingClientRect();
       const scaleX = mapRect.width / 800;
       const scaleY = mapRect.height / 600;
-      return {
-        left: point.x * scaleX,
-        top: point.y * scaleY
-      };
+      return { left: point.x * scaleX, top: point.y * scaleY };
     }
 
-    // Set posisi awal duyung (progress = 0)
-    function setDuyungInitial() {
-      const pos = getDuyungPosition(0);
+    // Tempatkan duyung sesuai state
+    function setDuyungFromState() {
+      const activePath = duyungState.path === 'hidden' ? pathHidden : pathVisible;
+      const pos = getScreenPosition(activePath, duyungState.progress);
       duyungWalker.style.left = pos.left + 'px';
       duyungWalker.style.top = pos.top + 'px';
       duyungWalker.classList.add('show');
     }
-    setDuyungInitial();
+    setDuyungFromState();
 
-    // Animasi duyung bergerak mengikuti path
-    function animateDuyung(startProgress, endProgress, callback) {
-      const duration = 1500; // ms
+    // Hitung progress untuk pulau di path visible
+    function findProgressForCoordinates(path, x, y) {
+      const totalLength = path.getTotalLength();
+      let bestProgress = 0;
+      let bestDist = Infinity;
+      for (let i = 0; i <= totalLength; i += 5) { // langkah 5px
+        const p = path.getPointAtLength(i);
+        const dist = Math.hypot(p.x - x, p.y - y);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestProgress = i / totalLength;
+        }
+      }
+      return bestProgress;
+    }
+
+    // Koordinat viewBox untuk tiap pulau
+    const islandCoords = {
+      island1: { x: 120, y: 120 },
+      island2: { x: 280, y: 390 },
+      island3: { x: 520, y: 300 },
+      island4: { x: 704, y: 510 }
+    };
+
+    // Progress di path visible
+    const progressVisible = {
+      island1: 0, // awal path
+      island2: findProgressForCoordinates(pathVisible, islandCoords.island2.x, islandCoords.island2.y),
+      island3: findProgressForCoordinates(pathVisible, islandCoords.island3.x, islandCoords.island3.y),
+      island4: 1  // akhir path
+    };
+
+    // Animasi duyung
+    function animateDuyung(path, startProgress, endProgress, callback) {
+      const duration = 1500;
       const startTime = performance.now();
       duyungWalker.classList.add('show');
-
-      function step(currentTime) {
-        const elapsed = currentTime - startTime;
+      function step(now) {
+        const elapsed = now - startTime;
         const t = Math.min(elapsed / duration, 1);
-        const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        const eased = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
         const progress = startProgress + (endProgress - startProgress) * eased;
-
-        const pos = getDuyungPosition(progress);
+        const pos = getScreenPosition(path, progress);
         duyungWalker.style.left = pos.left + 'px';
         duyungWalker.style.top = pos.top + 'px';
-
-        if (t < 1) {
-          requestAnimationFrame(step);
-        } else {
-          currentProgress = endProgress;
+        if (t < 1) requestAnimationFrame(step);
+        else {
           if (callback) callback();
         }
       }
-
       requestAnimationFrame(step);
     }
 
@@ -502,38 +229,51 @@
     islandElements.forEach(island => {
       island.addEventListener('click', function() {
         if (isAnimating) return;
-
         if (this.classList.contains('locked')) {
           mapMessage.textContent = "🔒 Island ini masih terkunci. Selesaikan island sebelumnya dulu!";
           this.style.animation = 'shake 0.5s ease';
-          setTimeout(() => { this.style.animation = ''; }, 500);
+          setTimeout(() => this.style.animation = '', 500);
           return;
         }
 
-        const target = this.getAttribute('data-target');
         const islandId = this.id;
-        const endProgress = islandProgress[islandId];
-        const startProgress = currentProgress;
+        const target = this.getAttribute('data-target');
+        let targetPath, endProgress;
 
+        if (islandId === 'island1') {
+          targetPath = pathHidden;
+          endProgress = 1; // ke ujung path hidden (island1)
+        } else {
+          targetPath = pathVisible;
+          endProgress = progressVisible[islandId];
+        }
+
+        // Tentukan startProgress dari state saat ini
+        const activePath = duyungState.path === 'hidden' ? pathHidden : pathVisible;
+        const startProgress = duyungState.progress;
+
+        // Jika sudah berada di island yang sama, langsung redirect?
+        // Untuk sederhana, tetap animasikan dari posisi sekarang
         mapMessage.textContent = `⛵ Ratu Kucing Duyung berlayar ke ${this.querySelector('.island-label').textContent}...`;
         isAnimating = true;
 
-        animateDuyung(startProgress, endProgress, () => {
+        animateDuyung(activePath, startProgress, endProgress, () => {
+          // Simpan state baru
+          if (islandId === 'island1') {
+            duyungState = { path: 'visible', progress: 0 };
+          } else {
+            duyungState = { path: 'visible', progress: endProgress };
+          }
+          localStorage.setItem('duyungState', JSON.stringify(duyungState));
           window.location.href = target;
         });
       });
     });
 
-    // Keyframes shake
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = `
-      @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-6px); }
-        75% { transform: translateX(6px); }
-      }
-    `;
-    document.head.appendChild(styleSheet);
+    // Style untuk shake
+    const shakeStyle = document.createElement('style');
+    shakeStyle.textContent = '@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}';
+    document.head.appendChild(shakeStyle);
   </script>
 </body>
 </html>
