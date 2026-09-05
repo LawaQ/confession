@@ -140,7 +140,7 @@
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 800px;
+      max-width: 850px;
       text-align: center;
       margin-top: 40px;
     }
@@ -156,7 +156,7 @@
     .map-subtitle {
       color: #c2d8e8;
       font-size: 1rem;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       animation: fadeInDown 1s ease 0.2s both;
     }
     @keyframes fadeInDown {
@@ -219,7 +219,7 @@
     }
 
     .island-emoji {
-      font-size: 5rem;  /* diperbesar */
+      font-size: 4.5rem;
       line-height: 1;
       transition: transform 0.3s;
     }
@@ -268,22 +268,15 @@
       z-index: 5;
       pointer-events: none;
       opacity: 0;
-      transition: opacity 0.5s ease;
       filter: drop-shadow(0 0 15px rgba(255, 80, 120, 0.8));
     }
     .duyung-walker.show {
       opacity: 1;
-      animation: duyungWalk 1.2s ease-in-out forwards;
-    }
-    @keyframes duyungWalk {
-      0% { transform: translate(-50%, -100%) scale(0.7); }
-      50% { transform: translate(-50%, -120%) scale(1); }
-      100% { transform: translate(-50%, -100%) scale(0.9); }
     }
 
     /* Pesan */
     .map-message {
-      margin-top: 25px;
+      margin-top: 20px;
       min-height: 35px;
       color: var(--text-light);
       font-size: 1rem;
@@ -302,7 +295,7 @@
         height: 480px;
       }
       .island-emoji {
-        font-size: 3.5rem;
+        font-size: 3.2rem;
       }
       .island-label {
         font-size: 0.85rem;
@@ -361,45 +354,46 @@
     <div class="map-title">🗺️ Peta Kepulauan Ratu Kucing Duyung</div>
     <div class="map-subtitle">Jelajahi pulau-pulau untuk mengumpulkan kunci dan membuka misteri</div>
 
-    <div class="map-area">
-      <!-- SVG Pathway (disesuaikan posisi baru) -->
+    <div class="map-area" id="mapArea">
+      <!-- SVG Pathway (meliuk acak) -->
       <svg class="snake-path" viewBox="0 0 800 600" preserveAspectRatio="none">
-        <path d="M120,520 
-                 C180,430 220,470 300,380 
-                 C380,290 350,350 450,260 
-                 C530,190 540,230 620,140 
-                 C650,110 670,90 700,80" />
+        <path id="snakePath" d="M120,520 
+                 C180,440 220,480 280,420 
+                 C330,370 300,390 370,330 
+                 C430,280 420,350 480,300 
+                 C540,250 530,210 600,160 
+                 C650,120 680,90 720,70" />
       </svg>
 
       <!-- Island 1 -->
-      <div class="island unlocked" id="island1" style="left:8%; top:75%;" data-target="island-1.html">
+      <div class="island unlocked" id="island1" style="left:12%; top:80%;" data-target="island-1.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 1</div>
         <span class="key-indicator">🔑</span>
       </div>
 
       <!-- Island 2 -->
-      <div class="island locked" id="island2" style="left:30%; top:55%;" data-target="island-2.html">
+      <div class="island locked" id="island2" style="left:35%; top:62%;" data-target="island-2.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 2</div>
         <span class="key-indicator">🔑</span>
       </div>
 
       <!-- Island 3 -->
-      <div class="island locked" id="island3" style="left:55%; top:38%;" data-target="island-3.html">
+      <div class="island locked" id="island3" style="left:58%; top:45%;" data-target="island-3.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 3</div>
         <span class="key-indicator">🔑</span>
       </div>
 
       <!-- Island 4 -->
-      <div class="island locked" id="island4" style="left:80%; top:15%;" data-target="island-4.html">
+      <div class="island locked" id="island4" style="left:82%; top:18%;" data-target="island-4.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 4</div>
         <span class="key-indicator">🔑</span>
       </div>
 
-      <!-- Karakter Duyung (akan ditampilkan saat klik pulau) -->
+      <!-- Karakter Duyung -->
       <img src="assets/duyung.png" alt="Ratu Kucing Duyung" class="duyung-walker" id="duyungWalker">
     </div>
 
@@ -443,44 +437,90 @@
       }
     });
 
-    // ===== Interaksi pulau =====
-    const mapMessage = document.getElementById('mapMessage');
+    // ===== Peta dan animasi =====
+    const mapArea = document.getElementById('mapArea');
+    const snakePath = document.getElementById('snakePath');
     const duyungWalker = document.getElementById('duyungWalker');
+    const mapMessage = document.getElementById('mapMessage');
     let isAnimating = false;
 
+    // Progress pulau di sepanjang path (0 = awal, 1 = akhir)
+    const islandProgress = {
+      island1: 0.1,
+      island2: 0.35,
+      island3: 0.6,
+      island4: 0.9
+    };
+
+    // Fungsi konversi koordinat path ke posisi di map-area
+    function getDuyungPosition(progress) {
+      const totalLength = snakePath.getTotalLength();
+      const point = snakePath.getPointAtLength(totalLength * progress);
+
+      // Konversi viewBox 800x600 ke ukuran mapArea
+      const mapRect = mapArea.getBoundingClientRect();
+      const scaleX = mapRect.width / 800;
+      const scaleY = mapRect.height / 600;
+
+      return {
+        left: point.x * scaleX,
+        top: point.y * scaleY
+      };
+    }
+
+    // Fungsi animasi duyung bergerak mengikuti path
+    function animateDuyung(startProgress, endProgress, callback) {
+      const totalLength = snakePath.getTotalLength();
+      const duration = 1500; // ms
+      const startTime = performance.now();
+
+      duyungWalker.classList.add('show');
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        // easing sederhana
+        const eased = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+        const progress = startProgress + (endProgress - startProgress) * eased;
+
+        const pos = getDuyungPosition(progress);
+        duyungWalker.style.left = pos.left + 'px';
+        duyungWalker.style.top = pos.top + 'px';
+
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
+          duyungWalker.classList.remove('show');
+          if (callback) callback();
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    // ===== Interaksi pulau =====
     islandElements.forEach(island => {
       island.addEventListener('click', function() {
         if (isAnimating) return;
 
         if (this.classList.contains('locked')) {
           mapMessage.textContent = "🔒 Island ini masih terkunci. Selesaikan island sebelumnya dulu!";
-          // Efek getar
           this.style.animation = 'shake 0.5s ease';
           setTimeout(() => { this.style.animation = ''; }, 500);
           return;
         }
 
-        // Island terbuka
         const target = this.getAttribute('data-target');
-        const islandLabel = this.querySelector('.island-label').textContent;
-        mapMessage.textContent = `⛵ Ratu Kucing Duyung berlayar ke ${islandLabel}...`;
+        const islandId = this.id;
+        const endProgress = islandProgress[islandId];
+        const startProgress = islandId === 'island1' ? 0 : (islandProgress[Object.keys(islandProgress).find(key => islandProgress[key] < endProgress)] || 0);
 
-        // Tampilkan duyung di dekat pulau yang diklik
-        const islandRect = this.getBoundingClientRect();
-        const mapAreaRect = document.querySelector('.map-area').getBoundingClientRect();
-
-        // Posisi duyung di atas pulau (center)
-        const x = islandRect.left - mapAreaRect.left + islandRect.width / 2;
-        const y = islandRect.top - mapAreaRect.top;
-        duyungWalker.style.left = x + 'px';
-        duyungWalker.style.top = y + 'px';
-        duyungWalker.classList.add('show');
+        mapMessage.textContent = `⛵ Ratu Kucing Duyung berlayar ke ${this.querySelector('.island-label').textContent}...`;
         isAnimating = true;
 
-        // Redirect setelah animasi selesai (1.5 detik)
-        setTimeout(() => {
+        animateDuyung(startProgress, endProgress, () => {
           window.location.href = target;
-        }, 1500);
+        });
       });
     });
 
