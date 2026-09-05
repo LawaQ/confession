@@ -13,7 +13,7 @@
       --text-light: #e0f0ff;
       --accent-pink: #ff8fab;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', 'Segoe UI', sans-serif; }
     body {
       min-height: 100vh;
       background: linear-gradient(180deg, var(--deep-sea-1), var(--deep-sea-2), var(--deep-sea-3));
@@ -24,6 +24,7 @@
       position: relative;
       overflow-x: hidden;
     }
+
     .back-btn {
       position: fixed;
       top: 20px;
@@ -38,11 +39,44 @@
       border: 2px solid rgba(255,255,255,0.3);
       backdrop-filter: blur(10px);
     }
-    .map-container { position: relative; z-index: 2; width: 100%; max-width: 850px; text-align: center; }
-    .map-title { color: #fff; font-size: 2rem; text-shadow: 0 0 20px rgba(255,255,255,0.3); }
-    .map-subtitle { color: #c2d8e8; font-size: 1rem; margin-bottom: 20px; }
-    .map-area { position: relative; width: 100%; height: 600px; margin: 0 auto; }
-    .snake-path { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+    .back-btn:hover { background: rgba(0,0,0,0.7); }
+
+    .map-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 850px;
+      text-align: center;
+    }
+
+    .map-title {
+      color: #fff;
+      font-size: 2rem;
+      text-shadow: 0 0 20px rgba(255,255,255,0.3);
+      margin-bottom: 5px;
+    }
+
+    .map-subtitle {
+      color: #c2d8e8;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .map-area {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      margin: 0 auto;
+    }
+
+    .snake-path {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
     .snake-path path {
       fill: none;
       stroke: rgba(255,215,0,0.6);
@@ -53,6 +87,7 @@
     }
     .snake-path-hidden path { stroke: none; }
     @keyframes dashMove { 0% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -22; } }
+
     .island {
       position: absolute;
       z-index: 2;
@@ -65,14 +100,39 @@
       user-select: none;
     }
     .island:hover:not(.locked) { transform: scale(1.1); }
-    .island.locked { opacity: 0.5; filter: grayscale(0.6) drop-shadow(0 4px 6px rgba(0,0,0,0.5)); cursor: not-allowed; }
+    .island.locked {
+      opacity: 0.5;
+      filter: grayscale(0.6) drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+      cursor: not-allowed;
+    }
     .island-emoji { font-size: 4.5rem; line-height: 1; }
     .island.unlocked .island-emoji { animation: islandFloat 3s ease-in-out infinite; }
     @keyframes islandFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    .island-label { color: #fff; font-weight: 700; margin-top: 6px; background: rgba(0,0,0,0.6); padding: 4px 18px; border-radius: 30px; text-transform: uppercase; letter-spacing: 1px; }
-    .key-indicator { position: absolute; top: -15px; right: -25px; font-size: 2.2rem; animation: keyBounce 2s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(255,215,0,0.8)); display: none; }
+
+    .island-label {
+      color: #fff;
+      font-weight: 700;
+      margin-top: 6px;
+      background: rgba(0,0,0,0.6);
+      padding: 4px 18px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 1rem;
+    }
+
+    .key-indicator {
+      position: absolute;
+      top: -15px;
+      right: -25px;
+      font-size: 2.2rem;
+      animation: keyBounce 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 8px rgba(255,215,0,0.8));
+      display: none;
+    }
     .island.unlocked .key-indicator { display: block; }
     @keyframes keyBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
     .duyung-walker {
       position: absolute;
       width: 80px;
@@ -84,16 +144,26 @@
       transition: opacity 0.5s;
     }
     .duyung-walker.show { opacity: 1; }
-    .map-message { margin-top: 20px; color: #fff; font-weight: 600; }
+
+    .map-message {
+      margin-top: 20px;
+      min-height: 35px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
     @media (max-width: 600px) {
       .map-area { height: 480px; }
       .island-emoji { font-size: 3.2rem; }
       .island-label { font-size: 0.85rem; }
       .duyung-walker { width: 60px; }
+      .map-title { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
+
   <a href="index.html" class="back-btn">⬅️ Kembali</a>
 
   <div class="map-container">
@@ -141,175 +211,189 @@
   </div>
 
   <script>
-    // ===== Gelembung =====
-    const bubblesContainer = document.createElement('div');
-    bubblesContainer.style.cssText = 'position:fixed;width:100%;height:100%;top:0;left:0;pointer-events:none;z-index:0;';
-    document.body.appendChild(bubblesContainer);
-    for (let i = 0; i < 30; i++) {
-      const bubble = document.createElement('div');
-      const size = Math.random() * 50 + 20;
-      bubble.style.cssText = `position:absolute;bottom:-80px;width:${size}px;height:${size}px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:50%;animation:rise ${Math.random() * 8 + 6}s linear infinite;animation-delay:${Math.random() * 5}s;left:${Math.random() * 100}%;`;
-      bubblesContainer.appendChild(bubble);
-    }
-    const riseStyle = document.createElement('style');
-    riseStyle.textContent = '@keyframes rise { 0% { transform: translateY(0) scale(1); opacity: 0.6; } 100% { transform: translateY(-110vh) scale(1.4); opacity: 0; } }';
-    document.head.appendChild(riseStyle);
-
-    // ===== Status pulau dari localStorage =====
-    let unlockedIslands = JSON.parse(localStorage.getItem('unlockedIslands')) || [];
-    if (unlockedIslands.length === 0) {
-      unlockedIslands = ['island1'];
-      localStorage.setItem('unlockedIslands', JSON.stringify(unlockedIslands));
-    }
-
-    const islandElements = document.querySelectorAll('.island');
-    islandElements.forEach(island => {
-      if (unlockedIslands.includes(island.id)) {
-        island.classList.remove('locked');
-        island.classList.add('unlocked');
-      } else {
-        island.classList.add('locked');
-        island.classList.remove('unlocked');
+    (function() {
+      // ===== BUBBLES =====
+      const bubblesContainer = document.createElement('div');
+      bubblesContainer.style.cssText = 'position:fixed;width:100%;height:100%;top:0;left:0;pointer-events:none;z-index:0;';
+      document.body.appendChild(bubblesContainer);
+      for (let i = 0; i < 30; i++) {
+        const bubble = document.createElement('div');
+        const size = Math.random() * 50 + 20;
+        bubble.style.cssText = `position:absolute;bottom:-80px;width:${size}px;height:${size}px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:50%;animation:rise ${Math.random() * 8 + 6}s linear infinite;animation-delay:${Math.random() * 5}s;left:${Math.random() * 100}%;`;
+        bubblesContainer.appendChild(bubble);
       }
-    });
+      const riseStyle = document.createElement('style');
+      riseStyle.textContent = '@keyframes rise { 0% { transform: translateY(0) scale(1); opacity: 0.6; } 100% { transform: translateY(-110vh) scale(1.4); opacity: 0; } }';
+      document.head.appendChild(riseStyle);
 
-    // ===== Posisi duyung dari localStorage =====
-    let duyungState = JSON.parse(localStorage.getItem('duyungState')) || { path: 'hidden', progress: 0 };
+      // ===== STATUS PULAU =====
+      let unlockedIslands = JSON.parse(localStorage.getItem('unlockedIslands')) || [];
+      if (unlockedIslands.length === 0) {
+        unlockedIslands = ['island1'];
+        localStorage.setItem('unlockedIslands', JSON.stringify(unlockedIslands));
+      }
 
-    const pathHidden = document.getElementById('snakePathHidden');
-    const pathVisible = document.getElementById('snakePathVisible');
-    const duyungWalker = document.getElementById('duyungWalker');
-    const mapArea = document.getElementById('mapArea');
-    const mapMessage = document.getElementById('mapMessage');
-    let isAnimating = false;
-
-    function getScreenPosition(path, progress) {
-      const totalLength = path.getTotalLength();
-      const point = path.getPointAtLength(totalLength * progress);
-      const mapRect = mapArea.getBoundingClientRect();
-      const scaleX = mapRect.width / 800;
-      const scaleY = mapRect.height / 600;
-      return { left: point.x * scaleX, top: point.y * scaleY };
-    }
-
-    function setDuyungFromState() {
-      const activePath = duyungState.path === 'hidden' ? pathHidden : pathVisible;
-      const pos = getScreenPosition(activePath, duyungState.progress);
-      duyungWalker.style.left = pos.left + 'px';
-      duyungWalker.style.top = pos.top + 'px';
-      duyungWalker.classList.add('show');
-    }
-    setDuyungFromState();
-
-    // Precompute progress untuk pulau di path visible
-    const islandCoordsViewBox = {
-      island1: { x: 120, y: 120 }, // path visible start
-      island2: { x: 280, y: 390 },
-      island3: { x: 520, y: 300 },
-      island4: { x: 704, y: 510 }  // path visible end
-    };
-
-    function findProgressForCoords(path, x, y) {
-      const totalLength = path.getTotalLength();
-      let bestProgress = 0;
-      let bestDist = Infinity;
-      for (let i = 0; i <= totalLength; i += 5) {
-        const p = path.getPointAtLength(i);
-        const dist = Math.hypot(p.x - x, p.y - y);
-        if (dist < bestDist) {
-          bestDist = dist;
-          bestProgress = i / totalLength;
+      const islandElements = document.querySelectorAll('.island');
+      islandElements.forEach(island => {
+        if (unlockedIslands.includes(island.id)) {
+          island.classList.remove('locked');
+          island.classList.add('unlocked');
+        } else {
+          island.classList.add('locked');
+          island.classList.remove('unlocked');
         }
+      });
+
+      // ===== POSISI DUYUNG =====
+      let duyungState = JSON.parse(localStorage.getItem('duyungState')) || { path: 'hidden', progress: 0 };
+
+      const pathHidden = document.getElementById('snakePathHidden');
+      const pathVisible = document.getElementById('snakePathVisible');
+      const duyungWalker = document.getElementById('duyungWalker');
+      const mapArea = document.getElementById('mapArea');
+      const mapMessage = document.getElementById('mapMessage');
+
+      let isAnimating = false;
+
+      // Precompute progress pulau
+      const islandCoordsViewBox = {
+        island1: { x: 120, y: 120 },
+        island2: { x: 280, y: 390 },
+        island3: { x: 520, y: 300 },
+        island4: { x: 704, y: 510 }
+      };
+
+      function findProgressForCoords(path, x, y) {
+        const totalLength = path.getTotalLength();
+        let bestProgress = 0;
+        let bestDist = Infinity;
+        for (let i = 0; i <= totalLength; i += 5) {
+          const p = path.getPointAtLength(i);
+          const dist = Math.hypot(p.x - x, p.y - y);
+          if (dist < bestDist) {
+            bestDist = dist;
+            bestProgress = i / totalLength;
+          }
+        }
+        return bestProgress;
       }
-      return bestProgress;
-    }
 
-    const progressVisible = {
-      island1: 0, // start path visible
-      island2: findProgressForCoords(pathVisible, islandCoordsViewBox.island2.x, islandCoordsViewBox.island2.y),
-      island3: findProgressForCoords(pathVisible, islandCoordsViewBox.island3.x, islandCoordsViewBox.island3.y),
-      island4: 1  // end path visible
-    };
+      const progressVisible = {
+        island1: 0,
+        island2: findProgressForCoords(pathVisible, islandCoordsViewBox.island2.x, islandCoordsViewBox.island2.y),
+        island3: findProgressForCoords(pathVisible, islandCoordsViewBox.island3.x, islandCoordsViewBox.island3.y),
+        island4: 1
+      };
 
-    function animateDuyung(path, startProgress, endProgress, callback) {
-      const duration = 1500;
-      const startTime = performance.now();
-      duyungWalker.classList.add('show');
-      function step(now) {
-        const elapsed = now - startTime;
-        const t = Math.min(elapsed / duration, 1);
-        const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-        const progress = startProgress + (endProgress - startProgress) * eased;
-        const pos = getScreenPosition(path, progress);
+      function getScreenPosition(path, progress) {
+        const totalLength = path.getTotalLength();
+        const point = path.getPointAtLength(totalLength * progress);
+        const mapRect = mapArea.getBoundingClientRect();
+        const scaleX = mapRect.width / 800;
+        const scaleY = mapRect.height / 600;
+        return { left: point.x * scaleX, top: point.y * scaleY };
+      }
+
+      function setDuyungFromState() {
+        const activePath = duyungState.path === 'hidden' ? pathHidden : pathVisible;
+        const pos = getScreenPosition(activePath, duyungState.progress);
         duyungWalker.style.left = pos.left + 'px';
         duyungWalker.style.top = pos.top + 'px';
-        if (t < 1) {
-          requestAnimationFrame(step);
-        } else {
-          if (callback) callback();
-        }
+        duyungWalker.classList.add('show');
       }
-      requestAnimationFrame(step);
-    }
 
-    islandElements.forEach(island => {
-      island.addEventListener('click', function () {
-        if (isAnimating) return;
-        if (this.classList.contains('locked')) {
-          mapMessage.textContent = '🔒 Island ini masih terkunci. Selesaikan island sebelumnya dulu!';
-          this.style.animation = 'shake 0.5s ease';
-          setTimeout(() => this.style.animation = '', 500);
-          return;
-        }
+      // Inisialisasi posisi
+      setDuyungFromState();
 
-        const islandId = this.id;
-        const target = this.getAttribute('data-target');
-        let targetPath, endProgress;
+      // ===== ANIMASI =====
+      function animateDuyung(path, startProgress, endProgress, callback) {
+        const duration = 1500;
+        const startTime = performance.now();
+        duyungWalker.classList.add('show');
 
-        if (islandId === 'island1') {
-          targetPath = pathHidden;
-          endProgress = 1; // ujung path hidden = island1
-        } else {
-          targetPath = pathVisible;
-          endProgress = progressVisible[islandId];
-        }
-
-        // Tentukan startProgress berdasarkan posisi duyung saat ini
-        let startPath, startProgress;
-        if (duyungState.path === 'hidden') {
-          startPath = pathHidden;
-          startProgress = duyungState.progress;
-        } else {
-          startPath = pathVisible;
-          startProgress = duyungState.progress;
-        }
-
-        // Jika target sama dengan posisi sekarang, langsung redirect tanpa animasi
-        if (duyungState.path === (islandId === 'island1' ? 'hidden' : 'visible') &&
-            Math.abs(startProgress - endProgress) < 0.01) {
-          window.location.href = target;
-          return;
-        }
-
-        mapMessage.textContent = `⛵ Ratu Kucing Duyung berlayar ke ${this.querySelector('.island-label').textContent}...`;
-        isAnimating = true;
-
-        animateDuyung(startPath, startProgress, endProgress, () => {
-          // Simpan state baru
-          if (islandId === 'island1') {
-            duyungState = { path: 'visible', progress: 0 }; // berada di island1 (start path visible)
+        function step(now) {
+          const elapsed = now - startTime;
+          const t = Math.min(elapsed / duration, 1);
+          const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+          const progress = startProgress + (endProgress - startProgress) * eased;
+          const pos = getScreenPosition(path, progress);
+          duyungWalker.style.left = pos.left + 'px';
+          duyungWalker.style.top = pos.top + 'px';
+          if (t < 1) {
+            requestAnimationFrame(step);
           } else {
-            duyungState = { path: 'visible', progress: endProgress };
+            if (callback) callback();
           }
-          localStorage.setItem('duyungState', JSON.stringify(duyungState));
-          window.location.href = target;
+        }
+        requestAnimationFrame(step);
+      }
+
+      // ===== INTERAKSI PULAU =====
+      islandElements.forEach(island => {
+        island.addEventListener('click', function() {
+          if (isAnimating) return;
+
+          if (this.classList.contains('locked')) {
+            mapMessage.textContent = '🔒 Island ini masih terkunci. Selesaikan island sebelumnya dulu!';
+            this.style.animation = 'shake 0.5s ease';
+            setTimeout(() => this.style.animation = '', 500);
+            return;
+          }
+
+          const islandId = this.id;
+          const target = this.getAttribute('data-target');
+          let targetPath, endProgress;
+
+          if (islandId === 'island1') {
+            targetPath = pathHidden;
+            endProgress = 1;
+          } else {
+            targetPath = pathVisible;
+            endProgress = progressVisible[islandId];
+          }
+
+          // Dapatkan posisi start dari state saat ini
+          const startPath = duyungState.path === 'hidden' ? pathHidden : pathVisible;
+          const startProgress = duyungState.progress;
+
+          // Jika sudah berada di pulau yang sama, redirect langsung
+          if (duyungState.path === (islandId === 'island1' ? 'hidden' : 'visible') &&
+              Math.abs(startProgress - endProgress) < 0.01) {
+            window.location.href = target;
+            return;
+          }
+
+          mapMessage.textContent = `⛵ Ratu Kucing Duyung berlayar ke ${this.querySelector('.island-label').textContent}...`;
+          isAnimating = true;
+
+          animateDuyung(startPath, startProgress, endProgress, () => {
+            // Simpan state baru
+            if (islandId === 'island1') {
+              duyungState = { path: 'visible', progress: 0 };
+            } else {
+              duyungState = { path: 'visible', progress: endProgress };
+            }
+            localStorage.setItem('duyungState', JSON.stringify(duyungState));
+            window.location.href = target;
+          });
         });
       });
-    });
 
-    const shakeStyle = document.createElement('style');
-    shakeStyle.textContent = '@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }';
-    document.head.appendChild(shakeStyle);
+      // Shake animation
+      const shakeStyle = document.createElement('style');
+      shakeStyle.textContent = '@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }';
+      document.head.appendChild(shakeStyle);
+
+      // ===== REDIRECT CHECK =====
+      // Saat halaman dimuat, cek apakah ada redirect loop
+      // Jika ya, reset state
+      if (sessionStorage.getItem('redirectLoop') === 'true') {
+        duyungState = { path: 'hidden', progress: 0 };
+        localStorage.setItem('duyungState', JSON.stringify(duyungState));
+        sessionStorage.removeItem('redirectLoop');
+        setDuyungFromState();
+      }
+    })();
   </script>
 </body>
 </html>
