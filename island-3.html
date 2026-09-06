@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulau 3 - Dari Gelap ke Cahaya 🌗</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gelap: #0a0a0a;
+      --abu-gelap: #1c1c1c;
+      --abu-sedang: #3a3a3a;
+      --abu-terang: #8a8a8a;
+      --putih: #f0f0f0;
+      --emas: #c9a86b;
+      --teks-gelap: #d0d0d0;
+      --teks-terang: #222;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-image: url('assets/background-island-3.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: #0a0a0a;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      padding: 80px 20px 100px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--teks-gelap);
+      transition: background-image 1s ease;
+    }
+
+    body.cerah {
+      background-image: url('assets/background-island-3-terang.jpg');
+      color: var(--teks-terang);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 0;
+      pointer-events: none;
+      transition: background 1s ease;
+    }
+
+    body.cerah::before {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 20;
+      padding: 10px 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      background: rgba(0,0,0,0.5);
+      color: var(--putih);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(10px);
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .back-btn:hover {
+      background: rgba(0,0,0,0.7);
+      border-color: var(--abu-terang);
+    }
+
+    .main-container {
+      position: relative;
+      z-index: 2;
+      max-width: 650px;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .letter-header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeInDown 1.5s ease;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .letter-tag {
+      display: inline-block;
+      padding: 6px 20px;
+      border: 2px solid var(--abu-sedang);
+      border-radius: 50px;
+      color: var(--abu-terang);
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      background: rgba(0,0,0,0.4);
+    }
+    .letter-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: inherit;
+    }
+    .letter-subtitle {
+      color: var(--abu-terang);
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    .accent-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 25px 0;
+    }
+    .accent-line .line { height: 2px; width: 60px; background: var(--abu-sedang); }
+    .accent-line .dot { width: 6px; height: 6px; background: var(--abu-terang); border-radius: 50%; }
+
+    .typewriter-text {
+      font-size: 1.2rem;
+      line-height: 1.9;
+      margin-bottom: 25px;
+      min-height: 1.9em;
+      font-weight: 500;
+      text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+    body.cerah .typewriter-text {
+      text-shadow: 0 0 5px rgba(255,255,255,0.5);
+    }
+
+    .signature {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--emas);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 40px;
+      text-align: right;
+      opacity: 0;
+      transition: opacity 1.5s;
+    }
+
+    .btn-lanjut {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 50px;
+      background: rgba(0,0,0,0.5);
+      color: var(--putih);
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+      border: 1px solid var(--abu-sedang);
+    }
+    .btn-lanjut.visible {
+      opacity: 1;
+      pointer-events: auto;
+      animation: fadeInUp 1s ease forwards;
+    }
+    .btn-lanjut:hover {
+      background: #3a3a3a;
+    }
+
+    .btn-finish {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 15px 35px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
+      color: var(--putih);
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      opacity: 0;
+      pointer-events: none;
+      border: 1px solid var(--abu-sedang);
+    }
+    .btn-finish.visible {
+      opacity: 1;
+      pointer-events: auto;
+      animation: fadeInUp 1s ease forwards;
+    }
+    .btn-finish:hover {
+      background: #3a3a3a;
+      transform: translateY(-3px);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Overlay transisi background */
+    .bg-transition-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0a;
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+    .bg-transition-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 600px) {
+      .letter-title { font-size: 1.8rem; }
+      .typewriter-text { font-size: 1.05rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#" class="back-btn" id="backBtn">⬅️ Kembali</a>
+
+  <!-- Overlay untuk transisi background -->
+  <div class="bg-transition-overlay" id="bgTransitionOverlay"></div>
+
+  <div class="main-container">
+    <!-- ================= BAGIAN GELAP ================= -->
+    <div class="letter-header" id="headerGelap">
+      <div class="letter-tag">🌑 Sisi Gelap</div>
+      <h1 class="letter-title">Surat dari Kegelapan</h1>
+      <div class="letter-subtitle">Tentang rasa rendah diri dan keraguan</div>
+    </div>
+
+    <div class="accent-line" id="lineGelap">
+      <div class="line"></div>
+      <div class="dot"></div>
+      <div class="line"></div>
+    </div>
+
+    <div id="gelapSection">
+      <p class="typewriter-text" data-text="Halo, kamu..."></p>
+      <p class="typewriter-text" data-text="Malam ini aku menulis dari tempat yang paling gelap dalam pikiranku. Tempat di mana aku sering bertanya-tanya, apakah aku cukup untukmu? Apakah aku pantas?" data-delay="10"></p>
+      <p class="typewriter-text" data-text="Aku tahu kita pernah saling suka. Tapi belakangan, aku merasa makin jauh. Mungkin karena aku sendiri yang tidak yakin pada diriku. Aku merasa bukan orang yang bisa membuatmu bangga." data-delay="10"></p>
+      <p class="typewriter-text" data-text="Kadang aku melihatmu dari kejauhan, dan aku merasa kecil. Aku takut kalau ternyata semua ini hanya kebetulan, bukan pilihan." data-delay="10"></p>
+
+      <button class="btn-lanjut" id="btnLanjut">Lanjut ke Cahaya →</button>
+    </div>
+
+    <!-- ================= BAGIAN TERANG ================= -->
+    <div id="terangSection" style="display:none;">
+      <div class="letter-header">
+        <div class="letter-tag" style="border-color:#c9a86b; color:#c9a86b;">🌤️ Sisi Terang</div>
+        <h1 class="letter-title">Sejak Kamu Hadir</h1>
+        <div class="letter-subtitle">Tentang cahaya yang tumbuh perlahan</div>
+      </div>
+
+      <div class="accent-line">
+        <div class="line" style="background:#c9a86b;"></div>
+        <div class="dot" style="background:#c9a86b;"></div>
+        <div class="line" style="background:#c9a86b;"></div>
+      </div>
+
+      <p class="typewriter-text" data-text="Tapi kemudian aku ingat, sejak kamu hadir, ada cahaya yang mulai menyelinap ke dalam hidupku. Bukan cahaya yang menyilaukan, tapi cukup untuk membuatku melihat jalan." data-delay="15"></p>
+      <p class="typewriter-text" data-text="Kamu tidak pernah menyuruhku menjadi sempurna. Kamu hanya hadir, dan itu cukup. Di saat aku merasa tidak berharga, kamu tetap di sana, tanpa banyak tanya." data-delay="15"></p>
+      <p class="typewriter-text" data-text="Perlahan aku sadar, mungkin aku tidak seburuk yang kupikir. Mungkin aku hanya terlalu keras pada diriku sendiri. Dan mungkin, untuk mencintai seseorang, aku harus mulai belajar menerima diriku." data-delay="15"></p>
+      <p class="typewriter-text" data-text="Jadi di surat ini, aku ingin berterima kasih. Karena kamu, aku mulai berani melawan gelapku sendiri." data-delay="15"></p>
+
+      <div class="signature" id="signature">— Aku yang mulai belajar percaya diri</div>
+
+      <button class="btn-finish" id="btnFinish">Selesaikan Pulau 3 ✓</button>
+    </div>
+  </div>
+
+  <script src="state.js"></script>
+  <script>
+    (function() {
+      const backBtn = document.getElementById('backBtn');
+      backBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        setDuyungAtIsland('island3');
+        navigateTo('map.html');
+      });
+
+      const gelapSection = document.getElementById('gelapSection');
+      const terangSection = document.getElementById('terangSection');
+      const btnLanjut = document.getElementById('btnLanjut');
+      const btnFinish = document.getElementById('btnFinish');
+      const signature = document.getElementById('signature');
+      const bgTransitionOverlay = document.getElementById('bgTransitionOverlay');
+      const body = document.body;
+
+      // Typewriter untuk bagian gelap
+      function startGelapTypewriter() {
+        const elements = gelapSection.querySelectorAll('.typewriter-text');
+        let currentIndex = 0;
+
+        function typeNext() {
+          if (currentIndex >= elements.length) {
+            // Tampilkan tombol lanjut
+            btnLanjut.classList.add('visible');
+            return;
+          }
+
+          const element = elements[currentIndex];
+          const text = element.getAttribute('data-text');
+          const delay = parseInt(element.getAttribute('data-delay')) || 30;
+          element.textContent = '';
+          let charIndex = 0;
+
+          function typeChar() {
+            if (charIndex < text.length) {
+              element.textContent += text.charAt(charIndex);
+              charIndex++;
+              setTimeout(typeChar, delay);
+            } else {
+              currentIndex++;
+              setTimeout(typeNext, 500);
+            }
+          }
+
+          typeChar();
+        }
+
+        typeNext();
+      }
+
+      // Typewriter untuk bagian terang
+      function startTerangTypewriter() {
+        const elements = terangSection.querySelectorAll('.typewriter-text');
+        let currentIndex = 0;
+
+        function typeNext() {
+          if (currentIndex >= elements.length) {
+            signature.style.opacity = '1';
+            setTimeout(() => {
+              btnFinish.classList.add('visible');
+            }, 600);
+            return;
+          }
+
+          const element = elements[currentIndex];
+          const text = element.getAttribute('data-text');
+          const delay = parseInt(element.getAttribute('data-delay')) || 30;
+          element.textContent = '';
+          let charIndex = 0;
+
+          function typeChar() {
+            if (charIndex < text.length) {
+              element.textContent += text.charAt(charIndex);
+              charIndex++;
+              setTimeout(typeChar, delay);
+            } else {
+              currentIndex++;
+              setTimeout(typeNext, 500);
+            }
+          }
+
+          typeChar();
+        }
+
+        typeNext();
+      }
+
+      // Mulai bagian gelap
+      startGelapTypewriter();
+
+      // Tombol lanjut: transisi background
+      btnLanjut.addEventListener('click', function() {
+        // Tampilkan overlay hitam
+        bgTransitionOverlay.classList.add('show');
+
+        setTimeout(() => {
+          // Ganti background ke terang
+          body.classList.add('cerah');
+
+          // Sembunyikan overlay
+          setTimeout(() => {
+            bgTransitionOverlay.classList.remove('show');
+
+            // Tampilkan bagian terang
+            gelapSection.style.display = 'none';
+            terangSection.style.display = 'block';
+
+            // Mulai typewriter bagian terang
+            startTerangTypewriter();
+          }, 800);
+        }, 800);
+      });
+
+      btnFinish.addEventListener('click', function() {
+        completeIslandAndReturn('island3');
+      });
+    })();
+  </script>
+</body>
+</html>
