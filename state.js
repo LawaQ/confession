@@ -4,21 +4,21 @@
  * <script src="state.js"></script>
  *
  * Catatan:
- * - Semua penyimpanan sekarang memakai sessionStorage,
- *   jadi progres hanya bertahan selama sesi browser.
- * - Jika tab ditutup dan dibuka lagi, progres otomatis mulai dari awal.
- * - Ini mencegah data lama nyangkut di HP dan membuat pulau terbuka sendiri.
+ * - Penyimpanan memakai localStorage agar progres bertahan saat browser ditutup.
+ * - Reset otomatis dilakukan setiap 24 jam.
+ * - Progres pulau dihitung ulang dari data completedIslands agar selalu konsisten.
  */
 
 const ISLAND_ORDER = ['island1', 'island2', 'island3', 'island4'];
+const LAST_RESET_KEY = 'lastResetTimestamp';
 
 /* =====================================================
- * STORAGE HELPER (sessionStorage)
+ * STORAGE HELPER (localStorage)
  * ===================================================== */
 
 function storageGet(key, fallback) {
   try {
-    const raw = sessionStorage.getItem(key);
+    const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) : fallback;
   } catch (e) {
     return fallback;
@@ -27,7 +27,7 @@ function storageGet(key, fallback) {
 
 function storageSet(key, value) {
   try {
-    sessionStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
     // ignore
   }
@@ -35,7 +35,30 @@ function storageSet(key, value) {
 
 function storageRemove(key) {
   try {
-    sessionStorage.removeItem(key);
+    localStorage.removeItem(key);
+  } catch (e) {
+    // ignore
+  }
+}
+
+/* =====================================================
+ * RESET OTOMATIS SETIAP 24 JAM
+ * ===================================================== */
+
+function autoResetDailyIfNeeded() {
+  const now = Date.now();
+  const last = Number(localStorage.getItem(LAST_RESET_KEY)) || 0;
+
+  // Jika lebih dari 24 jam sejak terakhir reset, hapus progres.
+  if (now - last > 24 * 60 * 60 * 1000) {
+    storageRemove('unlockedIslands');
+    storageRemove('completedIslands');
+    storageRemove('duyungState');
+  }
+
+  // Perbarui timestamp terakhir.
+  try {
+    localStorage.setItem(LAST_RESET_KEY, String(now));
   } catch (e) {
     // ignore
   }
@@ -198,9 +221,11 @@ function resetProgress() {
 }
 
 /* =====================================================
- * AUTO-INIT: jalankan transisi saat halaman dimuat
+ * AUTO-INIT
  * ===================================================== */
 if (typeof document !== 'undefined') {
+  autoResetDailyIfNeeded();
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initPageTransition);
   } else {
