@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gerbang Ratu Kucing Duyung 🐱🧜‍♀️</title>
   <style>
-    /* ===== WARNA DASAR LAUT ===== */
     :root {
       --deep-sea-1: #0a1c2e;
       --deep-sea-2: #0d2b45;
@@ -17,30 +16,27 @@
       --card-border: rgba(255, 255, 255, 0.15);
       --text-light: #e0f0ff;
       --glow: 0 0 30px rgba(255, 143, 171, 0.7);
-      --glow-gold: 0 0 25px rgba(255, 215, 0, 0.7);
     }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
     }
-
     body {
+      min-height: 100vh;
+      background: linear-gradient(180deg, var(--deep-sea-1) 0%, var(--deep-sea-2) 40%, var(--deep-sea-3) 100%);
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(180deg, var(--deep-sea-1) 0%, var(--deep-sea-2) 40%, var(--deep-sea-3) 100%);
-      overflow: hidden;
-      position: relative;
       padding: 20px;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    /* ===== GELEMBUNG ===== */
+    /* Dekorasi gelembung */
     .bubbles {
-      position: absolute;
+      position: fixed;
       width: 100%;
       height: 100%;
       top: 0;
@@ -61,57 +57,6 @@
       100% { transform: translateY(-110vh) scale(1.4); opacity: 0; }
     }
 
-    /* ===== DEKORASI IKON LAUT MENGAPUNG ===== */
-    .floating-icons {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 0;
-      font-size: 2.2rem;
-      user-select: none;
-    }
-    .float-icon {
-      position: absolute;
-      animation: floatAround 10s ease-in-out infinite;
-      opacity: 0.5;
-      filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
-    }
-    @keyframes floatAround {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-25px) rotate(8deg); }
-    }
-
-    /* ===== DASAR LAUT ===== */
-    .sea-floor {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 180px;
-      pointer-events: none;
-      z-index: 0;
-      display: flex;
-      justify-content: space-around;
-      align-items: flex-end;
-      font-size: 3rem;
-      opacity: 0.7;
-      padding-bottom: 10px;
-      user-select: none;
-    }
-    .sea-floor span {
-      display: inline-block;
-      animation: sway 4s ease-in-out infinite;
-      transform-origin: bottom center;
-    }
-    @keyframes sway {
-      0%, 100% { transform: rotate(-6deg); }
-      50% { transform: rotate(6deg); }
-    }
-
-    /* ===== CARD UTAMA ===== */
     .card {
       position: relative;
       z-index: 2;
@@ -125,15 +70,14 @@
       width: 100%;
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 0 30px rgba(255,255,255,0.03);
-      animation: fadeInUp 1.5s ease;
+      animation: fadeInUp 1s ease;
     }
-
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(40px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ===== MAKHLUK HYBRID: RATU KUCING DUYUNG ===== */
+    /* Makhluk hybrid Ratu Kucing Duyung */
     .hybrid-container {
       width: 200px;
       height: 200px;
@@ -158,7 +102,6 @@
       transform: translateX(-50%);
       font-size: 130px;
       z-index: 1;
-      opacity: 0.95;
     }
     .hybrid-cat {
       bottom: 82px;
@@ -186,10 +129,8 @@
       color: var(--text-light);
       margin-bottom: 10px;
       font-weight: 700;
-      letter-spacing: 0.5px;
       text-shadow: 0 0 20px rgba(255,255,255,0.3);
     }
-
     p.subtitle {
       color: #c2d8e8;
       font-size: 0.95rem;
@@ -202,7 +143,6 @@
       flex-direction: column;
       gap: 14px;
     }
-
     input[type="text"] {
       padding: 15px 20px;
       border: 2px solid rgba(255, 255, 255, 0.2);
@@ -263,7 +203,7 @@
       color: rgba(255,255,255,0.45);
     }
 
-    /* ===== KUNCI YANG MUNCUL SETELAH JAWABAN BENAR ===== */
+    /* Kunci reward */
     .key-reward {
       position: relative;
       z-index: 5;
@@ -274,34 +214,30 @@
     .key-reward.visible {
       display: block;
     }
-
     @keyframes keyAppear {
       0% { opacity: 0; transform: translateY(-60px) scale(0.3); }
       60% { opacity: 1; transform: translateY(10px) scale(1.1); }
       80% { transform: translateY(-5px) scale(0.95); }
       100% { transform: translateY(0) scale(1); }
     }
-
     .key-emoji {
       font-size: 4rem;
       display: block;
-      filter: drop-shadow(var(--glow-gold));
+      filter: drop-shadow(0 0 15px rgba(255,215,0,0.8));
       animation: keyFloat 3s ease-in-out infinite;
     }
     @keyframes keyFloat {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
-
     .key-text {
       color: var(--gold-light);
-      font-size: 0.9rem;
       font-weight: 600;
       margin-top: 8px;
       letter-spacing: 1px;
     }
 
-    /* ===== TOMBOL BERLAYAR ===== */
+    /* Tombol berlayar */
     .btn-sail {
       position: relative;
       z-index: 5;
@@ -328,7 +264,7 @@
       box-shadow: 0 12px 25px rgba(26, 107, 138, 0.7);
     }
 
-    /* ===== OVERLAY OMBAK ===== */
+    /* Overlay ombak */
     .wave-overlay {
       position: fixed;
       top: 0;
@@ -368,7 +304,6 @@
       100% { bottom: 0; }
     }
 
-    /* ===== RESPONSIVE ===== */
     @media (max-width: 480px) {
       .card {
         padding: 30px 20px;
@@ -383,46 +318,16 @@
       .hybrid-mermaid { font-size: 100px; }
       .hybrid-cat { bottom: 60px; font-size: 50px; }
       .hybrid-crown { bottom: 115px; font-size: 30px; }
-      .sea-floor { height: 120px; font-size: 2.2rem; }
       .key-emoji { font-size: 3rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- GELEMBUNG BACKGROUND -->
+  <!-- Gelembung background -->
   <div class="bubbles" id="bubbles"></div>
 
-  <!-- IKON LAUT MENGAPUNG -->
-  <div class="floating-icons">
-    <span class="float-icon" style="top:8%; left:7%;">🐠</span>
-    <span class="float-icon" style="top:25%; right:10%; animation-delay:2s;">🪼</span>
-    <span class="float-icon" style="top:55%; left:12%; animation-delay:4s;">🐡</span>
-    <span class="float-icon" style="top:70%; right:15%; animation-delay:1s;">🦑</span>
-    <span class="float-icon" style="top:15%; left:60%; animation-delay:3s;">🐳</span>
-    <span class="float-icon" style="top:40%; right:25%; animation-delay:5s;">🐬</span>
-    <span class="float-icon" style="top:80%; left:30%; animation-delay:2.5s;">🦀</span>
-    <span class="float-icon" style="top:65%; left:45%; animation-delay:3.5s;">🐚</span>
-    <span class="float-icon" style="top:30%; left:20%; animation-delay:1.5s;">⭐</span>
-    <span class="float-icon" style="top:50%; right:5%; animation-delay:4.5s;">💎</span>
-    <span class="float-icon" style="bottom:25%; left:5%; animation-delay:0.8s;">🪸</span>
-  </div>
-
-  <!-- DASAR LAUT -->
-  <div class="sea-floor">
-    <span style="font-size:3.5rem;">🌿</span>
-    <span style="font-size:2.8rem;">🪸</span>
-    <span style="font-size:3.2rem;">🌿</span>
-    <span style="font-size:2.5rem;">🐚</span>
-    <span style="font-size:3rem;">🪸</span>
-    <span style="font-size:3.5rem;">🌿</span>
-    <span style="font-size:2.2rem;">⭐</span>
-  </div>
-
-  <!-- CARD UTAMA -->
   <div class="card">
-
-    <!-- MAKHLUK HYBRID -->
     <div class="hybrid-container">
       <span class="hybrid-mermaid">🧜‍♀️</span>
       <span class="hybrid-cat">🐱</span>
@@ -443,116 +348,93 @@
     <div id="message" class="message"></div>
     <div class="hint">Petunjuk: gabungan kucing, duyung, dan seorang ratu 😉</div>
 
-    <!-- KUNCI REWARD -->
     <div class="key-reward" id="keyReward">
       <span class="key-emoji">🗝️</span>
       <div class="key-text">KUNCI DITEMUKAN! 🎉</div>
     </div>
 
-    <!-- TOMBOL BERLAYAR -->
     <button class="btn-sail" id="btnSail">Lanjut Berlayar ⛵</button>
-
   </div>
 
-  <!-- OVERLAY OMBAK -->
+  <!-- Overlay ombak -->
   <div class="wave-overlay" id="waveOverlay">
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
   </div>
 
+  <script src="state.js"></script>
   <script>
-    // ===== SET JAWABAN BENAR =====
-    const correctAnswer = "Ratu Kucing Duyung";
+    (function() {
+      // Pastikan default progress terinisialisasi.
+      getUnlockedIslands();
 
-    // ===== MEMBUAT GELEMBUNG OTOMATIS =====
-    const bubblesContainer = document.getElementById('bubbles');
-    const bubbleCount = 30;
-    for (let i = 0; i < bubbleCount; i++) {
-      const bubble = document.createElement('div');
-      bubble.classList.add('bubble');
-      const size = Math.random() * 50 + 20;
-      bubble.style.width = size + 'px';
-      bubble.style.height = size + 'px';
-      bubble.style.left = Math.random() * 100 + '%';
-      bubble.style.animationDuration = Math.random() * 8 + 6 + 's';
-      bubble.style.animationDelay = Math.random() * 5 + 's';
-      bubblesContainer.appendChild(bubble);
-    }
-
-    // ===== ELEMEN =====
-    const input = document.getElementById('passwordInput');
-    const button = document.getElementById('submitBtn');
-    const message = document.getElementById('message');
-    const keyReward = document.getElementById('keyReward');
-    const btnSail = document.getElementById('btnSail');
-    const waveOverlay = document.getElementById('waveOverlay');
-    let answerCorrect = false;
-
-    function cleanText(text) {
-      return text.trim().toLowerCase().replace(/\s+/g, ' ');
-    }
-
-    // ===== CEK JAWABAN =====
-    function checkAnswer() {
-      const userAnswer = cleanText(input.value);
-      const correct = cleanText(correctAnswer);
-
-      if (userAnswer === "") {
-        message.textContent = "Ketik dulu jawabannya ya 😊";
-        message.className = "message";
-        return;
+      // Buat gelembung dekoratif.
+      const bubblesContainer = document.getElementById('bubbles');
+      for (let i = 0; i < 30; i++) {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        const size = Math.random() * 50 + 20;
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        bubble.style.left = Math.random() * 100 + '%';
+        bubble.style.animationDuration = Math.random() * 8 + 6 + 's';
+        bubble.style.animationDelay = Math.random() * 5 + 's';
+        bubblesContainer.appendChild(bubble);
       }
 
-      if (userAnswer === correct) {
-        message.textContent = "Berhasil! Kamu masih ingat... 🥹";
-        message.className = "message success";
-        answerCorrect = true;
+      const correctAnswer = "Ratu Kucing Duyung";
+      const input = document.getElementById('passwordInput');
+      const button = document.getElementById('submitBtn');
+      const message = document.getElementById('message');
+      const keyReward = document.getElementById('keyReward');
+      const btnSail = document.getElementById('btnSail');
+      const waveOverlay = document.getElementById('waveOverlay');
+      let answerCorrect = false;
 
-        // Sembunyikan input dan tombol submit
-        input.style.display = 'none';
-        button.style.display = 'none';
-        document.querySelector('.hint').style.display = 'none';
+      function cleanText(text) {
+        return text.trim().toLowerCase().replace(/\s+/g, ' ');
+      }
 
-        // Tampilkan kunci reward
+      function checkAnswer() {
+        const userAnswer = cleanText(input.value);
+        if (userAnswer === "") {
+          message.textContent = "Ketik dulu jawabannya ya 😊";
+          message.className = "message";
+          return;
+        }
+        if (userAnswer === cleanText(correctAnswer)) {
+          message.textContent = "Berhasil! Kamu masih ingat... 🥹";
+          message.className = "message success";
+          answerCorrect = true;
+          input.style.display = 'none';
+          button.style.display = 'none';
+          document.querySelector('.hint').style.display = 'none';
+          setTimeout(() => { keyReward.classList.add('visible'); }, 500);
+          setTimeout(() => { btnSail.classList.add('visible'); }, 1500);
+        } else {
+          message.textContent = "Salah 😌 Coba ingat lagi...";
+          message.className = "message";
+          input.value = "";
+          input.focus();
+        }
+      }
+
+      button.addEventListener('click', checkAnswer);
+      input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') checkAnswer();
+      });
+
+      btnSail.addEventListener('click', function() {
+        if (!answerCorrect) return;
+        waveOverlay.classList.add('show');
         setTimeout(() => {
-          keyReward.classList.add('visible');
-        }, 500);
+          window.location.href = 'map.html';
+        }, 2800);
+      });
 
-        // Tampilkan tombol berlayar
-        setTimeout(() => {
-          btnSail.classList.add('visible');
-        }, 1500);
-
-      } else {
-        message.textContent = "Salah 😌 Coba ingat lagi, yang ini sih harusnya nggak lupa...";
-        message.className = "message";
-        input.value = "";
-        input.focus();
-      }
-    }
-
-    button.addEventListener('click', checkAnswer);
-    input.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        checkAnswer();
-      }
-    });
-
-    // ===== TOMBOL BERLAYAR =====
-    btnSail.addEventListener('click', function() {
-      if (!answerCorrect) return;
-
-      // Tampilkan overlay ombak
-      waveOverlay.classList.add('show');
-
-      // Redirect ke peta setelah ombak selesai (±2.5 detik)
-      setTimeout(() => {
-        window.location.href = "map.html";
-      }, 2800);
-    });
-
-    input.focus();
+      input.focus();
+    })();
   </script>
 </body>
 </html>
