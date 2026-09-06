@@ -18,13 +18,11 @@
       --bubble-bg: rgba(220, 60, 90, 0.30);
       --bubble-border: rgba(255,255,255,0.4);
     }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       background-image: url('assets/background-island-2.jpg');
       background-size: cover;
@@ -42,7 +40,6 @@
       font-family: 'Rajdhani', sans-serif;
       color: var(--putih);
     }
-
     body::before {
       content: '';
       position: fixed;
@@ -92,16 +89,19 @@
       text-align: center;
     }
 
-    /* ===== BAGIAN TRANSFORMASI ===== */
+    /* Transformasi */
     .transform-section {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 20px;
-      margin-top: 10vh;
+      margin-top: 12vh;
       animation: fadeInDown 1s ease;
     }
-
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     .ladybug-title {
       font-family: 'Chakra Petch', sans-serif;
       font-size: 2.5rem;
@@ -110,15 +110,12 @@
       text-transform: uppercase;
       text-shadow: 0 0 20px rgba(217, 35, 50, 0.8);
     }
-
     .ladybug-subtitle {
       font-size: 1.1rem;
       color: var(--abu);
       letter-spacing: 1px;
       font-weight: 500;
     }
-
-    /* Gambar anting */
     .ladybug-earring-img {
       width: 100px;
       max-width: 100%;
@@ -127,12 +124,10 @@
       animation: floatEarring 3s ease-in-out infinite;
       cursor: pointer;
     }
-
     @keyframes floatEarring {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-15px); }
     }
-
     .btn-transform {
       padding: 15px 40px;
       border: none;
@@ -153,7 +148,7 @@
       box-shadow: 0 12px 25px rgba(217, 35, 50, 0.9);
     }
 
-    /* ===== OVERLAY TRANSFORMASI ===== */
+    /* Overlay transformasi */
     .transform-overlay {
       position: fixed;
       top: 0;
@@ -171,20 +166,17 @@
     .transform-overlay.active {
       display: flex;
     }
-
     .transform-earring-img {
       width: 180px;
       max-width: 80%;
       filter: drop-shadow(0 0 60px rgba(255, 95, 122, 1));
       animation: spinGlow 1.5s ease-in-out infinite;
     }
-
     @keyframes spinGlow {
       0% { transform: scale(0.7) rotate(0deg); opacity: 0.5; }
       50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
       100% { transform: scale(0.7) rotate(360deg); opacity: 0.5; }
     }
-
     .transform-text {
       font-family: 'Chakra Petch', sans-serif;
       font-size: 2rem;
@@ -200,7 +192,7 @@
       50% { opacity: 1; }
     }
 
-    /* ===== BAGIAN SURAT ===== */
+    /* Surat */
     .letter-section {
       display: none;
       text-align: left;
@@ -213,7 +205,6 @@
       opacity: 1;
     }
 
-    /* Bubble ladybug dengan bintik lebih besar */
     .ladybug-bubble {
       background-color: var(--bubble-bg);
       background-image: radial-gradient(circle, rgba(0,0,0,0.35) 10px, transparent 11px);
@@ -227,7 +218,7 @@
       position: relative;
     }
 
-    /* Dekorasi di pinggir bubble */
+    /* Dekorasi bubble */
     .bubble-decor {
       position: absolute;
       width: 80px;
@@ -289,7 +280,6 @@
       font-weight: 500;
       text-shadow: 0 0 5px rgba(0,0,0,0.5);
     }
-
     .signature {
       font-family: 'Chakra Petch', sans-serif;
       font-size: 1.4rem;
@@ -303,55 +293,34 @@
       transition: opacity 1s;
     }
 
-    /* Kunci pulau 3 */
-    .key-reward {
-      text-align: center;
-      margin-top: 50px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-    .key-reward.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .key-emoji {
-      font-size: 3.5rem;
-      filter: drop-shadow(0 0 15px rgba(255,215,0,0.8));
-      animation: keyFloat 3s ease-in-out infinite;
-    }
-    @keyframes keyFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    .key-text {
-      font-family: 'Chakra Petch', sans-serif;
-      color: var(--emas);
-      font-weight: 700;
-      margin-top: 10px;
-      letter-spacing: 2px;
-      font-size: 1.1rem;
-      text-transform: uppercase;
-    }
-    .btn-next {
+    /* Tombol selesai */
+    .btn-finish {
       display: inline-block;
       margin-top: 25px;
-      padding: 14px 35px;
+      padding: 15px 35px;
+      border: none;
       border-radius: 50px;
       background: linear-gradient(135deg, #d92332, #ff5f7a);
       color: white;
-      text-decoration: none;
+      font-size: 1rem;
       font-weight: 700;
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 1rem;
       letter-spacing: 1px;
       text-transform: uppercase;
+      cursor: pointer;
       transition: all 0.3s;
       box-shadow: 0 8px 20px rgba(217, 35, 50, 0.6);
+      opacity: 0;
+      pointer-events: none;
     }
-    .btn-next:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 25px rgba(217, 35, 50, 0.9);
+    .btn-finish.visible {
+      opacity: 1;
+      pointer-events: auto;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 600px) {
@@ -369,29 +338,26 @@
 </head>
 <body>
 
-  <a href="map.html" class="back-btn">⬅️ Kembali</a>
+  <a href="#" class="back-btn" id="backBtn">⬅️ Kembali</a>
 
   <div class="main-container">
-
-    <!-- BAGIAN TRANSFORMASI -->
+    <!-- Transformasi -->
     <div class="transform-section" id="transformSection">
       <div class="ladybug-title">🐞 Pulau 2: Miraculous Ladybug</div>
       <div class="ladybug-subtitle">Saatnya bertransformasi untuk membuka surat</div>
-      <!-- Ganti src jika masih pakai .jpg: assets/earrings.jpg -->
       <img src="assets/earrings.png" alt="Earrings" class="ladybug-earring-img">
       <button class="btn-transform" id="btnTransform">Transform!</button>
     </div>
 
-    <!-- OVERLAY TRANSFORMASI -->
+    <!-- Overlay -->
     <div class="transform-overlay" id="transformOverlay">
       <img src="assets/earrings.png" alt="Earrings" class="transform-earring-img">
       <div class="transform-text" id="transformText">Tikki, spots on!</div>
     </div>
 
-    <!-- BAGIAN SURAT -->
+    <!-- Surat -->
     <div class="letter-section" id="letterSection">
       <div class="ladybug-bubble">
-        <!-- Dekorasi pinggir bubble -->
         <img src="assets/island2-kiri.png" alt="" class="bubble-decor bubble-decor-left">
         <img src="assets/island2-kanan.png" alt="" class="bubble-decor bubble-decor-right">
 
@@ -401,7 +367,6 @@
           <div class="letter-subtitle">Ditulis setelah transformasi</div>
         </div>
 
-        <!-- Paragraf yang akan diketik huruf per huruf -->
         <p class="typewriter-text" data-text="Halo, kamu..."></p>
         <p class="typewriter-text" data-text="Hari ini aku bertransformasi menjadi Ladybug, pahlawan yang selalu berusaha melindungi yang penting. Dan yang terpenting bagiku sekarang adalah kamu."></p>
         <p class="typewriter-text" data-text="Seperti Ladybug yang butuh Cat Noir, mungkin aku juga butuh kamu. Bukan untuk melawan penjahat, tapi untuk menjalani hari-hari yang kadang terasa berat."></p>
@@ -410,95 +375,82 @@
         <p class="typewriter-text" data-text="Terima kasih sudah membaca sampai sini. Surat ini kutulis dengan hati, bukan dengan sihir."></p>
 
         <div class="signature" id="signature">— Cat Noir-mu</div>
-      </div>
 
-      <!-- Kunci Pulau 3 -->
-      <div class="key-reward" id="keyReward">
-        <span class="key-emoji">🔑</span>
-        <div class="key-text">Kunci Pulau 3 ditemukan</div>
-        <a href="island-3.html" class="btn-next">Lanjut ke Pulau 3 →</a>
+        <button class="btn-finish" id="btnFinish">Selesaikan Pulau 2 ✓</button>
       </div>
     </div>
-
   </div>
 
+  <script src="state.js"></script>
   <script>
-    // ===== ELEMEN =====
-    const btnTransform = document.getElementById('btnTransform');
-    const transformSection = document.getElementById('transformSection');
-    const transformOverlay = document.getElementById('transformOverlay');
-    const transformText = document.getElementById('transformText');
-    const letterSection = document.getElementById('letterSection');
-    const keyReward = document.getElementById('keyReward');
-    const signature = document.getElementById('signature');
-    const typewriterElements = document.querySelectorAll('.typewriter-text');
+    (function() {
+      const backBtn = document.getElementById('backBtn');
+      backBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        setDuyungAtIsland('island2');
+        window.location.href = 'map.html';
+      });
 
-    let isTransforming = false;
+      const btnTransform = document.getElementById('btnTransform');
+      const transformSection = document.getElementById('transformSection');
+      const transformOverlay = document.getElementById('transformOverlay');
+      const transformText = document.getElementById('transformText');
+      const letterSection = document.getElementById('letterSection');
+      const signature = document.getElementById('signature');
+      const btnFinish = document.getElementById('btnFinish');
+      const typewriterElements = document.querySelectorAll('.typewriter-text');
 
-    // ===== FUNGSI TRANSFORMASI =====
-    btnTransform.addEventListener('click', () => {
-      if (isTransforming) return;
-      isTransforming = true;
+      let isTransforming = false;
 
-      // Sembunyikan section transform
-      transformSection.style.display = 'none';
+      btnTransform.addEventListener('click', function() {
+        if (isTransforming) return;
+        isTransforming = true;
 
-      // Tampilkan overlay
-      transformOverlay.classList.add('active');
+        transformSection.style.display = 'none';
+        transformOverlay.classList.add('active');
 
-      // Ubah teks setelah beberapa saat
-      setTimeout(() => {
-        transformText.textContent = 'TRANSFORMED! 🐞';
-      }, 2500);
+        setTimeout(() => {
+          transformText.textContent = 'TRANSFORMED! 🐞';
+        }, 2500);
 
-      // Setelah selesai, tampilkan surat
-      setTimeout(() => {
-        transformOverlay.classList.remove('active');
-        letterSection.classList.add('visible');
-        startTypewriter();
-      }, 3500);
-    });
+        setTimeout(() => {
+          transformOverlay.classList.remove('active');
+          letterSection.classList.add('visible');
+          startTypewriter();
+        }, 3500);
+      });
 
-    // ===== TYPEWRITER EFFECT =====
-    function startTypewriter() {
-      let currentIndex = 0;
-
-      function typeNext() {
-        if (currentIndex >= typewriterElements.length) {
-          // Semua selesai
-          signature.style.opacity = '1';
-          keyReward.classList.add('visible');
-          // Simpan status pulau 3 terbuka
-          let unlockedIslands = JSON.parse(localStorage.getItem('unlockedIslands')) || [];
-          if (!unlockedIslands.includes('island3')) {
-            unlockedIslands.push('island3');
-            localStorage.setItem('unlockedIslands', JSON.stringify(unlockedIslands));
+      function startTypewriter() {
+        let currentIndex = 0;
+        function typeNext() {
+          if (currentIndex >= typewriterElements.length) {
+            signature.style.opacity = '1';
+            btnFinish.classList.add('visible');
+            return;
           }
-          return;
-        }
-
-        const element = typewriterElements[currentIndex];
-        const text = element.getAttribute('data-text');
-        element.textContent = '';
-        let charIndex = 0;
-
-        function typeChar() {
-          if (charIndex < text.length) {
-            element.textContent += text.charAt(charIndex);
-            charIndex++;
-            setTimeout(typeChar, 30);
-          } else {
-            currentIndex++;
-            setTimeout(typeNext, 400);
+          const element = typewriterElements[currentIndex];
+          const text = element.getAttribute('data-text');
+          element.textContent = '';
+          let charIndex = 0;
+          function typeChar() {
+            if (charIndex < text.length) {
+              element.textContent += text.charAt(charIndex);
+              charIndex++;
+              setTimeout(typeChar, 30);
+            } else {
+              currentIndex++;
+              setTimeout(typeNext, 400);
+            }
           }
+          typeChar();
         }
-
-        typeChar();
+        typeNext();
       }
 
-      typeNext();
-    }
-
+      btnFinish.addEventListener('click', function() {
+        completeIslandAndReturn('island2');
+      });
+    })();
   </script>
 </body>
 </html>
