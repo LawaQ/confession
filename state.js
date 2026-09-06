@@ -3,31 +3,53 @@
  * Sertakan di SEMUA halaman: index.html, map.html, island-1.html, dst.
  * <script src="state.js"></script>
  *
- * Fitur:
- * - Manajemen pulau terbuka (unlocked) & selesai (completed)
- * - Posisi duyung persisten (atIsland)
- * - Transisi antar halaman (fade-in/fade-out)
- * - Reset progress untuk debug
+ * Catatan:
+ * - Semua penyimpanan sekarang memakai sessionStorage,
+ *   jadi progres hanya bertahan selama sesi browser.
+ * - Jika tab ditutup dan dibuka lagi, progres otomatis mulai dari awal.
+ * - Ini mencegah data lama nyangkut di HP dan membuat pulau terbuka sendiri.
  */
 
 const ISLAND_ORDER = ['island1', 'island2', 'island3', 'island4'];
+
+/* =====================================================
+ * STORAGE HELPER (sessionStorage)
+ * ===================================================== */
+
+function storageGet(key, fallback) {
+  try {
+    const raw = sessionStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function storageSet(key, value) {
+  try {
+    sessionStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    // ignore
+  }
+}
+
+function storageRemove(key) {
+  try {
+    sessionStorage.removeItem(key);
+  } catch (e) {
+    // ignore
+  }
+}
 
 /* =====================================================
  * 1. COMPLETED ISLANDS
  * ===================================================== */
 
 function getCompletedIslands() {
-  let stored = [];
-  try {
-    const raw = localStorage.getItem('completedIslands');
-    if (raw) stored = JSON.parse(raw);
-    if (!Array.isArray(stored)) stored = [];
-  } catch (e) {
-    stored = [];
-  }
+  const stored = storageGet('completedIslands', []);
+  if (!Array.isArray(stored)) return [];
 
-  // Sanitasi: hanya ambil yang berurutan mulai dari island1,
-  // kalau ada celah (island1 & island3 tanpa island2), berhenti di situ.
+  // Sanitasi: hanya ambil yang berurutan mulai dari island1.
   const sanitized = [];
   for (const id of ISLAND_ORDER) {
     if (stored.includes(id)) {
@@ -37,24 +59,15 @@ function getCompletedIslands() {
     }
   }
 
-  try {
-    localStorage.setItem('completedIslands', JSON.stringify(sanitized));
-  } catch (e) {
-    // ignore
-  }
-
+  storageSet('completedIslands', sanitized);
   return sanitized;
 }
 
 function completeIsland(islandId) {
   const completed = getCompletedIslands();
-  if (!completed.includes(islandId)) {
+  if (!completed.includes(islandId) && ISLAND_ORDER.includes(islandId)) {
     completed.push(islandId);
-    try {
-      localStorage.setItem('completedIslands', JSON.stringify(completed));
-    } catch (e) {
-      // ignore
-    }
+    storageSet('completedIslands', completed);
   }
   return completed;
 }
@@ -82,19 +95,13 @@ function getUnlockedIslands() {
     }
   }
 
-  try {
-    localStorage.setItem('unlockedIslands', JSON.stringify(unlocked));
-  } catch (e) {
-    // ignore
-  }
-
+  storageSet('unlockedIslands', unlocked);
   return unlocked;
 }
 
 function unlockNextIsland(currentIslandId) {
   // Tidak perlu logika manual lagi.
-  // Setelah pulau selesai, getUnlockedIslands() otomatis
-  // membuka pulau berikutnya berdasarkan completedIslands.
+  // getUnlockedIslands() otomatis menghitung dari completedIslands.
   return getUnlockedIslands();
 }
 
@@ -104,24 +111,13 @@ function unlockNextIsland(currentIslandId) {
 
 function setDuyungAtIsland(islandId) {
   const safeIslandId = ISLAND_ORDER.includes(islandId) ? islandId : null;
-  try {
-    localStorage.setItem('duyungState', JSON.stringify({ atIsland: safeIslandId }));
-  } catch (e) {
-    // ignore
-  }
+  storageSet('duyungState', { atIsland: safeIslandId });
 }
 
 function getDuyungState() {
-  try {
-    const raw = localStorage.getItem('duyungState');
-    if (raw) {
-      const s = JSON.parse(raw);
-      if (s && (s.atIsland === null || ISLAND_ORDER.includes(s.atIsland))) {
-        return s;
-      }
-    }
-  } catch (e) {
-    // ignore
+  const s = storageGet('duyungState', { atIsland: null });
+  if (s && (s.atIsland === null || ISLAND_ORDER.includes(s.atIsland))) {
+    return s;
   }
   return { atIsland: null };
 }
@@ -133,8 +129,7 @@ function getDuyungState() {
 function completeIslandAndReturn(currentIslandId) {
   completeIsland(currentIslandId);
   setDuyungAtIsland(currentIslandId);
-  // Karena completed bertambah, getUnlockedIslands() otomatis membuka pulau berikutnya.
-  getUnlockedIslands();
+  getUnlockedIslands(); // refresh unlock
   navigateTo('map.html');
 }
 
@@ -192,13 +187,11 @@ function initPageTransition() {
  * ===================================================== */
 
 function resetProgress() {
-  try {
-    localStorage.removeItem('unlockedIslands');
-    localStorage.removeItem('completedIslands');
-    localStorage.removeItem('duyungState');
-  } catch (e) {
-    // ignore
-  }
+  storageRemove('unlockedIslands');
+  storageRemove('completedIslands');
+  storageRemove('duyungState');
+
+  // Set ulang ke default
   getCompletedIslands();
   getUnlockedIslands();
   setDuyungAtIsland(null);
