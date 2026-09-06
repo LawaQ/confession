@@ -1,6 +1,6 @@
 /**
  * state.js — Sumber kebenaran tunggal untuk status game.
- * Sertakan file ini di SEMUA halaman: index.html, map.html, island-1.html, dst.
+ * Sertakan di SEMUA halaman: index.html, map.html, island-1.html, dst.
  * <script src="state.js"></script>
  *
  * Fitur:
@@ -13,59 +13,7 @@
 const ISLAND_ORDER = ['island1', 'island2', 'island3', 'island4'];
 
 /* =====================================================
- * 1. UNLOCKED ISLANDS
- * ===================================================== */
-
-function getUnlockedIslands() {
-  let stored = [];
-  try {
-    const raw = localStorage.getItem('unlockedIslands');
-    if (raw) stored = JSON.parse(raw);
-    if (!Array.isArray(stored)) stored = [];
-  } catch (e) {
-    stored = [];
-  }
-
-  const sanitized = [];
-  for (const id of ISLAND_ORDER) {
-    if (stored.includes(id)) {
-      sanitized.push(id);
-    } else {
-      break;
-    }
-  }
-  if (sanitized.length === 0) sanitized.push(ISLAND_ORDER[0]);
-
-  try {
-    localStorage.setItem('unlockedIslands', JSON.stringify(sanitized));
-  } catch (e) {
-    // ignore
-  }
-
-  return sanitized;
-}
-
-function unlockNextIsland(currentIslandId) {
-  const idx = ISLAND_ORDER.indexOf(currentIslandId);
-  const unlocked = getUnlockedIslands();
-
-  if (idx > -1 && idx + 1 < ISLAND_ORDER.length) {
-    const nextId = ISLAND_ORDER[idx + 1];
-    if (!unlocked.includes(nextId)) {
-      unlocked.push(nextId);
-      try {
-        localStorage.setItem('unlockedIslands', JSON.stringify(unlocked));
-      } catch (e) {
-        // ignore
-      }
-    }
-  }
-
-  return unlocked;
-}
-
-/* =====================================================
- * 2. COMPLETED ISLANDS (Progress)
+ * 1. COMPLETED ISLANDS
  * ===================================================== */
 
 function getCompletedIslands() {
@@ -78,8 +26,16 @@ function getCompletedIslands() {
     stored = [];
   }
 
-  // Filter hanya ID valid
-  const sanitized = stored.filter(id => ISLAND_ORDER.includes(id));
+  // Sanitasi: hanya ambil yang berurutan mulai dari island1,
+  // kalau ada celah (island1 & island3 tanpa island2), berhenti di situ.
+  const sanitized = [];
+  for (const id of ISLAND_ORDER) {
+    if (stored.includes(id)) {
+      sanitized.push(id);
+    } else {
+      break;
+    }
+  }
 
   try {
     localStorage.setItem('completedIslands', JSON.stringify(sanitized));
@@ -105,6 +61,41 @@ function completeIsland(islandId) {
 
 function isIslandCompleted(islandId) {
   return getCompletedIslands().includes(islandId);
+}
+
+/* =====================================================
+ * 2. UNLOCKED ISLANDS — dihitung dari completed
+ * ===================================================== */
+
+function getUnlockedIslands() {
+  const completed = getCompletedIslands();
+
+  // Island pertama selalu terbuka.
+  const unlocked = ['island1'];
+
+  // Buka island berikutnya HANYA jika pulau sebelumnya selesai.
+  for (let i = 1; i < ISLAND_ORDER.length; i++) {
+    if (completed.includes(ISLAND_ORDER[i - 1])) {
+      unlocked.push(ISLAND_ORDER[i]);
+    } else {
+      break;
+    }
+  }
+
+  try {
+    localStorage.setItem('unlockedIslands', JSON.stringify(unlocked));
+  } catch (e) {
+    // ignore
+  }
+
+  return unlocked;
+}
+
+function unlockNextIsland(currentIslandId) {
+  // Tidak perlu logika manual lagi.
+  // Setelah pulau selesai, getUnlockedIslands() otomatis
+  // membuka pulau berikutnya berdasarkan completedIslands.
+  return getUnlockedIslands();
 }
 
 /* =====================================================
@@ -141,8 +132,9 @@ function getDuyungState() {
 
 function completeIslandAndReturn(currentIslandId) {
   completeIsland(currentIslandId);
-  unlockNextIsland(currentIslandId);
   setDuyungAtIsland(currentIslandId);
+  // Karena completed bertambah, getUnlockedIslands() otomatis membuka pulau berikutnya.
+  getUnlockedIslands();
   navigateTo('map.html');
 }
 
@@ -151,7 +143,6 @@ function completeIslandAndReturn(currentIslandId) {
  * ===================================================== */
 
 function createTransitionOverlay() {
-  // Cegah duplikat overlay
   if (document.getElementById('transitionOverlay')) {
     return document.getElementById('transitionOverlay');
   }
@@ -174,10 +165,6 @@ function createTransitionOverlay() {
   return overlay;
 }
 
-/**
- * Pindah halaman dengan efek fade-out.
- * Gunakan ini untuk SEMUA navigasi.
- */
 function navigateTo(url) {
   const overlay = createTransitionOverlay();
   overlay.style.pointerEvents = 'auto';
@@ -188,12 +175,8 @@ function navigateTo(url) {
   }, 400);
 }
 
-/**
- * Panggil saat halaman dimuat untuk memulai fade-in.
- */
 function initPageTransition() {
   const overlay = createTransitionOverlay();
-  // Pastikan overlay tertutup dulu
   overlay.style.opacity = '1';
   overlay.style.pointerEvents = 'none';
 
@@ -216,8 +199,8 @@ function resetProgress() {
   } catch (e) {
     // ignore
   }
-  getUnlockedIslands();
   getCompletedIslands();
+  getUnlockedIslands();
   setDuyungAtIsland(null);
 }
 
