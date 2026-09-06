@@ -16,11 +16,7 @@
       --emas: #ffd700;
       --hitam: #0a0a0a;
     }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background-image: url('assets/background-f1.jpg');
       background-size: cover;
@@ -87,7 +83,6 @@
       text-align: center;
     }
 
-    /* Start engine section */
     .start-engine-section {
       display: flex;
       flex-direction: column;
@@ -95,6 +90,10 @@
       gap: 20px;
       margin-top: 15vh;
       animation: fadeInDown 1s ease;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .race-title {
       font-family: 'Chakra Petch', sans-serif;
@@ -164,7 +163,6 @@
       transform: scale(1);
     }
 
-    /* Letter section */
     .letter-section {
       display: none;
       text-align: left;
@@ -243,7 +241,6 @@
       transition: opacity 1s;
     }
 
-    /* Finish button */
     .btn-finish {
       display: inline-block;
       margin-top: 25px;
@@ -262,11 +259,11 @@
       box-shadow: 0 8px 20px rgba(225, 6, 0, 0.5);
       opacity: 0;
       pointer-events: none;
-      animation: fadeInUp 0.8s ease forwards;
     }
     .btn-finish.visible {
       opacity: 1;
       pointer-events: auto;
+      animation: fadeInUp 0.8s ease forwards;
     }
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -282,11 +279,9 @@
 </head>
 <body>
 
-  <!-- Tombol kembali ke peta tanpa unlock -->
   <a href="#" class="back-btn" id="backBtn">⬅️ Kembali</a>
 
   <div class="main-container">
-    <!-- Start Engine -->
     <div class="start-engine-section" id="startEngineSection">
       <div class="race-title">🏁 Pulau 1: Sirkuit Kenangan</div>
       <div class="race-subtitle">Nyalakan mesin untuk membuka surat</div>
@@ -301,7 +296,6 @@
       <div class="go-text" id="goText">GO! 🏁</div>
     </div>
 
-    <!-- Surat -->
     <div class="letter-section" id="letterSection">
       <div class="letter-header">
         <div class="letter-tag">🏁 Sirkuit Kenangan</div>
@@ -315,7 +309,6 @@
         <div class="line"></div>
       </div>
 
-      <!-- Paragraf yang akan diketik -->
       <p class="typewriter-text" data-text="Halo, kamu..."></p>
       <p class="typewriter-text" data-text="Aku menulis ini dari tempat yang mungkin tidak pernah kita kunjungi, tapi selalu kita bicarakan: lintasan balap. Tempat semua cerita dimulai, dari obrolan ringan soal F1 yang tak pernah kuduga akan membawaku sejauh ini."></p>
       <p class="typewriter-text" data-text="Dulu kamu sering bercerita tentang tim favoritmu, pembalap yang kamu kagumi, dan serunya menonton balapan tengah malam. Aku yang awalnya biasa saja, pelan-pelan ikut menantikan balapan berikutnya—bukan karena balapannya, tapi karena ada kamu di seberang sana."></p>
@@ -325,7 +318,6 @@
 
       <div class="signature" id="signature">— Seorang Bajak Laut</div>
 
-      <!-- Tombol selesai (muncul setelah surat selesai) -->
       <button class="btn-finish" id="btnFinish">Selesaikan Pulau 1 ✓</button>
     </div>
   </div>
@@ -336,9 +328,8 @@
       const backBtn = document.getElementById('backBtn');
       backBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        // Hanya simpan posisi, jangan unlock
         setDuyungAtIsland('island1');
-        window.location.href = 'map.html';
+        navigateTo('map.html');
       });
 
       const startBtn = document.getElementById('btnStart');
@@ -380,7 +371,6 @@
 
       function startTypewriter() {
         let currentIndex = 0;
-
         function typeNext() {
           if (currentIndex >= typewriterElements.length) {
             signature.style.opacity = '1';
