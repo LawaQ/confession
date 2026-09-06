@@ -16,8 +16,9 @@
       --putih: #f0f0f0;
       --emas: #c9a86b;
       --teks-gelap: #d0d0d0;
-      --bubble-gelap: rgba(20, 20, 20, 0.7);
-      --bubble-terang: rgba(255, 255, 255, 0.65);
+      --teks-terang: #e6e6e6;
+      --bubble-bg: rgba(20, 20, 20, 0.55);
+      --bubble-border: rgba(255, 255, 255, 0.15);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -42,7 +43,6 @@
 
     body.cerah {
       background-image: url('assets/background-island-3-terang.jpg');
-      color: #222;
     }
 
     .back-btn {
@@ -81,26 +81,16 @@
       text-align: center;
     }
 
-    /* Bubble chat */
-    .dark-bubble,
-    .light-bubble {
+    /* Bubble chat dasar */
+    .bubble-chat {
       border-radius: 30px;
       padding: 35px 30px;
       position: relative;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    .dark-bubble {
-      background: var(--bubble-gelap);
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-
-    .light-bubble {
-      background: var(--bubble-terang);
-      border: 1px solid rgba(255,255,255,0.5);
+      background: var(--bubble-bg);
+      border: 1px solid var(--bubble-border);
     }
 
     .letter-header {
@@ -132,6 +122,7 @@
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
+      color: var(--putih);
     }
     .letter-subtitle {
       color: var(--abu-terang);
@@ -155,11 +146,14 @@
       margin-bottom: 25px;
       min-height: 1.9em;
       font-weight: 500;
+      color: var(--teks-gelap);
       text-shadow: 0 0 4px rgba(0,0,0,0.4);
     }
+
+    /* Bagian terang: teks 10% lebih cerah */
     body.cerah .typewriter-text {
-      color: #222;
-      text-shadow: none;
+      color: var(--teks-terang);
+      text-shadow: 0 0 4px rgba(0,0,0,0.25);
     }
 
     .signature {
@@ -173,9 +167,6 @@
       text-align: right;
       opacity: 0;
       transition: opacity 1.5s;
-    }
-    body.cerah .signature {
-      color: #a67c2e;
     }
 
     .btn-lanjut,
@@ -210,11 +201,6 @@
       transform: translateY(-3px);
     }
 
-    body.cerah .btn-finish {
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-    }
-
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -238,10 +224,38 @@
       pointer-events: auto;
     }
 
+    /* Emoji dekorasi untuk bagian terang */
+    .sparkle-decor {
+      position: absolute;
+      font-size: 1.8rem;
+      opacity: 0.8;
+      pointer-events: none;
+      animation: sparkleFloat 2s ease-in-out infinite;
+    }
+    .sparkle-decor:nth-child(1) {
+      top: -18px;
+      left: 10px;
+    }
+    .sparkle-decor:nth-child(2) {
+      top: 30%;
+      right: -15px;
+      animation-delay: 0.5s;
+    }
+    .sparkle-decor:nth-child(3) {
+      bottom: -15px;
+      left: 20px;
+      animation-delay: 1s;
+    }
+    @keyframes sparkleFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.1); }
+    }
+
     @media (max-width: 600px) {
       .letter-title { font-size: 1.8rem; }
       .typewriter-text { font-size: 1.05rem; }
-      .dark-bubble, .light-bubble { padding: 20px 15px; }
+      .bubble-chat { padding: 20px 15px; }
+      .sparkle-decor { font-size: 1.4rem; }
     }
   </style>
 </head>
@@ -255,7 +269,7 @@
   <div class="main-container">
     <!-- ================= BAGIAN GELAP ================= -->
     <div id="gelapSection">
-      <div class="dark-bubble">
+      <div class="bubble-chat">
         <div class="letter-header">
           <div class="letter-tag">🌑 Sisi Gelap</div>
           <h1 class="letter-title">Surat dari Kegelapan</h1>
@@ -279,11 +293,16 @@
 
     <!-- ================= BAGIAN TERANG ================= -->
     <div id="terangSection" style="display:none;">
-      <div class="light-bubble">
+      <div class="bubble-chat">
+        <!-- Emoji dekorasi -->
+        <span class="sparkle-decor">✨</span>
+        <span class="sparkle-decor">✨</span>
+        <span class="sparkle-decor">✨</span>
+
         <div class="letter-header">
           <div class="letter-tag" style="border-color:#c9a86b; color:#c9a86b;">🌤️ Sisi Terang</div>
           <h1 class="letter-title">Sejak Kamu Hadir</h1>
-          <div class="letter-subtitle" style="color:#666;">Tentang cahaya yang tumbuh perlahan</div>
+          <div class="letter-subtitle" style="color:#aaa;">Tentang cahaya yang tumbuh perlahan</div>
         </div>
 
         <div class="accent-line">
