@@ -3,20 +3,19 @@
  * Sertakan file ini di SEMUA halaman: index.html, map.html, island-1.html, dst.
  * <script src="state.js"></script>
  *
- * Tujuan:
- * - Menghindari perbedaan logika localStorage antar halaman.
- * - Memastikan pulau terbuka selalu berurutan (tidak bisa loncat).
- * - Menyimpan posisi duyung sebagai ID pulau, bukan progress angka,
- *   agar tidak tergantung pada geometri path SVG di map.html.
+ * Fitur:
+ * - Manajemen pulau terbuka (unlocked) & selesai (completed)
+ * - Posisi duyung persisten (atIsland)
+ * - Transisi antar halaman (fade-in/fade-out)
+ * - Reset progress untuk debug
  */
 
 const ISLAND_ORDER = ['island1', 'island2', 'island3', 'island4'];
 
-/**
- * Ambil daftar pulau yang terbuka, disaring supaya selalu berurutan.
- * Kalau data di localStorage rusak/loncat, otomatis dirapikan dan
- * disimpan ulang.
- */
+/* =====================================================
+ * 1. UNLOCKED ISLANDS
+ * ===================================================== */
+
 function getUnlockedIslands() {
   let stored = [];
   try {
@@ -32,29 +31,20 @@ function getUnlockedIslands() {
     if (stored.includes(id)) {
       sanitized.push(id);
     } else {
-      // Berhenti di celah pertama, karena urutan harus kontinu.
       break;
     }
   }
-
-  // Jika kosong (misal data hilang), minimal island1 terbuka.
-  if (sanitized.length === 0) {
-    sanitized.push(ISLAND_ORDER[0]);
-  }
+  if (sanitized.length === 0) sanitized.push(ISLAND_ORDER[0]);
 
   try {
     localStorage.setItem('unlockedIslands', JSON.stringify(sanitized));
   } catch (e) {
-    // ignore storage errors (private mode, etc)
+    // ignore
   }
 
   return sanitized;
 }
 
-/**
- * Buka island berikutnya setelah currentIslandId selesai.
- * Mengembalikan daftar pulau yang terbuka.
- */
 function unlockNextIsland(currentIslandId) {
   const idx = ISLAND_ORDER.indexOf(currentIslandId);
   const unlocked = getUnlockedIslands();
@@ -74,10 +64,53 @@ function unlockNextIsland(currentIslandId) {
   return unlocked;
 }
 
-/**
- * Simpan posisi terakhir duyung sebagai ID pulau.
- * null berarti posisi awal (sebelum berlayar).
- */
+/* =====================================================
+ * 2. COMPLETED ISLANDS (Progress)
+ * ===================================================== */
+
+function getCompletedIslands() {
+  let stored = [];
+  try {
+    const raw = localStorage.getItem('completedIslands');
+    if (raw) stored = JSON.parse(raw);
+    if (!Array.isArray(stored)) stored = [];
+  } catch (e) {
+    stored = [];
+  }
+
+  // Filter hanya ID valid
+  const sanitized = stored.filter(id => ISLAND_ORDER.includes(id));
+
+  try {
+    localStorage.setItem('completedIslands', JSON.stringify(sanitized));
+  } catch (e) {
+    // ignore
+  }
+
+  return sanitized;
+}
+
+function completeIsland(islandId) {
+  const completed = getCompletedIslands();
+  if (!completed.includes(islandId)) {
+    completed.push(islandId);
+    try {
+      localStorage.setItem('completedIslands', JSON.stringify(completed));
+    } catch (e) {
+      // ignore
+    }
+  }
+  return completed;
+}
+
+function isIslandCompleted(islandId) {
+  return getCompletedIslands().includes(islandId);
+}
+
+/* =====================================================
+ * 3. DUYUNG STATE
+ * ===================================================== */
+
 function setDuyungAtIsland(islandId) {
   const safeIslandId = ISLAND_ORDER.includes(islandId) ? islandId : null;
   try {
@@ -87,10 +120,6 @@ function setDuyungAtIsland(islandId) {
   }
 }
 
-/**
- * Ambil posisi duyung terakhir.
- * Mengembalikan { atIsland: 'island1' | 'island2' | ... | null }
- */
 function getDuyungState() {
   try {
     const raw = localStorage.getItem('duyungState');
@@ -106,31 +135,99 @@ function getDuyungState() {
   return { atIsland: null };
 }
 
-/**
- * Panggil ini dari tombol "Selesai" / "Kembali ke Peta" di setiap halaman island.
- * Otomatis: buka island berikutnya, taruh duyung di island ini, lalu kembali ke map.
- *
- * Contoh di island-1.html:
- *   <button onclick="completeIslandAndReturn('island1')">Kembali ke Peta</button>
- */
+/* =====================================================
+ * 4. AKSI SELESAI PULAU & KEMBALI
+ * ===================================================== */
+
 function completeIslandAndReturn(currentIslandId) {
+  completeIsland(currentIslandId);
   unlockNextIsland(currentIslandId);
   setDuyungAtIsland(currentIslandId);
-  window.location.href = 'map.html';
+  navigateTo('map.html');
+}
+
+/* =====================================================
+ * 5. TRANSISI ANTAR HALAMAN
+ * ===================================================== */
+
+function createTransitionOverlay() {
+  // Cegah duplikat overlay
+  if (document.getElementById('transitionOverlay')) {
+    return document.getElementById('transitionOverlay');
+  }
+
+  const overlay = document.createElement('div');
+  overlay.id = 'transitionOverlay';
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a1c2e;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  `;
+  document.body.appendChild(overlay);
+  return overlay;
 }
 
 /**
- * Reset seluruh progress (untuk debug atau memulai ulang).
- * Bisa dipanggil dari console browser.
+ * Pindah halaman dengan efek fade-out.
+ * Gunakan ini untuk SEMUA navigasi.
  */
+function navigateTo(url) {
+  const overlay = createTransitionOverlay();
+  overlay.style.pointerEvents = 'auto';
+  overlay.style.opacity = '1';
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 400);
+}
+
+/**
+ * Panggil saat halaman dimuat untuk memulai fade-in.
+ */
+function initPageTransition() {
+  const overlay = createTransitionOverlay();
+  // Pastikan overlay tertutup dulu
+  overlay.style.opacity = '1';
+  overlay.style.pointerEvents = 'none';
+
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      overlay.style.opacity = '0';
+    }, 50);
+  });
+}
+
+/* =====================================================
+ * 6. RESET PROGRESS (untuk debug / mulai ulang)
+ * ===================================================== */
+
 function resetProgress() {
   try {
     localStorage.removeItem('unlockedIslands');
+    localStorage.removeItem('completedIslands');
     localStorage.removeItem('duyungState');
   } catch (e) {
     // ignore
   }
-  // Set ulang ke default: island1 terbuka, duyung di posisi awal.
   getUnlockedIslands();
+  getCompletedIslands();
   setDuyungAtIsland(null);
+}
+
+/* =====================================================
+ * AUTO-INIT: jalankan transisi saat halaman dimuat
+ * ===================================================== */
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPageTransition);
+  } else {
+    initPageTransition();
+  }
 }
