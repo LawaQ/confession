@@ -13,6 +13,7 @@
       --deep-sea-2: #0d2b45;
       --gold: #ffd700;
       --pink: #ff8fab;
+      --pink-soft: #ff5f7a;
       --putih: #f5f5f5;
       --teks: #e0e0e0;
       --bubble-bg: rgba(20, 20, 20, 0.55);
@@ -156,7 +157,7 @@
       transition: opacity 1.5s;
     }
 
-    /* Pertanyaan pamungkas */
+    /* Pertanyaan final */
     .final-question {
       margin-top: 30px;
       opacity: 0;
@@ -174,6 +175,7 @@
       color: var(--putih);
       margin-bottom: 25px;
       letter-spacing: 1px;
+      text-shadow: 0 0 15px rgba(255, 143, 171, 0.6);
     }
     .btn-group {
       display: flex;
@@ -181,7 +183,7 @@
       justify-content: center;
       gap: 15px;
     }
-    .btn-yes, .btn-no {
+    .btn-yes, .btn-mau {
       padding: 15px 40px;
       border: none;
       border-radius: 50px;
@@ -202,23 +204,23 @@
       transform: translateY(-3px);
       box-shadow: 0 12px 25px rgba(255, 107, 157, 0.8);
     }
-    .btn-no {
-      background: rgba(0,0,0,0.5);
+    .btn-mau {
+      background: rgba(255,255,255,0.15);
       color: var(--putih);
-      border: 2px solid var(--putih);
+      border: 2px solid var(--pink);
     }
-    .btn-no:hover {
-      background: rgba(0,0,0,0.7);
+    .btn-mau:hover {
+      background: rgba(255,255,255,0.25);
       transform: translateY(-3px);
     }
 
-    /* Respons */
     .response-message {
       margin-top: 25px;
       font-size: 1.2rem;
       font-weight: 600;
       color: var(--putih);
       min-height: 35px;
+      animation: fadeInUp 0.5s ease;
     }
 
     @media (max-width: 600px) {
@@ -226,7 +228,7 @@
       .typewriter-text { font-size: 1.05rem; }
       .bubble-chat { padding: 20px 15px; }
       .question-text { font-size: 1.4rem; }
-      .btn-yes, .btn-no { padding: 12px 25px; font-size: 1rem; }
+      .btn-yes, .btn-mau { padding: 12px 25px; font-size: 1rem; }
     }
   </style>
 </head>
@@ -256,12 +258,12 @@
 
       <div class="signature" id="signature">— Bajak Lautmu</div>
 
-      <!-- Pertanyaan pamungkas -->
+      <!-- Pertanyaan final -->
       <div class="final-question" id="finalQuestion">
-        <div class="question-text">Bolehkah seorang bajak laut bersanding dengan Ratu Kucing Duyung?</div>
+        <div class="question-text">Maukah kamu jadi bagian dari hidupku? 💖</div>
         <div class="btn-group">
-          <button class="btn-yes" id="btnYes">Boleh 🥰</button>
-          <button class="btn-no" id="btnNo">Tidak Boleh 😔</button>
+          <button class="btn-yes" id="btnYes">Iya, aku mau! 💖</button>
+          <button class="btn-mau" id="btnMau">Mau banget! 🥰</button>
         </div>
         <div class="response-message" id="responseMessage"></div>
       </div>
@@ -281,7 +283,7 @@
       const signature = document.getElementById('signature');
       const finalQuestion = document.getElementById('finalQuestion');
       const btnYes = document.getElementById('btnYes');
-      const btnNo = document.getElementById('btnNo');
+      const btnMau = document.getElementById('btnMau');
       const responseMessage = document.getElementById('responseMessage');
       const typewriterElements = document.querySelectorAll('.typewriter-text');
 
@@ -314,22 +316,21 @@
       }
       typeNext();
 
-      // Tombol jawaban
-      btnYes.addEventListener('click', function() {
-        responseMessage.innerHTML = '🥳 Terima kasih sudah menerima! Pelayaran ini berakhir bahagia.';
+      function handleYes() {
+        responseMessage.innerHTML = 'Yay! 🥳 Sekarang kamu resmi jadi milikku. 💖 Terima kasih sudah menerima bajak laut ini.';
         btnYes.style.display = 'none';
-        btnNo.style.display = 'none';
-        // Set pulau selesai (meski terakhir)
+        btnMau.style.display = 'none';
         completeIsland('island4');
         setTimeout(() => {
           navigateTo('map.html');
-        }, 2000);
-      });
+        }, 2500);
+      }
 
-      btnNo.addEventListener('click', function() {
-        responseMessage.innerHTML = '💙 Aku hargai kejujuranmu. Terima kasih sudah berlayar bersamaku sampai di sini.';
+      btnYes.addEventListener('click', handleYes);
+      btnMau.addEventListener('click', function() {
+        responseMessage.innerHTML = 'Aww! 🥰 Aku janji akan selalu jaga kamu, Ratu Kucing Duyung.';
         btnYes.style.display = 'none';
-        btnNo.style.display = 'none';
+        btnMau.style.display = 'none';
         completeIsland('island4');
         setTimeout(() => {
           navigateTo('map.html');
