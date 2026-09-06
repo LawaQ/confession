@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulau 4 - Pengakuan 🏝️💌</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-sea-1: #0a1c2e;
+      --deep-sea-2: #0d2b45;
+      --gold: #ffd700;
+      --pink: #ff8fab;
+      --putih: #f5f5f5;
+      --teks: #e0e0e0;
+      --bubble-bg: rgba(20, 20, 20, 0.55);
+      --bubble-border: rgba(255,255,255,0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-image: url('assets/background-island-4.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: #0a0a0a;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      padding: 80px 20px 100px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--teks);
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 20;
+      padding: 10px 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      background: rgba(0,0,0,0.5);
+      color: var(--putih);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(10px);
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .back-btn:hover {
+      background: rgba(0,0,0,0.7);
+      border-color: var(--pink);
+    }
+
+    .main-container {
+      position: relative;
+      z-index: 2;
+      max-width: 650px;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .bubble-chat {
+      border-radius: 30px;
+      padding: 35px 30px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background: var(--bubble-bg);
+      border: 1px solid var(--bubble-border);
+    }
+
+    .letter-header {
+      text-align: center;
+      margin-bottom: 35px;
+      animation: fadeInDown 1.5s ease;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .letter-tag {
+      display: inline-block;
+      padding: 6px 20px;
+      border: 2px solid var(--gold);
+      border-radius: 50px;
+      color: var(--gold);
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      background: rgba(255,215,0,0.1);
+    }
+    .letter-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 2.3rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--putih);
+    }
+    .letter-subtitle {
+      color: #c2d8e8;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    .accent-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0 30px;
+    }
+    .accent-line .line { height: 2px; width: 60px; background: var(--gold); }
+    .accent-line .dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+
+    .typewriter-text {
+      font-size: 1.2rem;
+      line-height: 1.9;
+      margin-bottom: 25px;
+      min-height: 1.9em;
+      font-weight: 500;
+      color: var(--teks);
+      text-shadow: 0 0 4px rgba(0,0,0,0.4);
+    }
+
+    .signature {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 40px;
+      text-align: right;
+      opacity: 0;
+      transition: opacity 1.5s;
+    }
+
+    /* Pertanyaan pamungkas */
+    .final-question {
+      margin-top: 30px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+    .final-question.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .question-text {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--putih);
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .btn-yes, .btn-no {
+      padding: 15px 40px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-yes {
+      background: linear-gradient(135deg, var(--pink), #ff6b9d);
+      color: white;
+      box-shadow: 0 8px 20px rgba(255, 107, 157, 0.5);
+    }
+    .btn-yes:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(255, 107, 157, 0.8);
+    }
+    .btn-no {
+      background: rgba(0,0,0,0.5);
+      color: var(--putih);
+      border: 2px solid var(--putih);
+    }
+    .btn-no:hover {
+      background: rgba(0,0,0,0.7);
+      transform: translateY(-3px);
+    }
+
+    /* Respons */
+    .response-message {
+      margin-top: 25px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--putih);
+      min-height: 35px;
+    }
+
+    @media (max-width: 600px) {
+      .letter-title { font-size: 1.8rem; }
+      .typewriter-text { font-size: 1.05rem; }
+      .bubble-chat { padding: 20px 15px; }
+      .question-text { font-size: 1.4rem; }
+      .btn-yes, .btn-no { padding: 12px 25px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#" class="back-btn" id="backBtn">⬅️ Kembali</a>
+
+  <div class="main-container">
+    <div class="bubble-chat">
+      <div class="letter-header">
+        <div class="letter-tag">🏝️ Pulau Terakhir</div>
+        <h1 class="letter-title">Surat Pengakuan</h1>
+        <div class="letter-subtitle">Untuk Ratu Kucing Duyung</div>
+      </div>
+
+      <div class="accent-line">
+        <div class="line"></div>
+        <div class="dot"></div>
+        <div class="line"></div>
+      </div>
+
+      <p class="typewriter-text" data-text="Halo, Ratu Kucing Duyung..."></p>
+      <p class="typewriter-text" data-text="Aku sudah berlayar jauh, melewati pulau-pulau kenangan. Di setiap pulau, aku menemukan alasan untuk terus berlayar. Dan alasan terbesarnya adalah kamu." data-delay="12"></p>
+      <p class="typewriter-text" data-text="Dari lintasan F1 sampai dunia Ladybug, dari gelap yang penuh ragu sampai cahaya yang kamu bawa, semua mengarah ke satu hal: aku ingin kamu tahu, aku masih di sini. Masih dengan rasa yang sama." data-delay="12"></p>
+      <p class="typewriter-text" data-text="Aku tidak ingin lagi menjadi bajak laut yang hanya berlayar di sekitarmu. Aku ingin berlabuh. Di hatimu." data-delay="12"></p>
+      <p class="typewriter-text" data-text="Jadi, dengan segenap keberanian yang kupunya, aku bertanya..." data-delay="12"></p>
+
+      <div class="signature" id="signature">— Bajak Lautmu</div>
+
+      <!-- Pertanyaan pamungkas -->
+      <div class="final-question" id="finalQuestion">
+        <div class="question-text">Bolehkah seorang bajak laut bersanding dengan Ratu Kucing Duyung?</div>
+        <div class="btn-group">
+          <button class="btn-yes" id="btnYes">Boleh 🥰</button>
+          <button class="btn-no" id="btnNo">Tidak Boleh 😔</button>
+        </div>
+        <div class="response-message" id="responseMessage"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="state.js"></script>
+  <script>
+    (function() {
+      const backBtn = document.getElementById('backBtn');
+      backBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        setDuyungAtIsland('island4');
+        navigateTo('map.html');
+      });
+
+      const signature = document.getElementById('signature');
+      const finalQuestion = document.getElementById('finalQuestion');
+      const btnYes = document.getElementById('btnYes');
+      const btnNo = document.getElementById('btnNo');
+      const responseMessage = document.getElementById('responseMessage');
+      const typewriterElements = document.querySelectorAll('.typewriter-text');
+
+      // Typewriter
+      let currentIndex = 0;
+      function typeNext() {
+        if (currentIndex >= typewriterElements.length) {
+          signature.style.opacity = '1';
+          setTimeout(() => {
+            finalQuestion.classList.add('visible');
+          }, 800);
+          return;
+        }
+        const element = typewriterElements[currentIndex];
+        const text = element.getAttribute('data-text');
+        const delay = parseInt(element.getAttribute('data-delay')) || 30;
+        element.textContent = '';
+        let charIndex = 0;
+        function typeChar() {
+          if (charIndex < text.length) {
+            element.textContent += text.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeChar, delay);
+          } else {
+            currentIndex++;
+            setTimeout(typeNext, 500);
+          }
+        }
+        typeChar();
+      }
+      typeNext();
+
+      // Tombol jawaban
+      btnYes.addEventListener('click', function() {
+        responseMessage.innerHTML = '🥳 Terima kasih sudah menerima! Pelayaran ini berakhir bahagia.';
+        btnYes.style.display = 'none';
+        btnNo.style.display = 'none';
+        // Set pulau selesai (meski terakhir)
+        completeIsland('island4');
+        setTimeout(() => {
+          navigateTo('map.html');
+        }, 2000);
+      });
+
+      btnNo.addEventListener('click', function() {
+        responseMessage.innerHTML = '💙 Aku hargai kejujuranmu. Terima kasih sudah berlayar bersamaku sampai di sini.';
+        btnYes.style.display = 'none';
+        btnNo.style.display = 'none';
+        completeIsland('island4');
+        setTimeout(() => {
+          navigateTo('map.html');
+        }, 2500);
+      });
+    })();
+  </script>
+</body>
+</html>
