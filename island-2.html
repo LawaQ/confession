@@ -18,11 +18,7 @@
       --bubble-bg: rgba(220, 60, 90, 0.30);
       --bubble-border: rgba(255,255,255,0.4);
     }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background-image: url('assets/background-island-2.jpg');
       background-size: cover;
@@ -89,7 +85,6 @@
       text-align: center;
     }
 
-    /* Transformasi */
     .transform-section {
       display: flex;
       flex-direction: column;
@@ -148,7 +143,6 @@
       box-shadow: 0 12px 25px rgba(217, 35, 50, 0.9);
     }
 
-    /* Overlay transformasi */
     .transform-overlay {
       position: fixed;
       top: 0;
@@ -163,9 +157,7 @@
       flex-direction: column;
       gap: 20px;
     }
-    .transform-overlay.active {
-      display: flex;
-    }
+    .transform-overlay.active { display: flex; }
     .transform-earring-img {
       width: 180px;
       max-width: 80%;
@@ -192,7 +184,6 @@
       50% { opacity: 1; }
     }
 
-    /* Surat */
     .letter-section {
       display: none;
       text-align: left;
@@ -218,7 +209,6 @@
       position: relative;
     }
 
-    /* Dekorasi bubble */
     .bubble-decor {
       position: absolute;
       width: 80px;
@@ -293,7 +283,6 @@
       transition: opacity 1s;
     }
 
-    /* Tombol selesai */
     .btn-finish {
       display: inline-block;
       margin-top: 25px;
@@ -341,7 +330,6 @@
   <a href="#" class="back-btn" id="backBtn">⬅️ Kembali</a>
 
   <div class="main-container">
-    <!-- Transformasi -->
     <div class="transform-section" id="transformSection">
       <div class="ladybug-title">🐞 Pulau 2: Miraculous Ladybug</div>
       <div class="ladybug-subtitle">Saatnya bertransformasi untuk membuka surat</div>
@@ -349,13 +337,11 @@
       <button class="btn-transform" id="btnTransform">Transform!</button>
     </div>
 
-    <!-- Overlay -->
     <div class="transform-overlay" id="transformOverlay">
       <img src="assets/earrings.png" alt="Earrings" class="transform-earring-img">
       <div class="transform-text" id="transformText">Tikki, spots on!</div>
     </div>
 
-    <!-- Surat -->
     <div class="letter-section" id="letterSection">
       <div class="ladybug-bubble">
         <img src="assets/island2-kiri.png" alt="" class="bubble-decor bubble-decor-left">
@@ -388,7 +374,7 @@
       backBtn.addEventListener('click', function(e) {
         e.preventDefault();
         setDuyungAtIsland('island2');
-        window.location.href = 'map.html';
+        navigateTo('map.html');
       });
 
       const btnTransform = document.getElementById('btnTransform');
