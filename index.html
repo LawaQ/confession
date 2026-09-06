@@ -57,6 +57,56 @@
       100% { transform: translateY(-110vh) scale(1.4); opacity: 0; }
     }
 
+    /* Dekorasi ikon laut */
+    .floating-icons {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+      font-size: 2rem;
+      user-select: none;
+    }
+    .float-icon {
+      position: absolute;
+      animation: floatAround 10s ease-in-out infinite;
+      opacity: 0.5;
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
+    }
+    @keyframes floatAround {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-25px) rotate(8deg); }
+    }
+
+    /* Dasar laut */
+    .sea-floor {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      pointer-events: none;
+      z-index: 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      font-size: 2.5rem;
+      opacity: 0.7;
+      padding-bottom: 10px;
+      user-select: none;
+    }
+    .sea-floor span {
+      display: inline-block;
+      animation: sway 4s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-6deg); }
+      50% { transform: rotate(6deg); }
+    }
+
     .card {
       position: relative;
       z-index: 2;
@@ -319,6 +369,8 @@
       .hybrid-cat { bottom: 60px; font-size: 50px; }
       .hybrid-crown { bottom: 115px; font-size: 30px; }
       .key-emoji { font-size: 3rem; }
+      .floating-icons { font-size: 1.5rem; }
+      .sea-floor { font-size: 1.8rem; height: 90px; }
     }
   </style>
 </head>
@@ -326,6 +378,32 @@
 
   <!-- Gelembung background -->
   <div class="bubbles" id="bubbles"></div>
+
+  <!-- Dekorasi ikon laut -->
+  <div class="floating-icons">
+    <span class="float-icon" style="top:8%; left:7%;">🐠</span>
+    <span class="float-icon" style="top:25%; right:10%; animation-delay:2s;">🪼</span>
+    <span class="float-icon" style="top:55%; left:12%; animation-delay:4s;">🐡</span>
+    <span class="float-icon" style="top:70%; right:15%; animation-delay:1s;">🦑</span>
+    <span class="float-icon" style="top:15%; left:60%; animation-delay:3s;">🐳</span>
+    <span class="float-icon" style="top:40%; right:25%; animation-delay:5s;">🐬</span>
+    <span class="float-icon" style="top:80%; left:30%; animation-delay:2.5s;">🦀</span>
+    <span class="float-icon" style="top:65%; left:45%; animation-delay:3.5s;">🐚</span>
+    <span class="float-icon" style="top:30%; left:20%; animation-delay:1.5s;">⭐</span>
+    <span class="float-icon" style="top:50%; right:5%; animation-delay:4.5s;">💎</span>
+    <span class="float-icon" style="bottom:25%; left:5%; animation-delay:0.8s;">🪸</span>
+  </div>
+
+  <!-- Dasar laut -->
+  <div class="sea-floor">
+    <span>🌿</span>
+    <span>🪸</span>
+    <span>🌿</span>
+    <span>🐚</span>
+    <span>🪸</span>
+    <span>🌿</span>
+    <span>⭐</span>
+  </div>
 
   <div class="card">
     <div class="hybrid-container">
@@ -366,10 +444,8 @@
   <script src="state.js"></script>
   <script>
     (function() {
-      // Pastikan default progress terinisialisasi.
       getUnlockedIslands();
 
-      // Buat gelembung dekoratif.
       const bubblesContainer = document.getElementById('bubbles');
       for (let i = 0; i < 30; i++) {
         const bubble = document.createElement('div');
