@@ -12,6 +12,7 @@
       --gold-1: #FFD700;
       --text-light: #e0f0ff;
       --accent-pink: #ff8fab;
+      --completed-green: #4ade80;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', 'Segoe UI', sans-serif; }
     body {
@@ -25,7 +26,7 @@
       overflow-x: hidden;
     }
 
-    /* ===== DEKORASI BAWAH LAUT ===== */
+    /* Dekorasi bawah laut */
     .floating-icons {
       position: fixed;
       width: 100%;
@@ -173,6 +174,7 @@
       white-space: nowrap;
     }
 
+    /* Indikator kunci (terbuka, belum selesai) */
     .key-indicator {
       position: absolute;
       top: -15px;
@@ -182,8 +184,26 @@
       filter: drop-shadow(0 0 8px rgba(255,215,0,0.8));
       display: none;
     }
-    .island.unlocked .key-indicator { display: block; }
+    .island.unlocked:not(.completed) .key-indicator { display: block; }
     @keyframes keyBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+    /* Indikator selesai (centang hijau) */
+    .completed-indicator {
+      position: absolute;
+      top: -15px;
+      right: -25px;
+      font-size: 2.2rem;
+      animation: popIn 0.5s ease;
+      filter: drop-shadow(0 0 10px rgba(74,222,128,0.9));
+      display: none;
+    }
+    .island.completed .completed-indicator { display: block; }
+    .island.completed .key-indicator { display: none; }
+    @keyframes popIn {
+      0% { transform: scale(0); }
+      70% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
 
     .duyung-walker {
       position: absolute;
@@ -231,7 +251,7 @@
 </head>
 <body>
 
-  <!-- DEKORASI IKON LAUT -->
+  <!-- Dekorasi ikon laut -->
   <div class="floating-icons">
     <span class="float-icon" style="top:8%; left:7%;">🐠</span>
     <span class="float-icon" style="top:25%; right:10%; animation-delay:2s;">🪼</span>
@@ -246,18 +266,13 @@
     <span class="float-icon" style="bottom:25%; left:5%; animation-delay:0.8s;">🪸</span>
   </div>
 
-  <!-- DASAR LAUT -->
+  <!-- Dasar laut -->
   <div class="sea-floor">
-    <span>🌿</span>
-    <span>🪸</span>
-    <span>🌿</span>
-    <span>🐚</span>
-    <span>🪸</span>
-    <span>🌿</span>
-    <span>⭐</span>
+    <span>🌿</span><span>🪸</span><span>🌿</span><span>🐚</span><span>🪸</span><span>🌿</span><span>⭐</span>
   </div>
 
-  <a href="index.html" class="back-btn">⬅️ Kembali</a>
+  <!-- Tombol kembali -->
+  <a href="#" class="back-btn" id="backBtn">⬅️ Kembali</a>
 
   <div class="map-container">
     <div class="map-title">🗺️ Peta Kepulauan Ratu Kucing Duyung</div>
@@ -279,21 +294,25 @@
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 1</div>
         <span class="key-indicator">🔑</span>
+        <span class="completed-indicator">✅</span>
       </div>
       <div class="island" id="island2" style="left:38%; top:72%;" data-target="island-2.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 2</div>
         <span class="key-indicator">🔑</span>
+        <span class="completed-indicator">✅</span>
       </div>
       <div class="island" id="island3" style="left:80%; top:45%;" data-target="island-3.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 3</div>
         <span class="key-indicator">🔑</span>
+        <span class="completed-indicator">✅</span>
       </div>
       <div class="island" id="island4" style="left:88%; top:85%;" data-target="island-4.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 4</div>
         <span class="key-indicator">🔑</span>
+        <span class="completed-indicator">✅</span>
       </div>
 
       <!-- Karakter Duyung -->
@@ -306,7 +325,7 @@
   <script src="state.js"></script>
   <script>
     (function() {
-      // Dekorasi gelembung
+      // Gelembung
       const bubblesContainer = document.createElement('div');
       bubblesContainer.style.cssText = 'position:fixed;width:100%;height:100%;top:0;left:0;pointer-events:none;z-index:0;';
       document.body.appendChild(bubblesContainer);
@@ -326,22 +345,39 @@
       const mapArea = document.getElementById('mapArea');
       const mapMessage = document.getElementById('mapMessage');
       const islandElements = document.querySelectorAll('.island');
+      const backBtn = document.getElementById('backBtn');
       let isAnimating = false;
 
+      backBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        navigateTo('index.html');
+      });
+
+      // Status pulau
       function refreshIslandLockState() {
         const unlocked = getUnlockedIslands();
+        const completed = getCompletedIslands();
         islandElements.forEach(island => {
-          if (unlocked.includes(island.id)) {
+          const id = island.id;
+          // Set locked/unlocked
+          if (unlocked.includes(id)) {
             island.classList.remove('locked');
             island.classList.add('unlocked');
           } else {
             island.classList.add('locked');
             island.classList.remove('unlocked');
           }
+          // Set completed
+          if (completed.includes(id)) {
+            island.classList.add('completed');
+          } else {
+            island.classList.remove('completed');
+          }
         });
       }
       refreshIslandLockState();
 
+      // Koordinat pulau di viewBox
       const islandCoordsViewBox = {
         island1: { x: 120, y: 120 },
         island2: { x: 304, y: 432 },
@@ -450,7 +486,7 @@
           const target = this.getAttribute('data-target');
           const label = this.querySelector('.island-label').textContent;
           if (duyungState.atIsland === islandId) {
-            window.location.href = target;
+            navigateTo(target);
             return;
           }
           const start = resolveAnchor(duyungState.atIsland);
@@ -460,7 +496,7 @@
           function arrive() {
             duyungState = { atIsland: islandId };
             setDuyungAtIsland(islandId);
-            window.location.href = target;
+            navigateTo(target);
           }
           if (start.path === end.path) {
             animateDuyung(start.path, start.progress, end.progress, arrive);
