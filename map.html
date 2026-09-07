@@ -75,22 +75,6 @@
       50% { transform: rotate(6deg); }
     }
 
-    .back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 20;
-      padding: 10px 20px;
-      border-radius: 50px;
-      background: rgba(0,0,0,0.5);
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      border: 2px solid rgba(255,255,255,0.3);
-      backdrop-filter: blur(10px);
-    }
-    .back-btn:hover { background: rgba(0,0,0,0.7); }
-
     .map-container {
       position: relative;
       z-index: 2;
@@ -174,7 +158,6 @@
       white-space: nowrap;
     }
 
-    /* Indikator kunci (terbuka, belum selesai) */
     .key-indicator {
       position: absolute;
       top: -15px;
@@ -187,7 +170,6 @@
     .island.unlocked:not(.completed) .key-indicator { display: block; }
     @keyframes keyBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-    /* Indikator selesai (centang hijau) */
     .completed-indicator {
       position: absolute;
       top: -15px;
@@ -271,9 +253,6 @@
     <span>🌿</span><span>🪸</span><span>🌿</span><span>🐚</span><span>🪸</span><span>🌿</span><span>⭐</span>
   </div>
 
-  <!-- Tombol kembali -->
-  <a href="#" class="back-btn" id="backBtn">⬅️ Kembali</a>
-
   <div class="map-container">
     <div class="map-title">🗺️ Peta Kepulauan Ratu Kucing Duyung</div>
     <div class="map-subtitle">Jelajahi pulau-pulau untuk mengumpulkan kunci dan membuka misteri</div>
@@ -345,21 +324,13 @@
       const mapArea = document.getElementById('mapArea');
       const mapMessage = document.getElementById('mapMessage');
       const islandElements = document.querySelectorAll('.island');
-      const backBtn = document.getElementById('backBtn');
       let isAnimating = false;
 
-      backBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        navigateTo('index.html');
-      });
-
-      // Status pulau
       function refreshIslandLockState() {
         const unlocked = getUnlockedIslands();
         const completed = getCompletedIslands();
         islandElements.forEach(island => {
           const id = island.id;
-          // Set locked/unlocked
           if (unlocked.includes(id)) {
             island.classList.remove('locked');
             island.classList.add('unlocked');
@@ -367,7 +338,6 @@
             island.classList.add('locked');
             island.classList.remove('unlocked');
           }
-          // Set completed
           if (completed.includes(id)) {
             island.classList.add('completed');
           } else {
@@ -377,7 +347,6 @@
       }
       refreshIslandLockState();
 
-      // Koordinat pulau di viewBox
       const islandCoordsViewBox = {
         island1: { x: 120, y: 120 },
         island2: { x: 304, y: 432 },
@@ -449,6 +418,15 @@
         resizeTimer = setTimeout(() => {
           if (!isAnimating) setDuyungFromState();
         }, 150);
+      });
+
+      // 🔥 Penanganan back dari cache (bfcache) di HP
+      window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {
+          // Halaman dimuat dari bfcache, perbarui posisi duyung
+          duyungState = getDuyungState();
+          setDuyungFromState();
+        }
       });
 
       function animateDuyung(path, fromProgress, toProgress, callback) {
