@@ -39,34 +39,6 @@
       color: var(--teks-gelap);
     }
 
-    .back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 20;
-      padding: 10px 20px;
-      border: 2px solid rgba(255,255,255,0.5);
-      border-radius: 50px;
-      background: rgba(0,0,0,0.4);
-      color: #fff;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      backdrop-filter: blur(10px);
-      font-family: 'Chakra Petch', sans-serif;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-    .back-btn:hover {
-      background: rgba(0,0,0,0.6);
-      border-color: var(--pink);
-    }
-
     .main-container {
       position: relative;
       z-index: 2;
@@ -250,8 +222,6 @@
 </head>
 <body>
 
-  <a href="#" class="back-btn" id="backBtn">⬅️ Kembali</a>
-
   <div class="main-container">
     <div class="bubble-chat">
       <div class="letter-header">
@@ -291,13 +261,6 @@
   <script src="state.js"></script>
   <script>
     (function() {
-      const backBtn = document.getElementById('backBtn');
-      backBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        setDuyungAtIsland('island4');
-        navigateTo('map.html');
-      });
-
       const signature = document.getElementById('signature');
       const finalQuestion = document.getElementById('finalQuestion');
       const btnYes = document.getElementById('btnYes');
