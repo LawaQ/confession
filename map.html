@@ -420,10 +420,20 @@
         }, 150);
       });
 
-      // 🔥 Penanganan back dari cache (bfcache) di HP
+      // 🔥 Perbaikan back dari cache / HP
+      function refreshDuyungAfterBack() {
+        duyungState = getDuyungState();
+        setDuyungFromState();
+      }
+
       window.addEventListener('pageshow', function(event) {
         if (event.persisted) {
-          // Halaman dimuat dari bfcache, perbarui posisi duyung
+          setTimeout(refreshDuyungAfterBack, 100);
+        }
+      });
+
+      document.addEventListener('visibilitychange', function() {
+        if (!document.hidden && !isAnimating) {
           duyungState = getDuyungState();
           setDuyungFromState();
         }
