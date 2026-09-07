@@ -48,34 +48,6 @@
       pointer-events: none;
     }
 
-    .back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 20;
-      padding: 10px 20px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 50px;
-      background: rgba(0,0,0,0.5);
-      color: var(--putih);
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      backdrop-filter: blur(10px);
-      font-family: 'Chakra Petch', sans-serif;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-    .back-btn:hover {
-      background: rgba(0,0,0,0.7);
-      border-color: var(--merah-muda);
-    }
-
     .main-container {
       position: relative;
       z-index: 2;
@@ -85,6 +57,7 @@
       text-align: center;
     }
 
+    /* Transformasi */
     .transform-section {
       display: flex;
       flex-direction: column;
@@ -143,6 +116,7 @@
       box-shadow: 0 12px 25px rgba(217, 35, 50, 0.9);
     }
 
+    /* Overlay transformasi */
     .transform-overlay {
       position: fixed;
       top: 0;
@@ -184,6 +158,7 @@
       50% { opacity: 1; }
     }
 
+    /* Surat */
     .letter-section {
       display: none;
       text-align: left;
@@ -327,8 +302,6 @@
 </head>
 <body>
 
-  <a href="#" class="back-btn" id="backBtn">⬅️ Kembali</a>
-
   <div class="main-container">
     <div class="transform-section" id="transformSection">
       <div class="ladybug-title">🐞 Pulau 2: Miraculous Ladybug</div>
@@ -370,13 +343,6 @@
   <script src="state.js"></script>
   <script>
     (function() {
-      const backBtn = document.getElementById('backBtn');
-      backBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        setDuyungAtIsland('island2');
-        navigateTo('map.html');
-      });
-
       const btnTransform = document.getElementById('btnTransform');
       const transformSection = document.getElementById('transformSection');
       const transformOverlay = document.getElementById('transformOverlay');
