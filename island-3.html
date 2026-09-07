@@ -45,33 +45,6 @@
       background-image: url('assets/background-island-3-terang.jpg');
     }
 
-    .back-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 20;
-      padding: 10px 20px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-radius: 50px;
-      background: rgba(0,0,0,0.5);
-      color: var(--putih);
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      backdrop-filter: blur(10px);
-      font-family: 'Chakra Petch', sans-serif;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-    .back-btn:hover {
-      background: rgba(0,0,0,0.7);
-    }
-
     .main-container {
       position: relative;
       z-index: 2;
@@ -150,7 +123,6 @@
       text-shadow: 0 0 4px rgba(0,0,0,0.4);
     }
 
-    /* Bagian terang: teks 10% lebih cerah */
     body.cerah .typewriter-text {
       color: var(--teks-terang);
       text-shadow: 0 0 4px rgba(0,0,0,0.25);
@@ -261,8 +233,6 @@
 </head>
 <body>
 
-  <a href="#" class="back-btn" id="backBtn">⬅️ Kembali</a>
-
   <!-- Overlay untuk transisi background -->
   <div class="bg-transition-overlay" id="bgTransitionOverlay"></div>
 
@@ -326,13 +296,6 @@
   <script src="state.js"></script>
   <script>
     (function() {
-      const backBtn = document.getElementById('backBtn');
-      backBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        setDuyungAtIsland('island3');
-        navigateTo('map.html');
-      });
-
       const gelapSection = document.getElementById('gelapSection');
       const terangSection = document.getElementById('terangSection');
       const btnLanjut = document.getElementById('btnLanjut');
