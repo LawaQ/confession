@@ -106,7 +106,6 @@
     .accent-line .line { height: 2px; width: 60px; background: var(--pink-soft); }
     .accent-line .dot { width: 6px; height: 6px; background: var(--pink); border-radius: 50%; }
 
-    /* GIF profil bulat */
     .gif-profile {
       display: block;
       width: 110px;
@@ -197,14 +196,75 @@
       border-color: var(--pink);
     }
 
-    .response-message {
+    /* Bagian jawaban + textarea */
+    .answer-section {
+      display: none;
       margin-top: 25px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--teks-gelap);
-      min-height: 35px;
+    }
+    .answer-section.visible {
+      display: block;
       animation: fadeInUp 0.5s ease;
     }
+    textarea {
+      width: 100%;
+      padding: 15px;
+      border-radius: 15px;
+      border: 2px solid var(--pink-soft);
+      font-size: 1rem;
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--teks-gelap);
+      background: rgba(255,255,255,0.7);
+      resize: vertical;
+      min-height: 100px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    textarea:focus { border-color: var(--pink); }
+    .btn-send {
+      margin-top: 15px;
+      padding: 13px 30px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, var(--pink), #ff6b9d);
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(255,107,157,0.4);
+    }
+    .btn-send:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(255,107,157,0.7); }
+
+    .response-message {
+      margin-top: 15px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--teks-gelap);
+      min-height: 30px;
+      animation: fadeInUp 0.5s ease;
+    }
+    .btn-back-map {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 50px;
+      background: var(--pink);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .btn-back-map:hover { transform: translateY(-3px); }
+
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -236,7 +296,6 @@
         <div class="line"></div>
       </div>
 
-      <!-- GIF lokal dari folder assets -->
       <img src="assets/blush.gif" alt="Blush GIF" class="gif-profile">
 
       <p class="typewriter-text" data-text="Halo, Ratu Kucing Duyung..."></p>
@@ -249,11 +308,16 @@
 
       <div class="final-question" id="finalQuestion">
         <div class="question-text">Maukah kamu jadi bagian dari hidupku? 💖</div>
-        <div class="btn-group">
+        <div class="btn-group" id="btnGroup">
           <button class="btn-yes" id="btnYes">Iya, aku mau! 💖</button>
           <button class="btn-no" id="btnNo">Maaf, belum bisa 🙏</button>
         </div>
-        <div class="response-message" id="responseMessage"></div>
+
+        <div class="answer-section" id="answerSection">
+          <div class="response-message" id="responseMessage"></div>
+          <textarea id="heartMessage" placeholder="Tulis isi hatimu di sini..."></textarea>
+          <button class="btn-send" id="btnSend">Kirim Jawaban 💌</button>
+        </div>
       </div>
     </div>
   </div>
@@ -263,11 +327,18 @@
     (function() {
       const signature = document.getElementById('signature');
       const finalQuestion = document.getElementById('finalQuestion');
+      const btnGroup = document.getElementById('btnGroup');
       const btnYes = document.getElementById('btnYes');
       const btnNo = document.getElementById('btnNo');
+      const answerSection = document.getElementById('answerSection');
       const responseMessage = document.getElementById('responseMessage');
+      const heartMessage = document.getElementById('heartMessage');
+      const btnSend = document.getElementById('btnSend');
       const typewriterElements = document.querySelectorAll('.typewriter-text');
 
+      let chosenAnswer = '';
+
+      // Typewriter
       let currentIndex = 0;
       function typeNext() {
         if (currentIndex >= typewriterElements.length) {
@@ -296,20 +367,59 @@
       }
       typeNext();
 
+      function showAnswerSection(answer) {
+        chosenAnswer = answer;
+        responseMessage.textContent = answer === 'yes' 
+          ? 'Yay! 🥳 Tulis isi hatimu di bawah ini ya...' 
+          : 'Aku hargai kejujuranmu. Tulis apa pun yang ingin kamu sampaikan...';
+        btnGroup.style.display = 'none';
+        answerSection.classList.add('visible');
+      }
+
       btnYes.addEventListener('click', function() {
-        responseMessage.innerHTML = 'Yay! 🥳 Sekarang kamu resmi jadi milikku. 💖 Terima kasih sudah menerima bajak laut ini.';
-        btnYes.style.display = 'none';
-        btnNo.style.display = 'none';
-        completeIsland('island4');
-        setTimeout(() => navigateTo('map.html'), 2500);
+        showAnswerSection('yes');
       });
 
       btnNo.addEventListener('click', function() {
-        responseMessage.innerHTML = 'Aku hargai kejujuranmu. Terima kasih sudah berlayar bersamaku sampai di sini. 💙';
-        btnYes.style.display = 'none';
-        btnNo.style.display = 'none';
-        completeIsland('island4');
-        setTimeout(() => navigateTo('map.html'), 2500);
+        showAnswerSection('no');
+      });
+
+      btnSend.addEventListener('click', function() {
+        const message = heartMessage.value.trim();
+        if (!chosenAnswer) return;
+
+        btnSend.disabled = true;
+        btnSend.textContent = 'Mengirim...';
+
+        const payload = {
+          answer: chosenAnswer,
+          message: message || '(tidak menulis pesan)',
+          timestamp: new Date().toISOString()
+        };
+
+        fetch('https://formspree.io/f/xqpkyngp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+        .then(response => {
+          if (response.ok) {
+            responseMessage.textContent = 'Jawabanmu sudah terkirim! 💌 Terima kasih sudah berlayar bersamaku.';
+            heartMessage.style.display = 'none';
+            btnSend.style.display = 'none';
+            completeIsland('island4');
+          } else {
+            throw new Error('Gagal kirim');
+          }
+        })
+        .catch(error => {
+          responseMessage.textContent = 'Gagal mengirim. Coba lagi ya...';
+          btnSend.disabled = false;
+          btnSend.textContent = 'Kirim Jawaban 💌';
+        });
       });
     })();
   </script>
