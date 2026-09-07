@@ -410,6 +410,21 @@
         duyungWalker.style.top = pos.top + 'px';
         duyungWalker.classList.add('show');
       }
+
+      function refreshDuyungAfterBack() {
+        // Pastikan overlay transisi tidak menghalangi
+        const overlay = document.getElementById('transitionOverlay');
+        if (overlay) {
+          overlay.style.opacity = '0';
+          overlay.style.pointerEvents = 'none';
+          overlay.style.display = 'none';
+        }
+
+        duyungState = getDuyungState();
+        setDuyungFromState();
+        refreshIslandLockState();
+      }
+
       setDuyungFromState();
 
       let resizeTimer;
@@ -421,21 +436,15 @@
       });
 
       // 🔥 Perbaikan back dari cache / HP
-      function refreshDuyungAfterBack() {
-        duyungState = getDuyungState();
-        setDuyungFromState();
-      }
-
       window.addEventListener('pageshow', function(event) {
-        if (event.persisted) {
-          setTimeout(refreshDuyungAfterBack, 100);
-        }
+        // Panggil selalu, bukan hanya jika event.persisted
+        setTimeout(refreshDuyungAfterBack, 50);
       });
 
+      // Fallback untuk browser yang tidak mendukung bfcache
       document.addEventListener('visibilitychange', function() {
         if (!document.hidden && !isAnimating) {
-          duyungState = getDuyungState();
-          setDuyungFromState();
+          refreshDuyungAfterBack();
         }
       });
 
