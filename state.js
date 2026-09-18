@@ -53,11 +53,24 @@ function storageRemove(key) {
 
 
 /* =====================================================
+   SESSION STORAGE HELPER
+   Flag ending hanya berlaku untuk sesi tab saat ini.
+===================================================== */
+
+function sessionRemove(key) {
+  try {
+    sessionStorage.removeItem(key);
+  } catch (e) {
+    // ignore
+  }
+}
+
+
+/* =====================================================
    RESET OTOMATIS SETIAP 24 JAM
 ===================================================== */
 
 function autoResetDailyIfNeeded() {
-
   const now = Date.now();
 
   const last =
@@ -67,12 +80,10 @@ function autoResetDailyIfNeeded() {
       )
     ) || 0;
 
-
   if (
     now - last >
     24 * 60 * 60 * 1000
   ) {
-
     storageRemove(
       'unlockedIslands'
     );
@@ -84,16 +95,18 @@ function autoResetDailyIfNeeded() {
     storageRemove(
       'duyungState'
     );
+
+    // Progress baru harus bisa memainkan ending lagi.
+    sessionRemove(
+      'heartEndingPlayed'
+    );
   }
 
-
   try {
-
     localStorage.setItem(
       LAST_RESET_KEY,
       String(now)
     );
-
   } catch (e) {
     // ignore
   }
@@ -105,44 +118,34 @@ function autoResetDailyIfNeeded() {
 ===================================================== */
 
 function getCompletedIslands() {
-
   const stored =
     storageGet(
       'completedIslands',
       []
     );
 
-
   if (!Array.isArray(stored)) {
     return [];
   }
 
-
   const sanitized = [];
-
 
   for (
     const id of ISLAND_ORDER
   ) {
-
     if (
       stored.includes(id)
     ) {
-
       sanitized.push(id);
-
     } else {
-
       break;
     }
   }
-
 
   storageSet(
     'completedIslands',
     sanitized
   );
-
 
   return sanitized;
 }
@@ -151,16 +154,13 @@ function getCompletedIslands() {
 function completeIsland(
   islandId
 ) {
-
   const completed =
     getCompletedIslands();
-
 
   if (
     !completed.includes(islandId) &&
     ISLAND_ORDER.includes(islandId)
   ) {
-
     completed.push(
       islandId
     );
@@ -171,7 +171,6 @@ function completeIsland(
     );
   }
 
-
   return completed;
 }
 
@@ -179,7 +178,6 @@ function completeIsland(
 function isIslandCompleted(
   islandId
 ) {
-
   return getCompletedIslands()
     .includes(islandId);
 }
@@ -190,44 +188,35 @@ function isIslandCompleted(
 ===================================================== */
 
 function getUnlockedIslands() {
-
   const completed =
     getCompletedIslands();
-
 
   const unlocked = [
     'island1'
   ];
-
 
   for (
     let i = 1;
     i < ISLAND_ORDER.length;
     i++
   ) {
-
     if (
       completed.includes(
         ISLAND_ORDER[i - 1]
       )
     ) {
-
       unlocked.push(
         ISLAND_ORDER[i]
       );
-
     } else {
-
       break;
     }
   }
-
 
   storageSet(
     'unlockedIslands',
     unlocked
   );
-
 
   return unlocked;
 }
@@ -236,7 +225,6 @@ function getUnlockedIslands() {
 function unlockNextIsland(
   currentIslandId
 ) {
-
   return getUnlockedIslands();
 }
 
@@ -248,14 +236,12 @@ function unlockNextIsland(
 function setDuyungAtIsland(
   islandId
 ) {
-
   const safeIslandId =
     ISLAND_ORDER.includes(
       islandId
     )
       ? islandId
       : null;
-
 
   storageSet(
     'duyungState',
@@ -268,7 +254,6 @@ function setDuyungAtIsland(
 
 
 function getDuyungState() {
-
   const s =
     storageGet(
       'duyungState',
@@ -276,7 +261,6 @@ function getDuyungState() {
         atIsland: null
       }
     );
-
 
   if (
     s &&
@@ -287,10 +271,8 @@ function getDuyungState() {
       )
     )
   ) {
-
     return s;
   }
-
 
   return {
     atIsland: null
@@ -305,7 +287,6 @@ function getDuyungState() {
 function completeIslandAndReturn(
   currentIslandId
 ) {
-
   completeIsland(
     currentIslandId
   );
@@ -327,28 +308,23 @@ function completeIslandAndReturn(
 ===================================================== */
 
 function createTransitionOverlay() {
-
   if (
     document.getElementById(
       'transitionOverlay'
     )
   ) {
-
     return document.getElementById(
       'transitionOverlay'
     );
   }
-
 
   const overlay =
     document.createElement(
       'div'
     );
 
-
   overlay.id =
     'transitionOverlay';
-
 
   overlay.style.cssText = `
     position: fixed;
@@ -363,62 +339,46 @@ function createTransitionOverlay() {
     transition: opacity 0.4s ease;
   `;
 
-
   document.body.appendChild(
     overlay
   );
-
 
   return overlay;
 }
 
 
 function navigateTo(url) {
-
   const overlay =
     createTransitionOverlay();
-
 
   overlay.style.pointerEvents =
     'auto';
 
-
   overlay.style.opacity =
     '1';
 
-
   setTimeout(() => {
-
     window.location.href =
       url;
-
   }, 400);
 }
 
 
 function initPageTransition() {
-
   const overlay =
     createTransitionOverlay();
-
 
   overlay.style.opacity =
     '1';
 
-
   overlay.style.pointerEvents =
     'none';
 
-
   requestAnimationFrame(() => {
-
     setTimeout(() => {
-
       overlay.style.opacity =
         '0';
-
     }, 50);
-
   });
 }
 
@@ -428,7 +388,6 @@ function initPageTransition() {
 ===================================================== */
 
 function resetProgress() {
-
   storageRemove(
     'unlockedIslands'
   );
@@ -441,11 +400,28 @@ function resetProgress() {
     'duyungState'
   );
 
+  // Ending cinematic harus bisa diputar lagi setelah Replay.
+  sessionRemove(
+    'heartEndingPlayed'
+  );
+
+  /*
+    Reset manual dianggap sebagai awal
+    dari siklus 24 jam yang baru.
+    Jadi timer 24 jam dimulai dari sekarang.
+  */
+  try {
+    localStorage.setItem(
+      LAST_RESET_KEY,
+      String(Date.now())
+    );
+  } catch (e) {
+    // ignore
+  }
 
   /*
     Buat kembali state awal.
   */
-
   getCompletedIslands();
 
   getUnlockedIslands();
@@ -463,22 +439,17 @@ function resetProgress() {
 if (
   typeof document !== 'undefined'
 ) {
-
   autoResetDailyIfNeeded();
-
 
   if (
     document.readyState ===
     'loading'
   ) {
-
     document.addEventListener(
       'DOMContentLoaded',
       initPageTransition
     );
-
   } else {
-
     initPageTransition();
   }
 }
