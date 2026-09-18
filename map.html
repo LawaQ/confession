@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Peta Kepulauan Ratu Kucing Duyung 🏝️</title>
+  <title>A Little Story</title>
   <style>
     :root {
       --deep-sea-1: #0a1c2e;
@@ -81,17 +81,23 @@
       max-width: 850px;
       text-align: center;
     }
+
     .map-title {
       color: #fff;
-      font-size: 2rem;
+      font-size: 2.2rem;
+      font-weight: 700;
       text-shadow: 0 0 20px rgba(255,255,255,0.3);
-      margin-bottom: 5px;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
     }
+
     .map-subtitle {
       color: #c2d8e8;
       font-size: 1rem;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      font-style: italic;
     }
+
     .map-area {
       position: relative;
       width: 100%;
@@ -154,18 +160,6 @@
       white-space: nowrap;
     }
 
-    .key-indicator {
-      position: absolute;
-      top: -15px;
-      right: -25px;
-      font-size: 2.2rem;
-      animation: keyBounce 2s ease-in-out infinite;
-      filter: drop-shadow(0 0 8px rgba(255,215,0,0.8));
-      display: none;
-    }
-    .island.unlocked:not(.completed) .key-indicator { display: block; }
-    @keyframes keyBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-
     .completed-indicator {
       position: absolute;
       top: -15px;
@@ -176,7 +170,6 @@
       display: none;
     }
     .island.completed .completed-indicator { display: block; }
-    .island.completed .key-indicator { display: none; }
     @keyframes popIn {
       0% { transform: scale(0); }
       70% { transform: scale(1.2); }
@@ -214,7 +207,7 @@
       .island-emoji { font-size: 3.2rem; }
       .island-label { font-size: 0.8rem; padding: 3px 12px; }
       .duyung-walker { width: 56px; }
-      .map-title { font-size: 1.5rem; }
+      .map-title { font-size: 1.6rem; }
       .sea-floor { font-size: 1.8rem; height: 90px; }
       .floating-icons { font-size: 1.5rem; }
     }
@@ -250,8 +243,8 @@
   </div>
 
   <div class="map-container">
-    <div class="map-title">🗺️ Peta Kepulauan Ratu Kucing Duyung</div>
-    <div class="map-subtitle">Jelajahi pulau-pulau untuk mengumpulkan kunci dan membuka misteri</div>
+    <div class="map-title">A Little Story</div>
+    <div class="map-subtitle">Just a few things I wanted you to see.</div>
 
     <div class="map-area" id="mapArea">
       <!-- Path tersembunyi: titik mulai -> island1 -->
@@ -268,25 +261,21 @@
       <div class="island" id="island1" style="left:15%; top:20%;" data-target="island-1.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 1</div>
-        <span class="key-indicator">🔑</span>
         <span class="completed-indicator">✅</span>
       </div>
       <div class="island" id="island2" style="left:38%; top:72%;" data-target="island-2.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 2</div>
-        <span class="key-indicator">🔑</span>
         <span class="completed-indicator">✅</span>
       </div>
       <div class="island" id="island3" style="left:80%; top:45%;" data-target="island-3.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 3</div>
-        <span class="key-indicator">🔑</span>
         <span class="completed-indicator">✅</span>
       </div>
       <div class="island" id="island4" style="left:88%; top:85%;" data-target="island-4.html">
         <div class="island-emoji">🏝️</div>
         <div class="island-label">Island 4</div>
-        <span class="key-indicator">🔑</span>
         <span class="completed-indicator">✅</span>
       </div>
 
@@ -294,7 +283,7 @@
       <img src="assets/duyung.png" alt="Ratu Kucing Duyung" class="duyung-walker" id="duyungWalker">
     </div>
 
-    <div class="map-message" id="mapMessage">Klik pulau yang sudah terbuka untuk berlayar.</div>
+    <div class="map-message" id="mapMessage">Pilih salah satu pulau buat kamu jelajahi.</div>
   </div>
 
   <script src="state.js"></script>
@@ -408,7 +397,7 @@
       }
 
       function refreshDuyungAfterBack() {
-        isAnimating = false; // reset status animasi
+        isAnimating = false;
 
         const overlay = document.getElementById('transitionOverlay');
         if (overlay) {
@@ -432,13 +421,10 @@
         }, 150);
       });
 
-      // 🔥 Perbaikan back dari cache / HP
       window.addEventListener('pageshow', function(event) {
-        // Panggil selalu, bukan hanya jika event.persisted
         setTimeout(refreshDuyungAfterBack, 50);
       });
 
-      // Fallback untuk browser yang tidak mendukung bfcache
       document.addEventListener('visibilitychange', function() {
         if (!document.hidden && !isAnimating) {
           refreshDuyungAfterBack();
@@ -471,7 +457,7 @@
         island.addEventListener('click', function() {
           if (isAnimating) return;
           if (this.classList.contains('locked')) {
-            mapMessage.textContent = '🔒 Island ini masih terkunci. Selesaikan island sebelumnya dulu!';
+            mapMessage.textContent = '🔒 Pulau ini masih terkunci. Selesaikan pulau sebelumnya dulu ya.';
             this.style.animation = 'shake 0.5s ease';
             setTimeout(() => { this.style.animation = ''; }, 500);
             return;
@@ -485,10 +471,10 @@
           }
           const start = resolveAnchor(duyungState.atIsland);
           const end = resolveAnchor(islandId);
-          mapMessage.textContent = `⛵ Ratu Kucing Duyung berlayar ke ${label}...`;
+          mapMessage.textContent = `Ratu Kucing Duyung berlayar ke ${label}...`;
           isAnimating = true;
           function arrive() {
-            isAnimating = false; // reset agar back nanti bisa langsung klik
+            isAnimating = false;
             duyungState = { atIsland: islandId };
             setDuyungAtIsland(islandId);
             navigateTo(target);
