@@ -180,6 +180,12 @@
       overflow: visible;
     }
 
+    /* Jalur bantu tetap ada untuk perhitungan posisi duyung,
+       tapi tidak boleh terlihat di layar. */
+    #snakePathHidden {
+      display: none !important;
+    }
+
     .snake-path path {
       fill: none;
       stroke: rgba(255,215,0,0.6);
@@ -858,22 +864,22 @@
 
       body.heart-mode #island1 {
         left: 22% !important;
-        top: 25% !important;
+        top: 38% !important;
       }
 
       body.heart-mode #island2 {
         left: 78% !important;
-        top: 25% !important;
+        top: 38% !important;
       }
 
       body.heart-mode #island3 {
         left: 33% !important;
-        top: 67% !important;
+        top: 57% !important;
       }
 
       body.heart-mode #island4 {
         left: 67% !important;
-        top: 67% !important;
+        top: 57% !important;
       }
     }
 
@@ -903,22 +909,22 @@
 
       body.heart-mode #island1 {
         left: 21% !important;
-        top: 24% !important;
+        top: 39% !important;
       }
 
       body.heart-mode #island2 {
         left: 79% !important;
-        top: 24% !important;
+        top: 39% !important;
       }
 
       body.heart-mode #island3 {
         left: 31% !important;
-        top: 68% !important;
+        top: 58% !important;
       }
 
       body.heart-mode #island4 {
         left: 69% !important;
-        top: 68% !important;
+        top: 58% !important;
       }
     }
   </style>
@@ -2022,6 +2028,13 @@
               '';
 
           }, 50);
+
+          /* Tampilkan lagi ending saat kembali ke map setelah selesai. */
+          endingOverlay.classList.add('visible');
+
+          setTimeout(() => {
+            endingOverlay.classList.add('text-in');
+          }, 250);
 
           return;
 
