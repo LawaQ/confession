@@ -181,9 +181,13 @@
     }
 
     /* Jalur bantu tetap ada untuk perhitungan posisi duyung,
-       tapi tidak boleh terlihat di layar. */
+       tapi tidak boleh terlihat di layar.
+       Tetap di-render supaya getTotalLength / getPointAtLength
+       tetap valid di semua browser. */
     #snakePathHidden {
-      display: none !important;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .snake-path path {
@@ -1863,6 +1867,8 @@
                 atIsland: islandId
               };
 
+              setDuyungAtIsland(islandId);
+
               setDuyungFromState();
 
               navigateTo(target);
@@ -2174,10 +2180,8 @@
         function() {
 
           /*
-             INI PERUBAHAN PENTING.
-
-             Replay sekarang benar-benar
-             menghapus seluruh progress.
+             Replay benar-benar menghapus
+             seluruh progress.
           */
 
           resetProgress();
@@ -2188,9 +2192,6 @@
 
           /*
              Kembali ke awal cerita.
-             Karena state sudah di-reset,
-             user harus memainkan semuanya
-             dari awal lagi.
           */
 
           navigateTo(
@@ -2261,8 +2262,7 @@
             /*
                Kembali ke map:
                heart langsung ada,
-               title final langsung ada,
-               tanpa overlay.
+               title final langsung ada.
             */
 
             enterHeartFormation(false);
