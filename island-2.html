@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pulau 2 - Miraculous Ladybug 🐞</title>
+  <title>Miraculous Ladybug 🐞</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,6 +19,7 @@
       --bubble-border: rgba(255,255,255,0.4);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       background-image: url('assets/background-island-2.jpg');
       background-size: cover;
@@ -29,7 +30,7 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
-      padding: 80px 20px 100px;
+      padding: 70px 18px 90px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -43,7 +44,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.55);
+      background: rgba(0, 0, 0, 0.5);
       z-index: 0;
       pointer-events: none;
     }
@@ -51,72 +52,84 @@
     .main-container {
       position: relative;
       z-index: 2;
-      max-width: 650px;
+      max-width: 620px;
       width: 100%;
       margin: 0 auto;
       text-align: center;
     }
 
-    /* Transformasi */
+    /* ===== TRANSFORM SECTION ===== */
     .transform-section {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
       margin-top: 12vh;
       animation: fadeInDown 1s ease;
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .transform-section.hide {
+      opacity: 0;
+      transform: translateY(-20px);
+      pointer-events: none;
     }
     @keyframes fadeInDown {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     .ladybug-title {
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 2.5rem;
+      font-size: clamp(2rem, 8.5vw, 2.8rem);
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      text-shadow: 0 0 20px rgba(217, 35, 50, 0.8);
+      text-shadow: 0 0 22px rgba(217, 35, 50, 0.85);
+      line-height: 1.1;
     }
     .ladybug-subtitle {
-      font-size: 1.1rem;
+      font-size: clamp(0.95rem, 3.6vw, 1.1rem);
       color: var(--abu);
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       font-weight: 500;
+      font-style: italic;
     }
+
     .ladybug-earring-img {
-      width: 100px;
-      max-width: 100%;
-      margin: 0 auto;
-      filter: drop-shadow(0 0 25px rgba(255, 80, 120, 0.8));
+      width: 110px;
+      max-width: 40%;
+      margin: 6px auto 4px;
+      filter: drop-shadow(0 0 25px rgba(255, 80, 120, 0.85));
       animation: floatEarring 3s ease-in-out infinite;
       cursor: pointer;
     }
     @keyframes floatEarring {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+      50% { transform: translateY(-12px); }
     }
+
     .btn-transform {
-      padding: 15px 40px;
+      padding: 14px 38px;
       border: none;
       border-radius: 50px;
       background: linear-gradient(135deg, #d92332, #ff5f7a);
       color: white;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 700;
       font-family: 'Chakra Petch', sans-serif;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       cursor: pointer;
       transition: all 0.3s;
-      box-shadow: 0 8px 20px rgba(217, 35, 50, 0.6);
+      box-shadow: 0 8px 20px rgba(217, 35, 50, 0.5);
     }
     .btn-transform:hover {
       transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 12px 25px rgba(217, 35, 50, 0.9);
+      box-shadow: 0 12px 25px rgba(217, 35, 50, 0.85);
     }
+    .btn-transform:active { transform: translateY(0) scale(1); }
 
-    /* Overlay transformasi */
+    /* ===== TRANSFORM OVERLAY ===== */
     .transform-overlay {
       position: fixed;
       top: 0;
@@ -127,48 +140,59 @@
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(0,0,0,0.75);
+      background: rgba(0,0,0,0.78);
       flex-direction: column;
-      gap: 20px;
+      gap: 22px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
-    .transform-overlay.active { display: flex; }
+    .transform-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
     .transform-earring-img {
-      width: 180px;
-      max-width: 80%;
+      width: 170px;
+      max-width: 60%;
       filter: drop-shadow(0 0 60px rgba(255, 95, 122, 1));
-      animation: spinGlow 1.5s ease-in-out infinite;
+      animation: spinGlow 1.4s ease-in-out infinite;
     }
     @keyframes spinGlow {
-      0% { transform: scale(0.7) rotate(0deg); opacity: 0.5; }
-      50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
-      100% { transform: scale(0.7) rotate(360deg); opacity: 0.5; }
+      0% { transform: scale(0.75) rotate(0deg); opacity: 0.6; }
+      50% { transform: scale(1.15) rotate(180deg); opacity: 1; }
+      100% { transform: scale(0.75) rotate(360deg); opacity: 0.6; }
     }
+
     .transform-text {
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 2rem;
+      font-size: clamp(1.4rem, 5.5vw, 1.9rem);
       font-weight: 700;
       color: white;
       text-transform: uppercase;
       letter-spacing: 2px;
+      text-align: center;
       text-shadow: 0 0 20px rgba(255, 80, 120, 0.9);
       animation: pulseText 1s ease-in-out infinite;
+      padding: 0 20px;
     }
     @keyframes pulseText {
-      0%, 100% { opacity: 0.7; }
+      0%, 100% { opacity: 0.75; }
       50% { opacity: 1; }
     }
 
-    /* Surat */
+    /* ===== STORY SECTION ===== */
     .letter-section {
       display: none;
       text-align: left;
-      margin-top: 30px;
+      margin-top: 25px;
       opacity: 0;
-      transition: opacity 1s ease;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
     }
     .letter-section.visible {
       display: block;
       opacity: 1;
+      transform: translateY(0);
     }
 
     .ladybug-bubble {
@@ -177,91 +201,103 @@
       background-size: 60px 60px;
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px);
-      border-radius: 30px;
-      padding: 35px 30px;
-      border: 2px solid var(--bubble-border);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      border-radius: 28px;
+      padding: 32px 26px;
+      border: 1.5px solid var(--bubble-border);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
       position: relative;
     }
 
     .bubble-decor {
       position: absolute;
-      width: 80px;
-      max-width: 30%;
+      width: 75px;
+      max-width: 26%;
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
       pointer-events: none;
       z-index: 3;
     }
     .bubble-decor-left {
-      top: -25px;
-      left: -25px;
+      top: -22px;
+      left: -22px;
       transform: rotate(-15deg);
     }
     .bubble-decor-right {
-      bottom: -25px;
-      right: -25px;
+      bottom: -22px;
+      right: -22px;
       transform: rotate(15deg);
     }
 
     .letter-header {
       text-align: center;
-      margin-bottom: 35px;
+      margin-bottom: 28px;
     }
     .letter-tag {
       display: inline-block;
-      padding: 6px 20px;
-      border: 2px solid #ff5f7a;
+      padding: 5px 18px;
+      border: 1.5px solid #ff5f7a;
       border-radius: 50px;
       color: #ff5f7a;
       font-family: 'Chakra Petch', sans-serif;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       letter-spacing: 2px;
-      margin-bottom: 20px;
       text-transform: uppercase;
-      background: rgba(255, 95, 122, 0.1);
-    }
-    .letter-title {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: white;
-      text-shadow: 0 0 15px rgba(255, 95, 122, 0.7);
-    }
-    .letter-subtitle {
-      color: #e0e0e0;
-      font-size: 1rem;
-      margin-top: 10px;
+      background: rgba(255, 95, 122, 0.12);
     }
 
     .typewriter-text {
-      font-size: 1.15rem;
-      line-height: 1.8;
+      font-size: clamp(1rem, 4vw, 1.12rem);
+      line-height: 1.85;
       color: #f0f0f0;
-      margin-bottom: 20px;
-      min-height: 1.8em;
+      margin-bottom: 16px;
+      min-height: 1.85em;
       font-weight: 500;
-      text-shadow: 0 0 5px rgba(0,0,0,0.5);
+      text-shadow: 0 0 4px rgba(0,0,0,0.5);
+      word-wrap: break-word;
     }
+
     .signature {
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--emas);
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-top: 30px;
+      margin-top: 24px;
       text-align: right;
       opacity: 0;
       transition: opacity 1s;
     }
 
+    /* ===== CLOSING LINE ===== */
+    .closing-line {
+      margin-top: 30px;
+      text-align: center;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(1rem, 3.8vw, 1.12rem);
+      font-weight: 600;
+      color: #ffe4ec;
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 1s ease, transform 1s ease;
+      text-shadow: 0 0 12px rgba(255, 95, 122, 0.55);
+      padding: 0 8px;
+    }
+    .closing-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== CONTINUE BUTTON ===== */
+    .finish-wrap {
+      text-align: center;
+      margin-top: 26px;
+    }
     .btn-finish {
       display: inline-block;
-      margin-top: 25px;
-      padding: 15px 35px;
+      padding: 13px 34px;
       border: none;
       border-radius: 50px;
       background: linear-gradient(135deg, #d92332, #ff5f7a);
@@ -269,52 +305,76 @@
       font-size: 1rem;
       font-weight: 700;
       font-family: 'Chakra Petch', sans-serif;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
       cursor: pointer;
       transition: all 0.3s;
-      box-shadow: 0 8px 20px rgba(217, 35, 50, 0.6);
+      box-shadow: 0 8px 20px rgba(217, 35, 50, 0.5);
       opacity: 0;
       pointer-events: none;
     }
     .btn-finish.visible {
       opacity: 1;
       pointer-events: auto;
-      animation: fadeInUp 0.8s ease forwards;
+      animation: fadeInUp 0.7s ease forwards;
+    }
+    .btn-finish:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(217, 35, 50, 0.85);
     }
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
-      .ladybug-title { font-size: 1.8rem; }
-      .typewriter-text { font-size: 1.05rem; }
-      .ladybug-bubble { padding: 20px 15px; }
-      .letter-title { font-size: 1.8rem; }
+      body { padding: 55px 14px 80px; }
+      .transform-section { margin-top: 8vh; gap: 14px; }
+      .ladybug-bubble { padding: 24px 16px; border-radius: 22px; }
+      .bubble-decor { width: 55px; }
+      .bubble-decor-left { top: -14px; left: -14px; }
+      .bubble-decor-right { bottom: -14px; right: -14px; }
+      .ladybug-earring-img { width: 90px; }
+      .transform-earring-img { width: 130px; }
+      .btn-transform { padding: 13px 32px; font-size: 1.05rem; }
+      .btn-finish { padding: 12px 28px; font-size: 0.95rem; }
+    }
+
+    @media (max-width: 360px) {
+      .bubble-decor { width: 45px; }
+      .bubble-decor-left { top: -10px; left: -10px; }
+      .bubble-decor-right { bottom: -10px; right: -10px; }
+      .ladybug-earring-img { width: 75px; }
+    }
+
+    /* Landscape mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .transform-section { margin-top: 3vh; gap: 10px; }
+      body { padding: 40px 16px 60px; }
       .ladybug-earring-img { width: 70px; }
-      .transform-earring-img { width: 120px; }
-      .bubble-decor { width: 60px; }
-      .bubble-decor-left { top: -15px; left: -15px; }
-      .bubble-decor-right { bottom: -15px; right: -15px; }
     }
   </style>
 </head>
 <body>
 
   <div class="main-container">
+
+    <!-- TRANSFORM SECTION -->
     <div class="transform-section" id="transformSection">
-      <div class="ladybug-title">🐞 Pulau 2: Miraculous Ladybug</div>
-      <div class="ladybug-subtitle">Saatnya bertransformasi untuk membuka surat</div>
+      <div class="ladybug-title">Miraculous Ladybug</div>
+      <div class="ladybug-subtitle">And somehow, I got to know your world.</div>
       <img src="assets/earrings.png" alt="Earrings" class="ladybug-earring-img">
       <button class="btn-transform" id="btnTransform">Transform!</button>
     </div>
 
+    <!-- TRANSFORM OVERLAY -->
     <div class="transform-overlay" id="transformOverlay">
       <img src="assets/earrings.png" alt="Earrings" class="transform-earring-img">
       <div class="transform-text" id="transformText">Tikki, spots on!</div>
     </div>
 
+    <!-- STORY SECTION -->
     <div class="letter-section" id="letterSection">
       <div class="ladybug-bubble">
         <img src="assets/island2-kiri.png" alt="" class="bubble-decor bubble-decor-left">
@@ -322,10 +382,9 @@
 
         <div class="letter-header">
           <div class="letter-tag">🐞 Miraculous</div>
-          <h1 class="letter-title">Surat dari Ladybug</h1>
-          <div class="letter-subtitle">Ditulis setelah transformasi</div>
         </div>
 
+        <!-- Placeholder — isi akan ditulis ulang nanti -->
         <p class="typewriter-text" data-text="Halo, kamu..."></p>
         <p class="typewriter-text" data-text="Hari ini aku bertransformasi menjadi Ladybug, pahlawan yang selalu berusaha melindungi yang penting. Dan yang terpenting bagiku sekarang adalah kamu."></p>
         <p class="typewriter-text" data-text="Seperti Ladybug yang butuh Cat Noir, mungkin aku juga butuh kamu. Bukan untuk melawan penjahat, tapi untuk menjalani hari-hari yang kadang terasa berat."></p>
@@ -335,9 +394,18 @@
 
         <div class="signature" id="signature">— Cat Noir-mu</div>
 
-        <button class="btn-finish" id="btnFinish">Selesaikan Pulau 2 ✓</button>
+        <!-- Closing line -->
+        <div class="closing-line" id="closingLine">
+          I guess I know your world a little better now.
+        </div>
+
+        <!-- Continue button -->
+        <div class="finish-wrap">
+          <button class="btn-finish" id="btnFinish">Continue →</button>
+        </div>
       </div>
     </div>
+
   </div>
 
   <script src="state.js"></script>
@@ -349,41 +417,68 @@
       const transformText = document.getElementById('transformText');
       const letterSection = document.getElementById('letterSection');
       const signature = document.getElementById('signature');
+      const closingLine = document.getElementById('closingLine');
       const btnFinish = document.getElementById('btnFinish');
       const typewriterElements = document.querySelectorAll('.typewriter-text');
 
       let isTransforming = false;
 
+      // ===== TRANSFORM SEQUENCE =====
       btnTransform.addEventListener('click', function() {
         if (isTransforming) return;
         isTransforming = true;
 
-        transformSection.style.display = 'none';
-        transformOverlay.classList.add('active');
+        // Fade out transform section
+        transformSection.classList.add('hide');
 
+        // Tampilkan overlay setelah transisi section
         setTimeout(() => {
-          transformText.textContent = 'TRANSFORMED! 🐞';
-        }, 2500);
+          transformOverlay.classList.add('active');
 
-        setTimeout(() => {
-          transformOverlay.classList.remove('active');
-          letterSection.classList.add('visible');
-          startTypewriter();
-        }, 3500);
+          // Ganti teks setelah jeda
+          setTimeout(() => {
+            transformText.textContent = 'TRANSFORMED! 🐞';
+          }, 2200);
+
+          // Setelah selesai, sembunyikan overlay dan tampilkan story
+          setTimeout(() => {
+            transformOverlay.classList.remove('active');
+
+            setTimeout(() => {
+              transformSection.style.display = 'none';
+              letterSection.style.display = 'block';
+              void letterSection.offsetWidth;
+              letterSection.classList.add('visible');
+              startTypewriter();
+            }, 250);
+          }, 3200);
+        }, 500);
       });
 
+      // ===== TYPEWRITER =====
       function startTypewriter() {
         let currentIndex = 0;
+
         function typeNext() {
           if (currentIndex >= typewriterElements.length) {
+            // Selesai — munculkan signature, closing line, lalu tombol
             signature.style.opacity = '1';
-            btnFinish.classList.add('visible');
+
+            setTimeout(() => {
+              closingLine.classList.add('visible');
+            }, 500);
+
+            setTimeout(() => {
+              btnFinish.classList.add('visible');
+            }, 1400);
             return;
           }
+
           const element = typewriterElements[currentIndex];
           const text = element.getAttribute('data-text');
           element.textContent = '';
           let charIndex = 0;
+
           function typeChar() {
             if (charIndex < text.length) {
               element.textContent += text.charAt(charIndex);
@@ -391,15 +486,19 @@
               setTimeout(typeChar, 30);
             } else {
               currentIndex++;
-              setTimeout(typeNext, 400);
+              setTimeout(typeNext, 380);
             }
           }
+
           typeChar();
         }
+
         typeNext();
       }
 
+      // ===== CONTINUE =====
       btnFinish.addEventListener('click', function() {
+        btnFinish.disabled = true;
         completeIslandAndReturn('island2');
       });
     })();
