@@ -5,721 +5,920 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Little Story</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <style>
+    :root {
+      --deep-sea-1: #0a1c2e;
+      --deep-sea-2: #0d2b45;
+      --deep-sea-3: #0f3b5c;
+      --turquoise: #7fd8e6;
+      --gold-1: #FFD700;
+      --gold-soft: #ffea9a;
+      --text-light: #e0f0ff;
+      --accent-pink: #ff8fab;
+    }
+
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }
-
-    html,
-    body {
-      width: 100%;
-      min-height: 100%;
+      box-sizing: border-box;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
     }
 
     body {
-      overflow: hidden;
+      min-height: 100vh;
       background:
-        radial-gradient(circle at 50% 30%, rgba(46, 137, 164, .18), transparent 35%),
-        linear-gradient(180deg, #071d2b 0%, #082536 45%, #041723 100%);
-      color: #fff;
-      font-family: "Rajdhani", sans-serif;
+        radial-gradient(circle at 50% 35%, rgba(45, 130, 160, 0.18), transparent 45%),
+        linear-gradient(
+          180deg,
+          var(--deep-sea-1),
+          var(--deep-sea-2),
+          var(--deep-sea-3)
+        );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+      transition: background 2.5s ease;
     }
 
-    /* =====================================================
-       BACKGROUND
-    ===================================================== */
+    /* ============================================================
+       DEKORASI LAUT
+    ============================================================ */
 
-    .ocean {
+    .floating-icons {
       position: fixed;
-      inset: 0;
-      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
       pointer-events: none;
       z-index: 0;
+      font-size: 2rem;
+      user-select: none;
+      transition: opacity 2s ease;
     }
 
-    .light-ray {
+    .float-icon {
       position: absolute;
-      top: -15%;
-      width: 180px;
-      height: 140%;
-      background: linear-gradient(
-        180deg,
-        rgba(255,255,255,.08),
-        rgba(255,255,255,0)
-      );
-      filter: blur(18px);
-      transform: rotate(12deg);
-      opacity: .35;
+      animation: floatAround 10s ease-in-out infinite;
+      opacity: 0.5;
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
     }
 
-    .ray-1 {
-      left: 8%;
-    }
-
-    .ray-2 {
-      left: 42%;
-      transform: rotate(-8deg);
-      opacity: .22;
-    }
-
-    .ray-3 {
-      right: 10%;
-      transform: rotate(10deg);
-      opacity: .2;
-    }
-
-    .bubble {
-      position: absolute;
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: 50%;
-      opacity: .45;
-      animation: floatBubble linear infinite;
-    }
-
-    .bubble:nth-child(4) {
-      width: 14px;
-      height: 14px;
-      left: 8%;
-      bottom: -30px;
-      animation-duration: 13s;
-    }
-
-    .bubble:nth-child(5) {
-      width: 8px;
-      height: 8px;
-      left: 22%;
-      bottom: -20px;
-      animation-duration: 9s;
-      animation-delay: 2s;
-    }
-
-    .bubble:nth-child(6) {
-      width: 20px;
-      height: 20px;
-      left: 78%;
-      bottom: -40px;
-      animation-duration: 16s;
-      animation-delay: 1s;
-    }
-
-    .bubble:nth-child(7) {
-      width: 10px;
-      height: 10px;
-      left: 91%;
-      bottom: -20px;
-      animation-duration: 11s;
-      animation-delay: 4s;
-    }
-
-    @keyframes floatBubble {
-      from {
-        transform: translateY(0);
-        opacity: 0;
+    @keyframes floatAround {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
       }
-      15% {
-        opacity: .45;
-      }
-      to {
-        transform: translateY(-115vh);
-        opacity: 0;
+
+      50% {
+        transform: translateY(-25px) rotate(8deg);
       }
     }
 
     .sea-floor {
-      position: absolute;
+      position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 85px;
-      background:
-        radial-gradient(ellipse at 20% 30%, rgba(255,255,255,.04), transparent 40%),
-        linear-gradient(180deg, transparent, rgba(0,0,0,.2));
+      height: 120px;
+      pointer-events: none;
+      z-index: 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      font-size: 2.5rem;
+      opacity: 0.7;
+      padding-bottom: 10px;
+      user-select: none;
+      transition: opacity 2s ease;
     }
 
-    /* =====================================================
-       HEADER
-    ===================================================== */
+    .sea-floor span {
+      display: inline-block;
+      animation: sway 4s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
 
-    .header {
+    @keyframes sway {
+      0%, 100% {
+        transform: rotate(-6deg);
+      }
+
+      50% {
+        transform: rotate(6deg);
+      }
+    }
+
+    body.heart-mode .floating-icons {
+      opacity: 0.22;
+    }
+
+    body.heart-mode .sea-floor {
+      opacity: 0.3;
+    }
+
+    /* ============================================================
+       MAP
+    ============================================================ */
+
+    .map-container {
       position: relative;
-      z-index: 10;
+      z-index: 2;
+      width: 100%;
+      max-width: 850px;
       text-align: center;
-      padding: 28px 20px 0;
-      transition: transform .7s ease, opacity .7s ease;
     }
 
-    .header h1 {
-      font-family: "Chakra Petch", sans-serif;
-      font-size: clamp(27px, 5vw, 46px);
-      font-weight: 600;
-      letter-spacing: 2px;
-      transition: all .8s ease;
+    .map-title {
+      color: #fff;
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-shadow: 0 0 20px rgba(255,255,255,0.3);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+      transition:
+        opacity 1.5s ease,
+        transform 1.5s ease;
     }
 
-    .header p {
-      margin-top: 5px;
-      font-size: 17px;
-      letter-spacing: .5px;
-      opacity: .72;
-      transition: all .8s ease;
+    .map-subtitle {
+      color: #c2d8e8;
+      font-size: 1rem;
+      margin-bottom: 25px;
+      font-style: italic;
+      transition:
+        opacity 1.5s ease,
+        transform 1.5s ease;
     }
 
-    body.heart-mode .header h1 {
-      letter-spacing: 1px;
+    body.heart-mode .map-subtitle {
+      opacity: 1;
+      transform: translateY(0);
     }
-
-    body.heart-mode .header p {
-      opacity: .82;
-    }
-
-    /* =====================================================
-       MAP AREA
-    ===================================================== */
 
     .map-area {
       position: relative;
-      z-index: 5;
-      width: min(920px, 94vw);
-      height: 590px;
-      margin: 5px auto 0;
+      width: 100%;
+      height: 600px;
+      margin: 0 auto;
     }
 
-    /* =====================================================
-       NORMAL SAILING PATH
-    ===================================================== */
+    /* ============================================================
+       PATH
+    ============================================================ */
 
-    .route-normal,
-    .route-heart {
+    .snake-path {
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      overflow: visible;
+      z-index: 1;
       pointer-events: none;
+      overflow: visible;
     }
 
-    .route-normal {
-      opacity: 1;
-      transition: opacity .9s ease;
-    }
-
-    .route-heart {
-      opacity: 0;
-      transition: opacity .9s ease;
-    }
-
-    .normal-line {
+    .snake-path path {
       fill: none;
-      stroke: rgba(247, 204, 101, .75);
-      stroke-width: 3;
+      stroke: rgba(255,215,0,0.6);
+      stroke-width: 4;
+      stroke-dasharray: 12 10;
       stroke-linecap: round;
-      stroke-dasharray: 9 10;
-      filter: drop-shadow(0 0 5px rgba(247,204,101,.25));
+      animation: dashMove 2s linear infinite;
+      vector-effect: non-scaling-stroke;
     }
 
-    .heart-line {
-      fill: rgba(255, 105, 145, .045);
-      stroke: rgba(255, 144, 175, .95);
-      stroke-width: 5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      filter:
-        drop-shadow(0 0 5px rgba(255, 108, 150, .55))
-        drop-shadow(0 0 16px rgba(255, 108, 150, .25));
-      stroke-dasharray: 2600;
-      stroke-dashoffset: 2600;
+    @keyframes dashMove {
+      0% {
+        stroke-dashoffset: 0;
+      }
+
+      100% {
+        stroke-dashoffset: -22;
+      }
     }
 
-    body.heart-mode .route-normal {
-      opacity: 0;
-    }
-
-    body.heart-mode .route-heart {
+    /* Path awal */
+    #pathNormal {
       opacity: 1;
+      visibility: visible;
+      transition:
+        opacity 1.2s ease,
+        visibility 0s linear 0s;
     }
 
-    body.heart-mode .heart-line {
-      animation: drawHeart 2.2s cubic-bezier(.65,0,.25,1) forwards;
+    /* Path heart */
+    #pathHeart {
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        opacity 1.5s ease,
+        visibility 0s linear 1.5s;
     }
 
-    @keyframes drawHeart {
+    #pathHeart path {
+      stroke: rgba(255, 234, 154, 0.9);
+      stroke-width: 4.5;
+      stroke-dasharray: 14 11;
+      stroke-dashoffset: 1000;
+      filter:
+        drop-shadow(0 0 5px rgba(255,220,120,0.4))
+        drop-shadow(0 0 12px rgba(255,220,120,0.18));
+    }
+
+    body.heart-mode #pathNormal {
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        opacity 0.8s ease,
+        visibility 0s linear 0.8s;
+    }
+
+    body.heart-mode #pathHeart {
+      opacity: 1;
+      visibility: visible;
+      transition:
+        opacity 1.5s ease,
+        visibility 0s linear 0s;
+    }
+
+    body.heart-mode #pathHeart path {
+      animation:
+        heartPathDraw 2.8s ease-out forwards,
+        dashMove 2s linear infinite 2.8s;
+    }
+
+    @keyframes heartPathDraw {
+      from {
+        stroke-dashoffset: 1000;
+      }
+
       to {
         stroke-dashoffset: 0;
       }
     }
 
-    /* =====================================================
-       ISLANDS
-       IMPORTANT:
-       Tidak menggunakan inline left/top.
-       ===================================================== */
+    /* ============================================================
+       ISLAND
+    ============================================================ */
 
     .island {
       position: absolute;
-      width: 116px;
-      height: 116px;
-      transform: translate(-50%, -50%);
+      z-index: 3;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
       cursor: pointer;
-      z-index: 10;
+      user-select: none;
+
+      transform: translate(-50%, -50%);
+
+      filter:
+        drop-shadow(0 6px 10px rgba(0,0,0,0.5));
 
       transition:
-        left 1.9s cubic-bezier(.65,0,.25,1),
-        top 1.9s cubic-bezier(.65,0,.25,1),
-        transform .45s ease,
-        filter .6s ease,
-        opacity .5s ease;
+        left 2.7s cubic-bezier(0.65, 0, 0.35, 1),
+        top 2.7s cubic-bezier(0.65, 0, 0.35, 1),
+        transform 0.35s ease,
+        filter 0.5s ease;
     }
 
-    .island:hover {
-      transform: translate(-50%, -50%) scale(1.07);
-    }
-
-    .island-visual {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .island-glow {
-      position: absolute;
-      width: 92px;
-      height: 92px;
-      border-radius: 50%;
-      background: rgba(255, 209, 105, .12);
-      filter: blur(15px);
-      transition: all .5s ease;
-    }
-
-    .island-shell {
-      position: relative;
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background:
-        radial-gradient(circle at 38% 28%, #fff2b5 0 8%, transparent 9%),
-        radial-gradient(circle at 35% 32%, #e9c86c, #b07c31 65%, #68411e);
-      border: 3px solid rgba(255,239,171,.8);
-      box-shadow:
-        inset 0 -10px 18px rgba(0,0,0,.22),
-        0 5px 18px rgba(0,0,0,.3);
-      transition: all .5s ease;
-    }
-
-    .island-number {
-      position: relative;
-      z-index: 2;
-      font-family: "Chakra Petch", sans-serif;
-      font-size: 25px;
-      font-weight: 700;
-      color: #fff;
-      text-shadow: 0 2px 5px rgba(0,0,0,.45);
-    }
-
-    .island-label {
-      position: absolute;
-      top: calc(100% + 5px);
-      left: 50%;
-      transform: translateX(-50%);
-      white-space: nowrap;
-      font-family: "Chakra Petch", sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .5px;
-      text-shadow: 0 2px 5px rgba(0,0,0,.6);
-      transition: opacity .5s ease;
+    .island:hover:not(.locked) {
+      transform:
+        translate(-50%, -50%)
+        scale(1.08);
     }
 
     .island.locked {
-      opacity: .38;
-      cursor: default;
-      filter: grayscale(.6);
+      opacity: 0.55;
+      filter:
+        grayscale(0.55)
+        drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+
+      cursor: not-allowed;
     }
 
-    .island.completed .island-shell {
-      background:
-        radial-gradient(circle at 38% 28%, #fff6c8 0 8%, transparent 9%),
-        radial-gradient(circle at 35% 32%, #ffe38a, #d19b42 65%, #7c4e24);
-      border-color: rgba(255,241,177,1);
-      box-shadow:
-        inset 0 -10px 18px rgba(0,0,0,.18),
-        0 0 20px rgba(255,209,105,.32);
+    .island.locked:hover {
+      transform: translate(-50%, -50%);
     }
 
-    /* =====================================================
-       NORMAL POSITIONS
-    ===================================================== */
-
-    #island1 {
-      left: 15%;
-      top: 20%;
+    .island-emoji {
+      font-size: 4.5rem;
+      line-height: 1;
     }
 
-    #island2 {
-      left: 38%;
-      top: 72%;
+    .island.unlocked .island-emoji {
+      animation: islandFloat 3s ease-in-out infinite;
     }
 
-    #island3 {
-      left: 80%;
-      top: 45%;
+    @keyframes islandFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
     }
 
-    #island4 {
-      left: 88%;
-      top: 85%;
+    .island-label {
+      color: #fff;
+      font-weight: 700;
+      margin-top: 6px;
+      background: rgba(0,0,0,0.6);
+      padding: 4px 18px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 1rem;
+      white-space: nowrap;
+      transition:
+        background 1.5s ease,
+        transform 1.5s ease;
     }
 
-    /* =====================================================
-       HEART POSITIONS
-       ===================================================== */
+    /* ============================================================
+       LOCK
+    ============================================================ */
 
-    /*
-      Heart dibuat berdasarkan koordinat relatif terhadap
-      map-area, bukan diamond.
+    .lock-indicator {
+      position: absolute;
+      top: -12px;
+      right: -20px;
+      font-size: 1.6rem;
+      filter:
+        drop-shadow(0 0 8px rgba(255,255,255,0.4));
+      opacity: 0.75;
+      display: none;
+    }
 
-      1 = outer left lobe
-      2 = outer right lobe
-      3 = lower-left curve
-      4 = lower-right curve
-    */
+    .island.locked .lock-indicator {
+      display: block;
+    }
+
+    /* ============================================================
+       HEART FORMATION
+    ============================================================ */
 
     body.heart-mode #island1 {
-      left: 25%;
-      top: 31%;
+      left: 23% !important;
+      top: 27% !important;
     }
 
     body.heart-mode #island2 {
-      left: 75%;
-      top: 31%;
+      left: 77% !important;
+      top: 27% !important;
     }
 
     body.heart-mode #island3 {
-      left: 34%;
-      top: 64%;
+      left: 34% !important;
+      top: 65% !important;
     }
 
     body.heart-mode #island4 {
-      left: 66%;
-      top: 64%;
+      left: 66% !important;
+      top: 65% !important;
     }
 
-    body.heart-mode .island {
-      transition-duration: 2s;
+    body.heart-mode .island-label {
+      background: rgba(5, 18, 30, 0.5);
+      transform: translateY(2px);
     }
 
-    /* =====================================================
-       MERMAID / RATU KUCING DUYUNG
-    ===================================================== */
+    /* ============================================================
+       DUYUNG
+    ============================================================ */
 
-    .mermaid {
+    .duyung-walker {
       position: absolute;
-      left: 15%;
-      top: 20%;
-      width: 92px;
-      height: 92px;
-      z-index: 20;
-
-      transform: translate(-50%, -50%);
-      transition:
-        left 2s cubic-bezier(.65,0,.25,1),
-        top 2s cubic-bezier(.65,0,.25,1),
-        transform .8s ease,
-        opacity .6s ease;
+      width: 80px;
+      z-index: 8;
       pointer-events: none;
-    }
 
-    .mermaid img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 5px 8px rgba(0,0,0,.35));
-    }
-
-    body.heart-mode .mermaid {
-      left: 50%;
-      top: 48%;
-      transform: translate(-50%, -50%);
-    }
-
-    /* =====================================================
-       HEART CENTER
-    ===================================================== */
-
-    .heart-center {
-      position: absolute;
-      left: 50%;
-      top: 48%;
-      width: 125px;
-      height: 125px;
-      transform: translate(-50%, -50%) scale(.7);
-      border-radius: 50%;
-      background: radial-gradient(
-        circle,
-        rgba(255,164,191,.12),
-        rgba(255,164,191,0) 70%
-      );
       opacity: 0;
+
+      transform:
+        translate(-50%, -50%);
+
+      filter:
+        drop-shadow(0 0 15px rgba(255,80,120,0.8));
+
       transition:
-        opacity 1s ease 1.4s,
-        transform 1.2s cubic-bezier(.34,1.56,.64,1) 1.4s;
-      pointer-events: none;
+        opacity 0.5s ease;
     }
 
-    body.heart-mode .heart-center {
+    .duyung-walker.show {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
     }
 
-    /* =====================================================
-       COMPLETION OVERLAY
-    ===================================================== */
+    body.heart-mode .duyung-walker {
+      transition:
+        opacity 0.5s ease,
+        left 1.9s cubic-bezier(0.65, 0, 0.35, 1),
+        top 1.9s cubic-bezier(0.65, 0, 0.35, 1),
+        filter 1s ease;
 
-    .completion-overlay {
+      filter:
+        drop-shadow(0 0 22px rgba(255,200,220,0.9));
+    }
+
+    /* ============================================================
+       RIPPLE
+    ============================================================ */
+
+    .ripple {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+
+      border:
+        2px solid rgba(180,230,245,0.75);
+
+      border-radius: 50%;
+
+      transform:
+        translate(-50%, -50%);
+
+      pointer-events: none;
+      z-index: 7;
+      opacity: 0;
+    }
+
+    .ripple.active {
+      animation:
+        rippleExpand 2.2s ease-out forwards;
+    }
+
+    @keyframes rippleExpand {
+      0% {
+        opacity: 0.85;
+        transform:
+          translate(-50%, -50%)
+          scale(0.5);
+
+        border-width: 3px;
+      }
+
+      100% {
+        opacity: 0;
+        transform:
+          translate(-50%, -50%)
+          scale(9);
+
+        border-width: 0.5px;
+      }
+    }
+
+    .ripple.delay-1 {
+      animation-delay: 0.4s;
+    }
+
+    .ripple.delay-2 {
+      animation-delay: 0.9s;
+    }
+
+    /* ============================================================
+       SPARKLE
+    ============================================================ */
+
+    .sparkle-heart {
+      position: absolute;
+      font-size: 0.9rem;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9;
+      color: #ffe4ec;
+      text-shadow:
+        0 0 10px rgba(255,200,220,0.9);
+
+      transition: opacity 1.5s ease;
+    }
+
+    .sparkle-heart.active {
+      opacity: 0.75;
+      animation:
+        sparkleTwinkle 3.5s ease-in-out infinite;
+    }
+
+    @keyframes sparkleTwinkle {
+      0%, 100% {
+        transform:
+          scale(1)
+          rotate(0deg);
+
+        opacity: 0.5;
+      }
+
+      50% {
+        transform:
+          scale(1.2)
+          rotate(15deg);
+
+        opacity: 0.9;
+      }
+    }
+
+    /* ============================================================
+       MESSAGE
+    ============================================================ */
+
+    .map-message {
+      margin-top: 20px;
+      min-height: 35px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      transition:
+        opacity 1s ease,
+        transform 1s ease;
+    }
+
+    body.heart-mode .map-message {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    /* ============================================================
+       SHAKE
+    ============================================================ */
+
+    @keyframes shake {
+      0%, 100% {
+        transform:
+          translate(-50%, -50%)
+          translateX(0);
+      }
+
+      25% {
+        transform:
+          translate(-50%, -50%)
+          translateX(-6px);
+      }
+
+      75% {
+        transform:
+          translate(-50%, -50%)
+          translateX(6px);
+      }
+    }
+
+    /* ============================================================
+       ENDING OVERLAY
+    ============================================================ */
+
+    .ending-overlay {
       position: fixed;
       inset: 0;
+
+      background:
+        radial-gradient(
+          ellipse at center,
+          rgba(10,25,40,0.48) 0%,
+          rgba(5,15,25,0.86) 100%
+        );
+
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+
       z-index: 100;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       padding: 24px;
 
-      background: rgba(3, 14, 23, .72);
-      backdrop-filter: blur(8px);
-
       opacity: 0;
-      visibility: hidden;
       pointer-events: none;
-      transition: opacity .8s ease, visibility .8s ease;
+
+      transition:
+        opacity 1.5s ease;
     }
 
-    .completion-overlay.show {
+    .ending-overlay.visible {
       opacity: 1;
-      visibility: visible;
       pointer-events: auto;
     }
 
-    .completion-card {
-      width: min(510px, 92vw);
-      padding: 40px 30px 34px;
+    .ending-content {
       text-align: center;
+      max-width: 520px;
+      padding: 10px 8px;
+    }
 
+    .ending-title {
+      font-family:
+        'Chakra Petch',
+        'Poppins',
+        sans-serif;
+
+      color: #fff8ee;
+
+      font-size:
+        clamp(1.4rem, 5.5vw, 1.9rem);
+
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      line-height: 1.35;
+
+      text-shadow:
+        0 0 25px rgba(255,220,180,0.45);
+
+      opacity: 0;
+      transform: translateY(12px);
+
+      transition:
+        opacity 1.2s ease,
+        transform 1.2s ease;
+    }
+
+    .ending-subtitle {
+      margin-top: 16px;
+
+      color: #e6dccb;
+
+      font-size:
+        clamp(0.95rem, 3.8vw, 1.08rem);
+
+      line-height: 1.7;
+      font-style: italic;
+
+      opacity: 0;
+      transform: translateY(12px);
+
+      transition:
+        opacity 1.2s ease 0.5s,
+        transform 1.2s ease 0.5s;
+    }
+
+    .ending-buttons {
+      margin-top: 34px;
+
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      gap: 12px;
+
+      opacity: 0;
+      transform: translateY(12px);
+
+      transition:
+        opacity 1.2s ease 1.1s,
+        transform 1.2s ease 1.1s;
+    }
+
+    .ending-overlay.text-in .ending-title {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .ending-overlay.text-in .ending-subtitle {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .ending-overlay.text-in .ending-buttons {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .ending-btn {
+      padding: 13px 28px;
+
+      border: none;
+      border-radius: 50px;
+
+      font-family:
+        'Chakra Petch',
+        'Poppins',
+        sans-serif;
+
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+
+      white-space: nowrap;
+    }
+
+    .ending-btn.primary {
       background:
         linear-gradient(
-          145deg,
-          rgba(24,55,72,.96),
-          rgba(9,28,41,.96)
+          135deg,
+          #d9a86b,
+          #f2c98a
         );
 
-      border: 1px solid rgba(255,174,196,.32);
-      border-radius: 26px;
+      color: #2a1d10;
 
       box-shadow:
-        0 25px 80px rgba(0,0,0,.5),
-        0 0 40px rgba(255,111,151,.08);
-
-      transform: translateY(20px) scale(.96);
-      transition: transform .8s cubic-bezier(.34,1.56,.64,1);
+        0 8px 22px rgba(217,168,107,0.35);
     }
 
-    .completion-overlay.show .completion-card {
-      transform: translateY(0) scale(1);
+    .ending-btn.primary:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 12px 28px rgba(217,168,107,0.55);
     }
 
-    .completion-heart {
-      font-size: 52px;
-      line-height: 1;
-      margin-bottom: 20px;
-      filter: drop-shadow(0 5px 12px rgba(255,92,137,.3));
+    .ending-btn.secondary {
+      background:
+        rgba(255,255,255,0.1);
+
+      color: #f0e9dd;
+
+      border:
+        1.5px solid rgba(255,240,215,0.5);
     }
 
-    .completion-card h2 {
-      font-family: "Chakra Petch", sans-serif;
-      font-size: clamp(25px, 6vw, 35px);
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-    }
+    .ending-btn.secondary:hover {
+      background:
+        rgba(255,255,255,0.2);
 
-    .completion-card p {
-      font-size: 18px;
-      line-height: 1.55;
-      opacity: .78;
-      max-width: 400px;
-      margin: auto;
-    }
-
-    .completion-actions {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 28px;
-    }
-
-    .completion-actions button {
-      border: 0;
-      border-radius: 999px;
-      padding: 12px 19px;
-      font-family: "Chakra Petch", sans-serif;
-      font-size: 14px;
-      cursor: pointer;
-      transition: transform .25s ease, background .25s ease;
-    }
-
-    .completion-actions button:hover {
       transform: translateY(-2px);
     }
 
-    .btn-replay {
-      background: rgba(255,255,255,.1);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,.14) !important;
+    /* ============================================================
+       BUBBLES
+    ============================================================ */
+
+    .bubbles-layer {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
     }
 
-    .btn-explore {
-      background: #f19ab3;
-      color: #321621;
+    .bubble {
+      position: absolute;
+      bottom: -80px;
+
+      background:
+        rgba(255,255,255,0.08);
+
+      border:
+        1px solid rgba(255,255,255,0.15);
+
+      border-radius: 50%;
+
+      animation:
+        rise linear infinite;
     }
 
-    /* =====================================================
-       RESPONSIVE — MOBILE
-    ===================================================== */
+    @keyframes rise {
+      0% {
+        transform:
+          translateY(0)
+          scale(1);
+
+        opacity: 0.6;
+      }
+
+      100% {
+        transform:
+          translateY(-110vh)
+          scale(1.4);
+
+        opacity: 0;
+      }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
 
     @media (max-width: 600px) {
 
-      .header {
-        padding-top: 22px;
-      }
-
-      .header h1 {
-        font-size: 27px;
-      }
-
-      .header p {
-        font-size: 15px;
-      }
-
       .map-area {
-        width: 100vw;
-        height: 510px;
-        margin-top: 5px;
+        height: 480px;
       }
 
-      .island {
-        width: 92px;
-        height: 92px;
-      }
-
-      .island-shell {
-        width: 70px;
-        height: 70px;
-        border-width: 2px;
-      }
-
-      .island-number {
-        font-size: 20px;
-      }
-
-      .island-glow {
-        width: 75px;
-        height: 75px;
+      .island-emoji {
+        font-size: 3.2rem;
       }
 
       .island-label {
-        font-size: 11px;
+        font-size: 0.8rem;
+        padding: 3px 12px;
+      }
+
+      .duyung-walker {
+        width: 56px;
+      }
+
+      .map-title {
+        font-size: 1.6rem;
+      }
+
+      .sea-floor {
+        font-size: 1.8rem;
+        height: 90px;
+      }
+
+      .floating-icons {
+        font-size: 1.5rem;
+      }
+
+      .lock-indicator {
+        font-size: 1.3rem;
+        top: -10px;
+        right: -16px;
+      }
+
+      body.heart-mode .island-label {
+        font-size: 0.7rem;
+        padding: 3px 9px;
+      }
+
+      .ending-btn {
+        padding: 12px 22px;
+        font-size: 0.9rem;
       }
 
       /*
-        Mobile heart dibuat lebih tinggi,
-        bukan dilebarkan secara horizontal.
-        Ini menjaga rasio heart supaya tidak gepeng.
+        Heart mobile dibuat sedikit lebih tinggi.
+        Tidak mengubah desain normal map.
       */
 
       body.heart-mode #island1 {
-        left: 26%;
-        top: 31%;
+        left: 22% !important;
+        top: 25% !important;
       }
 
       body.heart-mode #island2 {
-        left: 74%;
-        top: 31%;
+        left: 78% !important;
+        top: 25% !important;
       }
 
       body.heart-mode #island3 {
-        left: 34%;
-        top: 60%;
+        left: 33% !important;
+        top: 67% !important;
       }
 
       body.heart-mode #island4 {
-        left: 66%;
-        top: 60%;
-      }
-
-      body.heart-mode .mermaid {
-        left: 50%;
-        top: 47%;
-      }
-
-      .mermaid {
-        width: 72px;
-        height: 72px;
-      }
-
-      .heart-center {
-        width: 105px;
-        height: 105px;
-        top: 47%;
-      }
-
-      .heart-line {
-        stroke-width: 4;
-      }
-
-      .completion-card {
-        padding: 32px 22px 28px;
-      }
-
-      .completion-card p {
-        font-size: 16px;
-      }
-
-      .completion-actions button {
-        width: 100%;
+        left: 67% !important;
+        top: 67% !important;
       }
     }
 
-    @media (max-height: 650px) and (max-width: 600px) {
+    @media (max-width: 380px) {
+
       .map-area {
-        height: 430px;
+        height: 400px;
       }
 
-      body.heart-mode #island1,
+      .island-emoji {
+        font-size: 2.6rem;
+      }
+
+      .island-label {
+        font-size: 0.7rem;
+        padding: 2px 10px;
+      }
+
+      .duyung-walker {
+        width: 46px;
+      }
+
+      .ending-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      body.heart-mode #island1 {
+        left: 21% !important;
+        top: 24% !important;
+      }
+
       body.heart-mode #island2 {
-        top: 28%;
+        left: 79% !important;
+        top: 24% !important;
       }
 
-      body.heart-mode #island3,
+      body.heart-mode #island3 {
+        left: 31% !important;
+        top: 68% !important;
+      }
+
       body.heart-mode #island4 {
-        top: 62%;
-      }
-
-      body.heart-mode .mermaid {
-        top: 46%;
-      }
-
-      .heart-center {
-        top: 46%;
+        left: 69% !important;
+        top: 68% !important;
       }
     }
   </style>
@@ -727,519 +926,1354 @@
 
 <body>
 
-  <!-- =====================================================
-       OCEAN BACKGROUND
-  ====================================================== -->
+  <!-- ============================================================
+       DEKORASI LAUT
+  ============================================================ -->
 
-  <div class="ocean">
-    <div class="light-ray ray-1"></div>
-    <div class="light-ray ray-2"></div>
-    <div class="light-ray ray-3"></div>
+  <div class="floating-icons">
 
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
+    <span class="float-icon" style="top:8%; left:7%;">
+      🐠
+    </span>
 
-    <div class="sea-floor"></div>
+    <span class="float-icon"
+          style="top:25%; right:10%; animation-delay:2s;">
+      🪼
+    </span>
+
+    <span class="float-icon"
+          style="top:55%; left:12%; animation-delay:4s;">
+      🐡
+    </span>
+
+    <span class="float-icon"
+          style="top:70%; right:15%; animation-delay:1s;">
+      🦑
+    </span>
+
+    <span class="float-icon"
+          style="top:15%; left:60%; animation-delay:3s;">
+      🐳
+    </span>
+
+    <span class="float-icon"
+          style="top:40%; right:25%; animation-delay:5s;">
+      🐬
+    </span>
+
+    <span class="float-icon"
+          style="top:80%; left:30%; animation-delay:2.5s;">
+      🦀
+    </span>
+
+    <span class="float-icon"
+          style="top:65%; left:45%; animation-delay:3.5s;">
+      🐚
+    </span>
+
+    <span class="float-icon"
+          style="top:30%; left:20%; animation-delay:1.5s;">
+      ⭐
+    </span>
+
+    <span class="float-icon"
+          style="top:50%; right:5%; animation-delay:4.5s;">
+      💎
+    </span>
+
+    <span class="float-icon"
+          style="bottom:25%; left:5%; animation-delay:0.8s;">
+      🪸
+    </span>
+
   </div>
 
+  <div class="sea-floor">
+    <span>🌿</span>
+    <span>🪸</span>
+    <span>🌿</span>
+    <span>🐚</span>
+    <span>🪸</span>
+    <span>🌿</span>
+    <span>⭐</span>
+  </div>
 
-  <!-- =====================================================
-       HEADER
-  ====================================================== -->
-
-  <header class="header">
-    <h1 id="mapTitle">A Little Story</h1>
-    <p id="mapSubtitle">Just a few things I wanted to show you.</p>
-  </header>
+  <div class="bubbles-layer" id="bubblesLayer"></div>
 
 
-  <!-- =====================================================
+  <!-- ============================================================
        MAP
-  ====================================================== -->
+  ============================================================ -->
 
-  <main class="map-area">
+  <div class="map-container">
 
-    <!-- Jalur normal -->
-    <svg
-      class="route-normal"
-      viewBox="0 0 920 590"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <path
-        class="normal-line"
-        d="
-          M 138 118
-          C 230 190, 270 350, 350 425
-          C 460 530, 610 320, 736 266
-          C 805 236, 840 400, 810 500
-        "
-      />
-    </svg>
-
-
-    <!--
-      Jalur heart.
-      Bentuk ini sengaja dibuat tinggi dan simetris
-      agar tetap terbaca sebagai ❤️ di desktop maupun HP.
-    -->
-    <svg
-      class="route-heart"
-      viewBox="0 0 920 590"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <path
-        class="heart-line"
-        d="
-          M 460 535
-
-          C 430 505, 225 385, 190 270
-          C 150 140, 260 82, 355 130
-
-          C 410 158, 440 212, 460 255
-
-          C 480 212, 510 158, 565 130
-
-          C 660 82, 770 140, 730 270
-
-          C 695 385, 490 505, 460 535
-
-          Z
-        "
-      />
-    </svg>
-
-
-    <!-- Center glow -->
-    <div class="heart-center"></div>
-
-
-    <!-- ===================================================
-         ISLAND 1
-    ==================================================== -->
-
-    <div
-      class="island"
-      id="island1"
-      data-island="island1"
-      role="button"
-      tabindex="0"
-      aria-label="Pulau 1"
-    >
-      <div class="island-visual">
-        <div class="island-glow"></div>
-        <div class="island-shell">
-          <span class="island-number">1</span>
-        </div>
-        <span class="island-label">Lap One</span>
-      </div>
+    <div class="map-title" id="mapTitle">
+      A Little Story
     </div>
 
-
-    <!-- ===================================================
-         ISLAND 2
-    ==================================================== -->
-
-    <div
-      class="island"
-      id="island2"
-      data-island="island2"
-      role="button"
-      tabindex="0"
-      aria-label="Pulau 2"
-    >
-      <div class="island-visual">
-        <div class="island-glow"></div>
-        <div class="island-shell">
-          <span class="island-number">2</span>
-        </div>
-        <span class="island-label">Miraculous</span>
-      </div>
+    <div class="map-subtitle" id="mapSubtitle">
+      Just a few things I wanted you to see.
     </div>
 
+    <div class="map-area" id="mapArea">
 
-    <!-- ===================================================
-         ISLAND 3
-    ==================================================== -->
+      <!-- Jalur tersembunyi menuju Island 1 -->
+      <svg
+        class="snake-path"
+        viewBox="0 0 800 600"
+        preserveAspectRatio="none"
+        aria-hidden="true">
 
-    <div
-      class="island"
-      id="island3"
-      data-island="island3"
-      role="button"
-      tabindex="0"
-      aria-label="Pulau 3"
-    >
-      <div class="island-visual">
-        <div class="island-glow"></div>
-        <div class="island-shell">
-          <span class="island-number">3</span>
+        <path
+          id="snakePathHidden"
+          d="M400,560 C300,480 180,280 120,120" />
+
+      </svg>
+
+
+      <!-- Jalur perjalanan normal -->
+      <svg
+        class="snake-path"
+        id="pathNormal"
+        viewBox="0 0 800 600"
+        preserveAspectRatio="none"
+        aria-hidden="true">
+
+        <path
+          id="snakePathVisible"
+          d="
+            M120,120
+            C260,180 140,320 304,432
+            C420,520 480,220 640,270
+            C560,340 760,400 704,510
+          " />
+
+      </svg>
+
+
+      <!-- ========================================================
+           HEART PATH
+      ========================================================= -->
+
+      <svg
+        class="snake-path"
+        id="pathHeart"
+        viewBox="0 0 800 600"
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true">
+
+        <path
+          d="
+            M400,535
+
+            C365,500 175,375 170,230
+            C166,130 250,80 325,125
+
+            C365,148 390,190 400,225
+
+            C410,190 435,148 475,125
+
+            C550,80 634,130 630,230
+
+            C625,375 435,500 400,535
+
+            Z
+          " />
+
+      </svg>
+
+
+      <!-- ========================================================
+           ISLANDS
+      ======================================================== -->
+
+      <div
+        class="island"
+        id="island1"
+        style="left:15%; top:20%;"
+        data-target="island-1.html">
+
+        <div class="island-emoji">
+          🏝️
         </div>
-        <span class="island-label">Out of Character</span>
-      </div>
-    </div>
 
-
-    <!-- ===================================================
-         ISLAND 4
-    ==================================================== -->
-
-    <div
-      class="island"
-      id="island4"
-      data-island="island4"
-      role="button"
-      tabindex="0"
-      aria-label="Pulau 4"
-    >
-      <div class="island-visual">
-        <div class="island-glow"></div>
-        <div class="island-shell">
-          <span class="island-number">4</span>
+        <div class="island-label">
+          Island 1
         </div>
-        <span class="island-label">For You</span>
+
+        <span class="lock-indicator">
+          🔒
+        </span>
+
       </div>
-    </div>
 
 
-    <!-- ===================================================
-         RATU KUCING DUYUNG
-    ==================================================== -->
+      <div
+        class="island"
+        id="island2"
+        style="left:38%; top:72%;"
+        data-target="island-2.html">
 
-    <div class="mermaid" id="mermaid">
+        <div class="island-emoji">
+          🏝️
+        </div>
+
+        <div class="island-label">
+          Island 2
+        </div>
+
+        <span class="lock-indicator">
+          🔒
+        </span>
+
+      </div>
+
+
+      <div
+        class="island"
+        id="island3"
+        style="left:80%; top:45%;"
+        data-target="island-3.html">
+
+        <div class="island-emoji">
+          🏝️
+        </div>
+
+        <div class="island-label">
+          Island 3
+        </div>
+
+        <span class="lock-indicator">
+          🔒
+        </span>
+
+      </div>
+
+
+      <div
+        class="island"
+        id="island4"
+        style="left:88%; top:85%;"
+        data-target="island-4.html">
+
+        <div class="island-emoji">
+          🏝️
+        </div>
+
+        <div class="island-label">
+          Island 4
+        </div>
+
+        <span class="lock-indicator">
+          🔒
+        </span>
+
+      </div>
+
+
+      <!-- Ripple -->
+      <div class="ripple" id="ripple1"></div>
+      <div class="ripple delay-1" id="ripple2"></div>
+      <div class="ripple delay-2" id="ripple3"></div>
+
+
+      <!-- Ratu Kucing Duyung -->
       <img
         src="assets/duyung.png"
         alt="Ratu Kucing Duyung"
-      >
-    </div>
-
-  </main>
-
-
-  <!-- =====================================================
-       COMPLETION OVERLAY
-  ====================================================== -->
-
-  <div
-    class="completion-overlay"
-    id="completionOverlay"
-    aria-hidden="true"
-  >
-    <div class="completion-card">
-
-      <div class="completion-heart">❤️</div>
-
-      <h2>You Made It All the Way Here</h2>
-
-      <p>
-        And now you know everything I wanted you to know.
-      </p>
-
-      <div class="completion-actions">
-        <button
-          class="btn-replay"
-          id="btnReplay"
-        >
-          Replay the Journey ↻
-        </button>
-
-        <button
-          class="btn-explore"
-          id="btnExplore"
-        >
-          Explore the Islands →
-        </button>
-      </div>
+        class="duyung-walker"
+        id="duyungWalker">
 
     </div>
+
+    <div class="map-message" id="mapMessage">
+      Pilih salah satu pulau buat kamu jelajahi.
+    </div>
+
   </div>
 
 
-  <!-- =====================================================
-       STATE
-  ====================================================== -->
+  <!-- ============================================================
+       ENDING
+  ============================================================ -->
+
+  <div
+    class="ending-overlay"
+    id="endingOverlay">
+
+    <div class="ending-content">
+
+      <div class="ending-title">
+        You Made It All the Way Here
+      </div>
+
+      <div class="ending-subtitle">
+        And now you know everything I wanted you to know.
+      </div>
+
+      <div class="ending-buttons">
+
+        <button
+          class="ending-btn primary"
+          id="btnReplay">
+
+          Replay the Journey ↻
+
+        </button>
+
+        <button
+          class="ending-btn secondary"
+          id="btnExplore">
+
+          Explore the Islands →
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
 
   <script src="state.js"></script>
 
-
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
+    (function() {
 
-      const islands = [
-        document.getElementById("island1"),
-        document.getElementById("island2"),
-        document.getElementById("island3"),
-        document.getElementById("island4")
-      ];
+      /* ==========================================================
+         BUBBLES
+      ========================================================== */
 
-      const title = document.getElementById("mapTitle");
-      const subtitle = document.getElementById("mapSubtitle");
+      const bubblesLayer =
+        document.getElementById('bubblesLayer');
 
-      const overlay = document.getElementById("completionOverlay");
-      const btnReplay = document.getElementById("btnReplay");
-      const btnExplore = document.getElementById("btnExplore");
+      for (let i = 0; i < 30; i++) {
 
-      let heartFormationActive = false;
-      let completionShown = false;
+        const bubble =
+          document.createElement('div');
 
+        bubble.className = 'bubble';
 
-      /* ===================================================
-         UPDATE ISLAND STATES
-      ==================================================== */
+        const size =
+          Math.random() * 50 + 20;
 
-      function updateIslandStates() {
-        const unlocked = getUnlockedIslands();
-        const completed = getCompletedIslands();
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
 
-        islands.forEach((island) => {
-          const id = island.dataset.island;
+        bubble.style.left =
+          Math.random() * 100 + '%';
 
-          island.classList.toggle(
-            "locked",
-            !unlocked.includes(id)
-          );
+        bubble.style.animationDuration =
+          (Math.random() * 8 + 6) + 's';
 
-          island.classList.toggle(
-            "completed",
-            completed.includes(id)
-          );
-        });
+        bubble.style.animationDelay =
+          Math.random() * 5 + 's';
+
+        bubblesLayer.appendChild(bubble);
       }
 
 
-      /* ===================================================
-         OPEN ISLAND
-      ==================================================== */
+      /* ==========================================================
+         ELEMENTS
+      ========================================================== */
 
-      function openIsland(id) {
+      const pathHidden =
+        document.getElementById('snakePathHidden');
 
-        if (!getUnlockedIslands().includes(id)) {
-          return;
+      const pathVisible =
+        document.getElementById('snakePathVisible');
+
+      const pathHeart =
+        document.querySelector('#pathHeart path');
+
+      const duyungWalker =
+        document.getElementById('duyungWalker');
+
+      const mapArea =
+        document.getElementById('mapArea');
+
+      const mapMessage =
+        document.getElementById('mapMessage');
+
+      const mapTitle =
+        document.getElementById('mapTitle');
+
+      const mapSubtitle =
+        document.getElementById('mapSubtitle');
+
+      const islandElements =
+        document.querySelectorAll('.island');
+
+      const endingOverlay =
+        document.getElementById('endingOverlay');
+
+      const btnReplay =
+        document.getElementById('btnReplay');
+
+      const btnExplore =
+        document.getElementById('btnExplore');
+
+      const ripple1 =
+        document.getElementById('ripple1');
+
+      const ripple2 =
+        document.getElementById('ripple2');
+
+      const ripple3 =
+        document.getElementById('ripple3');
+
+
+      let isAnimating = false;
+      let heartMode = false;
+
+
+      /* ==========================================================
+         STATE PULAU
+      ========================================================== */
+
+      function refreshIslandLockState() {
+
+        const unlocked =
+          getUnlockedIslands();
+
+        islandElements.forEach(island => {
+
+          const id =
+            island.id;
+
+          if (unlocked.includes(id)) {
+
+            island.classList.remove('locked');
+            island.classList.add('unlocked');
+
+          } else {
+
+            island.classList.add('locked');
+            island.classList.remove('unlocked');
+
+          }
+
+        });
+
+      }
+
+      refreshIslandLockState();
+
+
+      /* ==========================================================
+         PATH GEOMETRY
+      ========================================================== */
+
+      const islandCoordsViewBox = {
+
+        island1: {
+          x: 120,
+          y: 120
+        },
+
+        island2: {
+          x: 304,
+          y: 432
+        },
+
+        island3: {
+          x: 640,
+          y: 270
+        },
+
+        island4: {
+          x: 704,
+          y: 510
         }
 
-        const pages = {
-          island1: "island-1.html",
-          island2: "island-2.html",
-          island3: "island-3.html",
-          island4: "island-4.html"
+      };
+
+
+      const pathLengthCache =
+        new Map();
+
+
+      function getPathLength(path) {
+
+        if (!pathLengthCache.has(path)) {
+
+          pathLengthCache.set(
+            path,
+            path.getTotalLength()
+          );
+
+        }
+
+        return pathLengthCache.get(path);
+
+      }
+
+
+      function findProgressForCoords(
+        path,
+        x,
+        y
+      ) {
+
+        const totalLength =
+          getPathLength(path);
+
+        let bestProgress = 0;
+        let bestDist = Infinity;
+
+        for (
+          let i = 0;
+          i <= totalLength;
+          i += 4
+        ) {
+
+          const p =
+            path.getPointAtLength(i);
+
+          const dist =
+            Math.hypot(
+              p.x - x,
+              p.y - y
+            );
+
+          if (dist < bestDist) {
+
+            bestDist = dist;
+
+            bestProgress =
+              i / totalLength;
+
+          }
+
+        }
+
+        return bestProgress;
+
+      }
+
+
+      const progressVisible = {
+
+        island1: 0,
+
+        island2:
+          findProgressForCoords(
+            pathVisible,
+            islandCoordsViewBox.island2.x,
+            islandCoordsViewBox.island2.y
+          ),
+
+        island3:
+          findProgressForCoords(
+            pathVisible,
+            islandCoordsViewBox.island3.x,
+            islandCoordsViewBox.island3.y
+          ),
+
+        island4: 1
+
+      };
+
+
+      function resolveAnchor(atIsland) {
+
+        if (
+          atIsland === null ||
+          atIsland === undefined
+        ) {
+
+          return {
+            path: pathHidden,
+            progress: 0
+          };
+
+        }
+
+        if (atIsland === 'island1') {
+
+          return {
+            path: pathVisible,
+            progress: 0
+          };
+
+        }
+
+        return {
+
+          path: pathVisible,
+
+          progress:
+            progressVisible[atIsland] ?? 0
+
         };
 
-        if (pages[id]) {
-          navigateTo(pages[id]);
-        }
       }
 
 
-      islands.forEach((island) => {
+      function getScreenPosition(
+        path,
+        progress
+      ) {
 
-        island.addEventListener("click", () => {
-          openIsland(island.dataset.island);
-        });
+        const totalLength =
+          getPathLength(path);
 
-        island.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            openIsland(island.dataset.island);
+        const point =
+          path.getPointAtLength(
+            totalLength * progress
+          );
+
+        const mapRect =
+          mapArea.getBoundingClientRect();
+
+        const scaleX =
+          mapRect.width / 800;
+
+        const scaleY =
+          mapRect.height / 600;
+
+        return {
+
+          left:
+            point.x * scaleX,
+
+          top:
+            point.y * scaleY
+
+        };
+
+      }
+
+
+      /* ==========================================================
+         DUYUNG STATE
+      ========================================================== */
+
+      let duyungState =
+        getDuyungState();
+
+
+      function setDuyungFromState() {
+
+        if (heartMode) return;
+
+        const {
+          path,
+          progress
+        } = resolveAnchor(
+          duyungState.atIsland
+        );
+
+        const pos =
+          getScreenPosition(
+            path,
+            progress
+          );
+
+        duyungWalker.style.left =
+          pos.left + 'px';
+
+        duyungWalker.style.top =
+          pos.top + 'px';
+
+        duyungWalker.classList.add('show');
+
+      }
+
+
+      function refreshDuyungAfterBack() {
+
+        isAnimating = false;
+
+        const overlay =
+          document.getElementById(
+            'transitionOverlay'
+          );
+
+        if (overlay) {
+
+          overlay.style.opacity = '0';
+          overlay.style.pointerEvents = 'none';
+          overlay.style.display = 'none';
+
+        }
+
+        duyungState =
+          getDuyungState();
+
+        if (!heartMode) {
+          setDuyungFromState();
+        }
+
+        refreshIslandLockState();
+
+      }
+
+
+      setDuyungFromState();
+
+
+      /* ==========================================================
+         RESIZE
+      ========================================================== */
+
+      let resizeTimer;
+
+      window.addEventListener(
+        'resize',
+        () => {
+
+          clearTimeout(resizeTimer);
+
+          resizeTimer =
+            setTimeout(() => {
+
+              if (
+                !isAnimating &&
+                !heartMode
+              ) {
+
+                setDuyungFromState();
+
+              }
+
+            }, 150);
+
+        }
+      );
+
+
+      window.addEventListener(
+        'pageshow',
+        () => {
+
+          setTimeout(
+            refreshDuyungAfterBack,
+            50
+          );
+
+        }
+      );
+
+
+      document.addEventListener(
+        'visibilitychange',
+        () => {
+
+          if (
+            !document.hidden &&
+            !isAnimating
+          ) {
+
+            refreshDuyungAfterBack();
+
           }
-        });
+
+        }
+      );
+
+
+      /* ==========================================================
+         DUYUNG MOVEMENT
+      ========================================================== */
+
+      function animateDuyung(
+        path,
+        fromProgress,
+        toProgress,
+        callback
+      ) {
+
+        if (
+          Math.abs(
+            toProgress - fromProgress
+          ) < 0.001
+        ) {
+
+          if (callback) callback();
+
+          return;
+
+        }
+
+
+        const duration = 1400;
+
+        const startTime =
+          performance.now();
+
+        duyungWalker.classList.add('show');
+
+
+        function step(now) {
+
+          const elapsed =
+            now - startTime;
+
+          const t =
+            Math.min(
+              elapsed / duration,
+              1
+            );
+
+          const eased =
+            t < 0.5
+              ? 2 * t * t
+              : -1 + (4 - 2 * t) * t;
+
+          const progress =
+            fromProgress +
+            (
+              toProgress -
+              fromProgress
+            ) * eased;
+
+          const pos =
+            getScreenPosition(
+              path,
+              progress
+            );
+
+          duyungWalker.style.left =
+            pos.left + 'px';
+
+          duyungWalker.style.top =
+            pos.top + 'px';
+
+
+          if (t < 1) {
+
+            requestAnimationFrame(step);
+
+          } else if (callback) {
+
+            callback();
+
+          }
+
+        }
+
+        requestAnimationFrame(step);
+
+      }
+
+
+      /* ==========================================================
+         CLICK ISLAND
+      ========================================================== */
+
+      islandElements.forEach(island => {
+
+        island.addEventListener(
+          'click',
+          function() {
+
+            if (isAnimating) return;
+
+
+            if (
+              this.classList.contains('locked')
+            ) {
+
+              mapMessage.textContent =
+                '🔒 Pulau ini masih terkunci. Selesaikan pulau sebelumnya dulu ya.';
+
+              this.style.animation =
+                'shake 0.5s ease';
+
+              setTimeout(() => {
+
+                this.style.animation = '';
+
+              }, 500);
+
+              return;
+
+            }
+
+
+            const islandId =
+              this.id;
+
+            const target =
+              this.getAttribute(
+                'data-target'
+              );
+
+
+            if (heartMode) {
+
+              navigateTo(target);
+
+              return;
+
+            }
+
+
+            const label =
+              this.querySelector(
+                '.island-label'
+              ).textContent;
+
+
+            if (
+              duyungState.atIsland === islandId
+            ) {
+
+              navigateTo(target);
+
+              return;
+
+            }
+
+
+            const start =
+              resolveAnchor(
+                duyungState.atIsland
+              );
+
+            const end =
+              resolveAnchor(
+                islandId
+              );
+
+
+            mapMessage.textContent =
+              `Ratu Kucing Duyung berlayar ke ${label}...`;
+
+            isAnimating = true;
+
+
+            function arrive() {
+
+              isAnimating = false;
+
+              duyungState = {
+                atIsland: islandId
+              };
+
+              setDuyungFromState();
+
+              navigateTo(target);
+
+            }
+
+
+            if (
+              start.path === end.path
+            ) {
+
+              animateDuyung(
+                start.path,
+                start.progress,
+                end.progress,
+                arrive
+              );
+
+            } else {
+
+              animateDuyung(
+                start.path,
+                start.progress,
+                1,
+                () => {
+
+                  animateDuyung(
+                    end.path,
+                    0,
+                    end.progress,
+                    arrive
+                  );
+
+                }
+              );
+
+            }
+
+          }
+        );
 
       });
 
 
-      /* ===================================================
-         CHANGE MAP TITLE
-      ==================================================== */
+      /* ==========================================================
+         ENDING
+      ========================================================== */
 
-      function changeToFinalTitle() {
+      const ALL_ISLANDS = [
+        'island1',
+        'island2',
+        'island3',
+        'island4'
+      ];
 
-        title.style.opacity = "0";
-        subtitle.style.opacity = "0";
-
-        setTimeout(() => {
-
-          title.innerHTML = "You Made It All the Way Here";
-
-          subtitle.innerHTML =
-            "And now you know everything I wanted you to know.";
-
-          title.style.opacity = "1";
-          subtitle.style.opacity = "1";
-
-        }, 450);
-      }
-
-
-      /* ===================================================
-         HEART FORMATION
-      ==================================================== */
-
-      function enterHeartFormation(showOverlay = true) {
-
-        if (heartFormationActive) {
-          if (showOverlay) {
-            showCompletionOverlay();
-          }
-          return;
-        }
-
-        heartFormationActive = true;
-
-        /*
-          Pastikan status pulau terbaru terbaca.
-        */
-        updateIslandStates();
-
-        /*
-          Mulai transformasi.
-        */
-        document.body.classList.add("heart-mode");
-
-        /*
-          Setelah pulau selesai bergerak dan heart
-          selesai tergambar, title berubah.
-        */
-        setTimeout(() => {
-          changeToFinalTitle();
-        }, 1900);
-
-        /*
-          Overlay muncul setelah seluruh transformasi
-          terasa selesai.
-        */
-        if (showOverlay) {
-          setTimeout(() => {
-            showCompletionOverlay();
-          }, 3000);
-        }
-      }
-
-
-      /* ===================================================
-         COMPLETION OVERLAY
-      ==================================================== */
-
-      function showCompletionOverlay() {
-
-        completionShown = true;
-
-        overlay.classList.add("show");
-        overlay.setAttribute("aria-hidden", "false");
-      }
-
-
-      function hideCompletionOverlay() {
-
-        completionShown = false;
-
-        overlay.classList.remove("show");
-        overlay.setAttribute("aria-hidden", "true");
-      }
-
-
-      /* ===================================================
-         CHECK ALL COMPLETED
-      ==================================================== */
 
       function allIslandsCompleted() {
 
-        const completed = getCompletedIslands();
+        const completed =
+          getCompletedIslands();
 
-        return (
-          completed.length === 4 &&
-          completed.includes("island1") &&
-          completed.includes("island2") &&
-          completed.includes("island3") &&
-          completed.includes("island4")
+        return ALL_ISLANDS.every(
+          id =>
+            completed.includes(id)
         );
+
       }
 
 
-      /* ===================================================
+      /* ==========================================================
+         GANTI TITLE MAP
+      ========================================================== */
+
+      function changeMapTitleToFinal() {
+
+        mapTitle.style.opacity = '0';
+        mapTitle.style.transform =
+          'translateY(-8px)';
+
+        mapSubtitle.style.opacity = '0';
+        mapSubtitle.style.transform =
+          'translateY(-8px)';
+
+        setTimeout(() => {
+
+          mapTitle.textContent =
+            'You Made It All the Way Here';
+
+          mapSubtitle.textContent =
+            'And now you know everything I wanted you to know.';
+
+          mapTitle.style.opacity = '1';
+          mapTitle.style.transform =
+            'translateY(0)';
+
+          mapSubtitle.style.opacity = '1';
+          mapSubtitle.style.transform =
+            'translateY(0)';
+
+        }, 800);
+
+      }
+
+
+      /* ==========================================================
+         HEART FORMATION
+      ========================================================== */
+
+      function enterHeartFormation(
+        animate
+      ) {
+
+        heartMode = true;
+
+
+        /* --------------------------------------------------------
+           REVISIT
+        -------------------------------------------------------- */
+
+        if (!animate) {
+
+          document.body.classList.add(
+            'heart-mode'
+          );
+
+          /*
+             Title final langsung ditampilkan
+             ketika kembali ke map.
+          */
+
+          mapTitle.textContent =
+            'You Made It All the Way Here';
+
+          mapSubtitle.textContent =
+            'And now you know everything I wanted you to know.';
+
+          mapTitle.style.opacity = '1';
+          mapSubtitle.style.opacity = '1';
+
+          /*
+             Duyung langsung berada di tengah.
+          */
+
+          const mapRect =
+            mapArea.getBoundingClientRect();
+
+          duyungWalker.style.transition =
+            'none';
+
+          duyungWalker.style.left =
+            (mapRect.width * 0.5) + 'px';
+
+          duyungWalker.style.top =
+            (mapRect.height * 0.47) + 'px';
+
+          duyungWalker.classList.add(
+            'show'
+          );
+
+          setTimeout(() => {
+
+            duyungWalker.style.transition =
+              '';
+
+          }, 50);
+
+          return;
+
+        }
+
+
+        /* --------------------------------------------------------
+           FIRST TIME
+        -------------------------------------------------------- */
+
+        setTimeout(() => {
+
+          /*
+             Heart mulai terbentuk.
+             Pulau tetap menggunakan desain
+             dan posisi heart yang sudah ada.
+          */
+
+          document.body.classList.add(
+            'heart-mode'
+          );
+
+
+          /*
+             Title berubah bersamaan dengan
+             selesainya formasi.
+          */
+
+          setTimeout(() => {
+
+            changeMapTitleToFinal();
+
+          }, 1900);
+
+
+          /*
+             Tunggu pulau selesai bergerak.
+          */
+
+          setTimeout(() => {
+
+            const mapRect =
+              mapArea.getBoundingClientRect();
+
+            const centerX =
+              mapRect.width * 0.5;
+
+            const centerY =
+              mapRect.height * 0.47;
+
+
+            /*
+               Duyung menuju tengah heart.
+            */
+
+            duyungWalker.style.left =
+              centerX + 'px';
+
+            duyungWalker.style.top =
+              centerY + 'px';
+
+            duyungWalker.classList.add(
+              'show'
+            );
+
+
+            /*
+               Ripple.
+            */
+
+            setTimeout(() => {
+
+              [
+                ripple1,
+                ripple2,
+                ripple3
+              ].forEach(ripple => {
+
+                ripple.style.left =
+                  centerX + 'px';
+
+                ripple.style.top =
+                  centerY + 'px';
+
+                ripple.classList.remove(
+                  'active'
+                );
+
+                void ripple.offsetWidth;
+
+                ripple.classList.add(
+                  'active'
+                );
+
+              });
+
+
+              /*
+                 Baru tampilkan ending.
+              */
+
+              setTimeout(() => {
+
+                endingOverlay.classList.add(
+                  'visible'
+                );
+
+
+                setTimeout(() => {
+
+                  endingOverlay.classList.add(
+                    'text-in'
+                  );
+
+                }, 150);
+
+              }, 1800);
+
+
+            }, 1900);
+
+
+          }, 2900);
+
+
+        }, 700);
+
+      }
+
+
+      /* ==========================================================
          REPLAY — RESET TOTAL
-      ==================================================== */
+      ========================================================== */
 
-      btnReplay.addEventListener("click", () => {
+      btnReplay.addEventListener(
+        'click',
+        function() {
 
-        /*
-          Ini sengaja menggunakan resetProgress()
-          dari state.js.
+          /*
+             INI PERUBAHAN PENTING.
 
-          Jadi:
-          completedIslands -> kosong
-          unlockedIslands  -> kembali island1
-          duyungState      -> null
-        */
+             Replay sekarang benar-benar
+             menghapus seluruh progress.
+          */
 
-        resetProgress();
+          resetProgress();
 
-        /*
-          Bersihkan mode heart juga untuk memastikan
-          kalau browser mempertahankan halaman sesaat,
-          state visual kembali normal.
-        */
+          sessionStorage.removeItem(
+            'heartEndingPlayed'
+          );
 
-        document.body.classList.remove("heart-mode");
+          /*
+             Kembali ke awal cerita.
+             Karena state sudah di-reset,
+             user harus memainkan semuanya
+             dari awal lagi.
+          */
 
-        heartFormationActive = false;
-        completionShown = false;
+          navigateTo(
+            'index.html'
+          );
 
-        /*
-          Kembali ke halaman awal.
-          Karena progress sudah di-reset,
-          journey benar-benar dimulai dari awal.
-        */
-
-        navigateTo("index.html");
-      });
+        }
+      );
 
 
-      /* ===================================================
+      /* ==========================================================
          EXPLORE
-      ==================================================== */
+      ========================================================== */
 
-      btnExplore.addEventListener("click", () => {
+      btnExplore.addEventListener(
+        'click',
+        function() {
 
-        hideCompletionOverlay();
+          /*
+             Jangan reset apa pun.
+             Heart dan title final tetap ada.
+          */
 
-        /*
-          Heart tetap berada di map.
-          Title final juga tetap.
-          User bebas membuka ulang pulau.
-        */
-
-      });
+          endingOverlay.classList.remove(
+            'text-in'
+          );
 
 
-      /* ===================================================
-         INITIAL STATE
-      ==================================================== */
+          setTimeout(() => {
 
-      updateIslandStates();
+            endingOverlay.classList.remove(
+              'visible'
+            );
 
-      /*
-        Kalau user kembali ke map setelah semua pulau
-        selesai, langsung tampilkan heart formation
-        dan title final.
+          }, 500);
 
-        Overlay TIDAK otomatis dibuka ketika revisit,
-        supaya user bisa langsung melihat map.
-      */
+        }
+      );
 
-      if (allIslandsCompleted()) {
 
-        /*
-          Jangan tampilkan overlay kedua kali.
-          Tapi heart + title final tetap aktif.
-        */
+      /* ==========================================================
+         INITIAL LOAD
+      ========================================================== */
 
-        enterHeartFormation(false);
+      window.addEventListener(
+        'load',
+        function() {
 
-      }
+          if (!allIslandsCompleted()) {
 
-    });
+            sessionStorage.removeItem(
+              'heartEndingPlayed'
+            );
+
+            return;
+
+          }
+
+
+          const alreadyPlayed =
+            sessionStorage.getItem(
+              'heartEndingPlayed'
+            ) === 'true';
+
+
+          if (alreadyPlayed) {
+
+            /*
+               Kembali ke map:
+               heart langsung ada,
+               title final langsung ada,
+               tanpa overlay.
+            */
+
+            enterHeartFormation(false);
+
+          } else {
+
+            /*
+               Pertama kali semua selesai:
+               jalankan cinematic.
+            */
+
+            sessionStorage.setItem(
+              'heartEndingPlayed',
+              'true'
+            );
+
+            enterHeartFormation(true);
+
+          }
+
+        }
+      );
+
+    })();
   </script>
 
 </body>
