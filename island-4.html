@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pulau 4 - Pengakuan 💖</title>
+  <title>For You</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,8 +16,8 @@
       --putih: #fff5fa;
       --teks-gelap: #3a2b3a;
       --teks-lembut: #6b4a5e;
-      --bubble-bg: rgba(255, 255, 255, 0.75);
-      --bubble-border: rgba(255, 143, 184, 0.6);
+      --bubble-bg: rgba(255, 255, 255, 0.78);
+      --bubble-border: rgba(255, 143, 184, 0.55);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -31,7 +31,7 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
-      padding: 80px 20px 100px;
+      padding: 60px 16px 80px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -42,192 +42,158 @@
     .main-container {
       position: relative;
       z-index: 2;
-      max-width: 650px;
+      max-width: 620px;
       width: 100%;
       margin: 0 auto;
       text-align: center;
     }
 
     .bubble-chat {
-      border-radius: 30px;
-      padding: 30px 30px 35px;
+      border-radius: 28px;
+      padding: 28px 22px 32px;
       position: relative;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       background: var(--bubble-bg);
-      border: 1px solid var(--bubble-border);
+      border: 1.5px solid var(--bubble-border);
     }
 
     .letter-header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 22px;
       animation: fadeInDown 1.5s ease;
     }
     @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
+      from { opacity: 0; transform: translateY(-18px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     .letter-tag {
       display: inline-block;
-      padding: 6px 20px;
-      border: 2px solid var(--pink);
+      padding: 5px 16px;
+      border: 1.5px solid var(--pink);
       border-radius: 50px;
       color: var(--pink-tua);
       font-family: 'Chakra Petch', sans-serif;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       letter-spacing: 2px;
-      margin-bottom: 20px;
       text-transform: uppercase;
       background: rgba(255, 143, 184, 0.15);
-    }
-    .letter-title {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 2.3rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--teks-gelap);
-    }
-    .letter-subtitle {
-      color: var(--teks-lembut);
-      font-size: 1rem;
-      margin-top: 10px;
     }
 
     .accent-line {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin: 20px 0 30px;
+      gap: 8px;
+      margin: 16px 0 22px;
     }
-    .accent-line .line { height: 2px; width: 60px; background: var(--pink-soft); }
+    .accent-line .line { height: 2px; width: 45px; background: var(--pink-soft); }
     .accent-line .dot { width: 6px; height: 6px; background: var(--pink); border-radius: 50%; }
 
     .gif-profile {
       display: block;
-      width: 110px;
-      height: 110px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      margin: 10px auto 30px;
-      border: 4px solid var(--pink-soft);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin: 6px auto 26px;
+      border: 3px solid var(--pink-soft);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
       background: #fff;
     }
 
     .typewriter-text {
-      font-size: 1.2rem;
-      line-height: 1.9;
-      margin-bottom: 25px;
-      min-height: 1.9em;
+      font-size: clamp(1rem, 4vw, 1.15rem);
+      line-height: 1.85;
+      margin-bottom: 18px;
+      min-height: 1.85em;
       font-weight: 500;
       color: var(--teks-gelap);
+      word-wrap: break-word;
+      text-align: left;
+    }
+
+    /* Kalimat confession utama — emphasis */
+    .confession-highlight {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(1.4rem, 6vw, 1.9rem);
+      font-weight: 700;
+      color: var(--pink-tua);
+      text-align: center;
+      letter-spacing: 0.5px;
+      margin: 28px 0;
+      min-height: 1.4em;
+      line-height: 1.4;
+      text-shadow: 0 0 15px rgba(255, 143, 184, 0.35);
     }
 
     .signature {
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--pink-tua);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-top: 40px;
+      letter-spacing: 0.8px;
+      margin-top: 30px;
       text-align: right;
       opacity: 0;
-      transition: opacity 1.5s;
+      transition: opacity 1s;
     }
 
-    .final-question {
+    /* Response area (opsional) */
+    .response-area {
       margin-top: 30px;
       opacity: 0;
       pointer-events: none;
       transition: opacity 1s ease;
+      text-align: center;
     }
-    .final-question.visible {
+    .response-area.visible {
       opacity: 1;
       pointer-events: auto;
     }
-    .question-text {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--teks-gelap);
-      margin-bottom: 25px;
-      letter-spacing: 1px;
-    }
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-    .btn-yes, .btn-no {
-      padding: 15px 40px;
-      border: none;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      font-weight: 700;
-      font-family: 'Chakra Petch', sans-serif;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .btn-yes {
-      background: linear-gradient(135deg, var(--pink), #ff6b9d);
-      color: white;
-      box-shadow: 0 8px 20px rgba(255, 107, 157, 0.5);
-    }
-    .btn-yes:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 25px rgba(255, 107, 157, 0.8);
-    }
-    .btn-no {
-      background: rgba(255,255,255,0.8);
-      color: var(--pink-tua);
-      border: 2px solid var(--pink-soft);
-    }
-    .btn-no:hover {
-      background: rgba(255,255,255,0.95);
-      transform: translateY(-3px);
-      border-color: var(--pink);
+
+    .response-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.98rem;
+      color: var(--teks-lembut);
+      margin-bottom: 12px;
+      font-style: italic;
+      line-height: 1.55;
+      padding: 0 4px;
     }
 
-    /* Bagian jawaban + textarea */
-    .answer-section {
-      display: none;
-      margin-top: 25px;
-    }
-    .answer-section.visible {
-      display: block;
-      animation: fadeInUp 0.5s ease;
-    }
     textarea {
       width: 100%;
-      padding: 15px;
-      border-radius: 15px;
-      border: 2px solid var(--pink-soft);
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1.5px solid var(--pink-soft);
       font-size: 1rem;
       font-family: 'Rajdhani', sans-serif;
       color: var(--teks-gelap);
-      background: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.8);
       resize: vertical;
       min-height: 100px;
       outline: none;
-      transition: border-color 0.3s;
+      transition: border-color 0.3s, background 0.3s;
+      line-height: 1.6;
     }
-    textarea:focus { border-color: var(--pink); }
+    textarea::placeholder { color: #b08a9e; }
+    textarea:focus {
+      border-color: var(--pink);
+      background: rgba(255,255,255,0.95);
+    }
+
     .btn-send {
-      margin-top: 15px;
-      padding: 13px 30px;
+      margin-top: 14px;
+      padding: 12px 30px;
       border: none;
       border-radius: 50px;
       background: linear-gradient(135deg, var(--pink), #ff6b9d);
       color: white;
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
       font-family: 'Chakra Petch', sans-serif;
       letter-spacing: 1px;
@@ -236,25 +202,29 @@
       transition: all 0.3s;
       box-shadow: 0 8px 20px rgba(255,107,157,0.4);
     }
-    .btn-send:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(255,107,157,0.7); }
+    .btn-send:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(255,107,157,0.7); }
+    .btn-send:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
     .response-message {
-      margin-top: 15px;
-      font-size: 1.1rem;
+      margin-top: 16px;
+      font-size: 1.02rem;
       font-weight: 600;
-      color: var(--teks-gelap);
-      min-height: 30px;
+      color: var(--teks-lembut);
+      min-height: 28px;
+      line-height: 1.55;
       animation: fadeInUp 0.5s ease;
+      padding: 0 4px;
     }
+
     .btn-back-map {
       display: inline-block;
-      margin-top: 15px;
-      padding: 12px 30px;
+      margin-top: 18px;
+      padding: 11px 28px;
       border: none;
       border-radius: 50px;
       background: var(--pink);
       color: white;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 700;
       cursor: pointer;
       text-decoration: none;
@@ -262,21 +232,32 @@
       font-family: 'Chakra Petch', sans-serif;
       letter-spacing: 1px;
       text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
     }
-    .btn-back-map:hover { transform: translateY(-3px); }
+    .btn-back-map.visible { opacity: 1; pointer-events: auto; }
+    .btn-back-map:hover { transform: translateY(-2px); }
 
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 600px) {
-      .letter-title { font-size: 1.8rem; }
-      .typewriter-text { font-size: 1.05rem; }
-      .bubble-chat { padding: 20px 15px; }
-      .question-text { font-size: 1.4rem; }
-      .btn-yes, .btn-no { padding: 12px 25px; font-size: 1rem; }
-      .gif-profile { width: 90px; height: 90px; }
+      body { padding: 50px 12px 70px; }
+      .bubble-chat { padding: 22px 16px 26px; border-radius: 22px; }
+      .gif-profile { width: 88px; height: 88px; margin-bottom: 22px; }
+      .typewriter-text { margin-bottom: 15px; }
+      .confession-highlight { margin: 22px 0; }
+    }
+
+    @media (max-width: 360px) {
+      .bubble-chat { padding: 18px 13px 22px; }
+      .gif-profile { width: 78px; height: 78px; }
+    }
+
+    @media (max-height: 500px) and (orientation: landscape) {
+      body { padding: 40px 16px 60px; }
     }
   </style>
 </head>
@@ -285,9 +266,7 @@
   <div class="main-container">
     <div class="bubble-chat">
       <div class="letter-header">
-        <div class="letter-tag">🏝️ Pulau Terakhir</div>
-        <h1 class="letter-title">Surat Pengakuan</h1>
-        <div class="letter-subtitle">Untuk Ratu Kucing Duyung</div>
+        <div class="letter-tag">💌 One Last Thing</div>
       </div>
 
       <div class="accent-line">
@@ -296,28 +275,39 @@
         <div class="line"></div>
       </div>
 
-      <img src="assets/blush.gif" alt="Blush GIF" class="gif-profile">
+      <img src="assets/blush.gif" alt="Blush" class="gif-profile">
 
-      <p class="typewriter-text" data-text="Halo, Ratu Kucing Duyung..."></p>
-      <p class="typewriter-text" data-text="Aku sudah berlayar jauh, melewati pulau-pulau kenangan. Di setiap pulau, aku menemukan alasan untuk terus berlayar. Dan alasan terbesarnya adalah kamu." data-delay="12"></p>
-      <p class="typewriter-text" data-text="Dari lintasan F1 sampai dunia Ladybug, dari gelap yang penuh ragu sampai cahaya yang kamu bawa, semua mengarah ke satu hal: aku ingin kamu tahu, aku masih di sini. Masih dengan rasa yang sama." data-delay="12"></p>
-      <p class="typewriter-text" data-text="Aku tidak ingin lagi menjadi bajak laut yang hanya berlayar di sekitarmu. Aku ingin berlabuh. Di hatimu." data-delay="12"></p>
-      <p class="typewriter-text" data-text="Jadi, dengan segenap keberanian yang kupunya, aku bertanya..." data-delay="12"></p>
+      <!-- Bagian 1: Sampai di sini -->
+      <p class="typewriter-text" data-text="Oke. Sampai juga di bagian ini."></p>
+      <p class="typewriter-text" data-text="Sebenernya aku nggak tau harus mulai dari mana. Tapi kayaknya kalau aku masih muter-muter juga percuma, jadi aku bilang langsung aja." data-delay="12"></p>
 
-      <div class="signature" id="signature">— Bajak Lautmu</div>
+      <!-- Bagian 2: Confession utama (highlight) -->
+      <p class="confession-highlight" id="confessionText" data-text="Aku suka sama kamu." data-delay="60"></p>
 
-      <div class="final-question" id="finalQuestion">
-        <div class="question-text">Maukah kamu jadi bagian dari hidupku? 💖</div>
-        <div class="btn-group" id="btnGroup">
-          <button class="btn-yes" id="btnYes">Iya, aku mau! 💖</button>
-          <button class="btn-no" id="btnNo">Maaf, belum bisa 🙏</button>
-        </div>
+      <!-- Bagian 3: Ini serius -->
+      <p class="typewriter-text" data-text="Beneran. Bukan karena lagi kesepian, bukan karena lagi butuh seseorang, bukan juga karena iseng. Aku beneran suka sama kamu." data-delay="12"></p>
 
-        <div class="answer-section" id="answerSection">
-          <div class="response-message" id="responseMessage"></div>
-          <textarea id="heartMessage" placeholder="Tulis isi hatimu di sini..."></textarea>
-          <button class="btn-send" id="btnSend">Kirim Jawaban 💌</button>
-        </div>
+      <!-- Bagian 4: Kenapa sekarang -->
+      <p class="typewriter-text" data-text="Di pulau sebelumnya aku bilang kalau biasanya aku milih diem. Kalau aku suka seseorang, aku lebih sering nyimpen sendiri. Nggak pernah aku sampein." data-delay="12"></p>
+      <p class="typewriter-text" data-text="Kali ini beda. Aku masih takut, kok. Masih kadang ngerasa nggak cukup. Tapi aku nggak mau rasa itu bikin aku diem lagi." data-delay="12"></p>
+      <p class="typewriter-text" data-text="Makanya aku bikin semua ini. Yang buat orang lain mungkin cuma website biasa, tapi buat aku... ini hal yang aku nggak pernah bayangin bakal aku lakuin." data-delay="12"></p>
+
+      <!-- Bagian 5: Tidak ada tuntutan -->
+      <p class="typewriter-text" data-text="Aku bikin ini bukan karena setelah kamu baca, aku berharap kita harus jadi apa-apa. Aku juga nggak lagi minta kamu buat jawab perasaanku." data-delay="12"></p>
+      <p class="typewriter-text" data-text="Aku cuma pengen kamu tahu." data-delay="12"></p>
+
+      <!-- Bagian 6: Ending -->
+      <p class="typewriter-text" data-text="Jadi... ya, itu aja yang sebenernya mau aku bilang. Kamu nggak perlu buru-buru jawab apa pun. Aku cuma seneng akhirnya kamu tahu." data-delay="12"></p>
+
+      <div class="signature" id="signature">— Dimas</div>
+
+      <!-- Response area (opsional) -->
+      <div class="response-area" id="responseArea">
+        <div class="response-label">Kalau kamu mau bilang sesuatu, tulis di sini. Nggak harus kok.</div>
+        <textarea id="heartMessage" placeholder="Kalau ada yang mau kamu sampaikan..."></textarea>
+        <button class="btn-send" id="btnSend">Kirim 💌</button>
+        <div class="response-message" id="responseMessage"></div>
+        <a href="#" class="btn-back-map" id="btnBackMap">Kembali ke Peta</a>
       </div>
     </div>
   </div>
@@ -326,74 +316,130 @@
   <script>
     (function() {
       const signature = document.getElementById('signature');
-      const finalQuestion = document.getElementById('finalQuestion');
-      const btnGroup = document.getElementById('btnGroup');
-      const btnYes = document.getElementById('btnYes');
-      const btnNo = document.getElementById('btnNo');
-      const answerSection = document.getElementById('answerSection');
+      const responseArea = document.getElementById('responseArea');
       const responseMessage = document.getElementById('responseMessage');
       const heartMessage = document.getElementById('heartMessage');
       const btnSend = document.getElementById('btnSend');
+      const btnBackMap = document.getElementById('btnBackMap');
       const typewriterElements = document.querySelectorAll('.typewriter-text');
+      const confessionEl = document.getElementById('confessionText');
 
-      let chosenAnswer = '';
-
-      // Typewriter
-      let currentIndex = 0;
-      function typeNext() {
-        if (currentIndex >= typewriterElements.length) {
-          signature.style.opacity = '1';
-          setTimeout(() => {
-            finalQuestion.classList.add('visible');
-          }, 800);
-          return;
-        }
-        const element = typewriterElements[currentIndex];
-        const text = element.getAttribute('data-text');
-        const delay = parseInt(element.getAttribute('data-delay')) || 30;
+      // ===== Typewriter untuk paragraf biasa =====
+      function typeParagraph(element, delay, onDone) {
+        const text = element.getAttribute('data-text') || '';
         element.textContent = '';
         let charIndex = 0;
+
         function typeChar() {
           if (charIndex < text.length) {
             element.textContent += text.charAt(charIndex);
             charIndex++;
             setTimeout(typeChar, delay);
           } else {
-            currentIndex++;
-            setTimeout(typeNext, 500);
+            if (onDone) onDone();
           }
         }
         typeChar();
       }
-      typeNext();
 
-      function showAnswerSection(answer) {
-        chosenAnswer = answer;
-        responseMessage.textContent = answer === 'yes' 
-          ? 'Yay! 🥳 Tulis isi hatimu di bawah ini ya...' 
-          : 'Aku hargai kejujuranmu. Tulis apa pun yang ingin kamu sampaikan...';
-        btnGroup.style.display = 'none';
-        answerSection.classList.add('visible');
+      // ===== Urutan typewriter =====
+      function startSequence() {
+        let index = 0;
+
+        function next() {
+          if (index >= typewriterElements.length) {
+            // Semua paragraf selesai → tampilkan signature, lalu response area
+            signature.style.opacity = '1';
+            setTimeout(() => {
+              responseArea.classList.add('visible');
+            }, 900);
+            return;
+          }
+
+          const el = typewriterElements[index];
+          const delay = parseInt(el.getAttribute('data-delay')) || 28;
+          index++;
+
+          typeParagraph(el, delay, () => {
+            setTimeout(next, 320);
+          });
+        }
+
+        next();
       }
 
-      btnYes.addEventListener('click', function() {
-        showAnswerSection('yes');
-      });
+      // ===== Confession highlight =====
+      // Munculkan confession setelah 2 paragraf pertama selesai.
+      // Supaya ritme storytelling-nya pas, kita trigger manual setelah paragraf ke-2.
+      function playConfession(onDone) {
+        const text = confessionEl.getAttribute('data-text') || '';
+        const delay = parseInt(confessionEl.getAttribute('data-delay')) || 60;
+        confessionEl.textContent = '';
+        let charIndex = 0;
 
-      btnNo.addEventListener('click', function() {
-        showAnswerSection('no');
-      });
+        function typeChar() {
+          if (charIndex < text.length) {
+            confessionEl.textContent += text.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeChar, delay);
+          } else {
+            if (onDone) onDone();
+          }
+        }
+        typeChar();
+      }
 
+      // ===== Kontrol urutan: paragraph 1-2 dulu, lalu confession, lalu sisanya =====
+      function startStory() {
+        const paragraphs = Array.from(typewriterElements);
+        let i = 0;
+
+        function typeNext() {
+          if (i >= paragraphs.length) {
+            signature.style.opacity = '1';
+            setTimeout(() => {
+              responseArea.classList.add('visible');
+            }, 900);
+            return;
+          }
+
+          const el = paragraphs[i];
+          const delay = parseInt(el.getAttribute('data-delay')) || 28;
+          const isSecondParagraph = i === 1;
+
+          i++;
+          typeParagraph(el, delay, () => {
+            if (isSecondParagraph) {
+              // Setelah 2 paragraf awal, mainkan confession highlight
+              setTimeout(() => {
+                playConfession(() => {
+                  setTimeout(typeNext, 400);
+                });
+              }, 320);
+            } else {
+              setTimeout(typeNext, 320);
+            }
+          });
+        }
+
+        typeNext();
+      }
+
+      startStory();
+
+      // ===== Kirim via Formspree =====
       btnSend.addEventListener('click', function() {
         const message = heartMessage.value.trim();
-        if (!chosenAnswer) return;
+        if (!message) {
+          responseMessage.textContent = 'Tulis dulu kalau ada yang mau kamu sampaikan. Kalau nggak ada, nggak apa-apa.';
+          return;
+        }
 
         btnSend.disabled = true;
         btnSend.textContent = 'Mengirim...';
 
         const payload = {
-          answer: chosenAnswer,
-          message: message || '(tidak menulis pesan)',
+          message: message,
           timestamp: new Date().toISOString()
         };
 
@@ -407,20 +453,28 @@
         })
         .then(response => {
           if (response.ok) {
-            responseMessage.textContent = 'Jawabanmu sudah terkirim! 💌 Terima kasih sudah berlayar bersamaku.';
+            responseMessage.textContent = 'Pesanmu sudah terkirim. Makasih ya. 💌';
             heartMessage.style.display = 'none';
             btnSend.style.display = 'none';
+            btnBackMap.classList.add('visible');
             completeIsland('island4');
           } else {
-            throw new Error('Gagal kirim');
+            throw new Error('gagal');
           }
         })
-        .catch(error => {
-          responseMessage.textContent = 'Gagal mengirim. Coba lagi ya...';
+        .catch(() => {
+          responseMessage.textContent = 'Gagal mengirim. Coba lagi ya.';
           btnSend.disabled = false;
-          btnSend.textContent = 'Kirim Jawaban 💌';
+          btnSend.textContent = 'Kirim 💌';
         });
       });
+
+      // ===== Tombol Kembali ke Peta =====
+      btnBackMap.addEventListener('click', function(e) {
+        e.preventDefault();
+        completeIslandAndReturn('island4');
+      });
+
     })();
   </script>
 </body>
