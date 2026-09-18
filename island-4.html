@@ -116,7 +116,6 @@
       text-align: left;
     }
 
-    /* Kalimat confession utama — emphasis */
     .confession-highlight {
       font-family: 'Chakra Petch', sans-serif;
       font-size: clamp(1.4rem, 6vw, 1.9rem);
@@ -142,7 +141,7 @@
       transition: opacity 1s;
     }
 
-    /* Response area (opsional) */
+    /* Response area */
     .response-area {
       margin-top: 30px;
       opacity: 0;
@@ -204,6 +203,29 @@
     }
     .btn-send:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(255,107,157,0.7); }
     .btn-send:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* Tombol Continue (opsional, di bawah Kirim) */
+    .btn-continue {
+      display: block;
+      margin: 16px auto 0;
+      padding: 10px 24px;
+      border: none;
+      background: transparent;
+      color: var(--teks-lembut);
+      font-size: 0.92rem;
+      font-weight: 600;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: color 0.3s;
+      text-decoration: underline;
+      text-decoration-color: rgba(107, 74, 94, 0.3);
+      text-underline-offset: 4px;
+    }
+    .btn-continue:hover {
+      color: var(--pink-tua);
+      text-decoration-color: var(--pink-soft);
+    }
 
     .response-message {
       margin-top: 16px;
@@ -277,35 +299,26 @@
 
       <img src="assets/blush.gif" alt="Blush" class="gif-profile">
 
-      <!-- Bagian 1: Sampai di sini -->
       <p class="typewriter-text" data-text="Oke. Sampai juga di bagian ini."></p>
       <p class="typewriter-text" data-text="Sebenernya aku nggak tau harus mulai dari mana. Tapi kayaknya kalau aku masih muter-muter juga percuma, jadi aku bilang langsung aja." data-delay="12"></p>
 
-      <!-- Bagian 2: Confession utama (highlight) -->
       <p class="confession-highlight" id="confessionText" data-text="Aku suka sama kamu." data-delay="60"></p>
 
-      <!-- Bagian 3: Ini serius -->
       <p class="typewriter-text" data-text="Beneran. Bukan karena lagi kesepian, bukan karena lagi butuh seseorang, bukan juga karena iseng. Aku beneran suka sama kamu." data-delay="12"></p>
-
-      <!-- Bagian 4: Kenapa sekarang -->
       <p class="typewriter-text" data-text="Di pulau sebelumnya aku bilang kalau biasanya aku milih diem. Kalau aku suka seseorang, aku lebih sering nyimpen sendiri. Nggak pernah aku sampein." data-delay="12"></p>
       <p class="typewriter-text" data-text="Kali ini beda. Aku masih takut, kok. Masih kadang ngerasa nggak cukup. Tapi aku nggak mau rasa itu bikin aku diem lagi." data-delay="12"></p>
       <p class="typewriter-text" data-text="Makanya aku bikin semua ini. Yang buat orang lain mungkin cuma website biasa, tapi buat aku... ini hal yang aku nggak pernah bayangin bakal aku lakuin." data-delay="12"></p>
-
-      <!-- Bagian 5: Tidak ada tuntutan -->
       <p class="typewriter-text" data-text="Aku bikin ini bukan karena setelah kamu baca, aku berharap kita harus jadi apa-apa. Aku juga nggak lagi minta kamu buat jawab perasaanku." data-delay="12"></p>
       <p class="typewriter-text" data-text="Aku cuma pengen kamu tahu." data-delay="12"></p>
-
-      <!-- Bagian 6: Ending -->
       <p class="typewriter-text" data-text="Jadi... ya, itu aja yang sebenernya mau aku bilang. Kamu nggak perlu buru-buru jawab apa pun. Aku cuma seneng akhirnya kamu tahu." data-delay="12"></p>
 
       <div class="signature" id="signature">— Dimas</div>
 
-      <!-- Response area (opsional) -->
       <div class="response-area" id="responseArea">
         <div class="response-label">Kalau kamu mau bilang sesuatu, tulis di sini. Nggak harus kok.</div>
         <textarea id="heartMessage" placeholder="Kalau ada yang mau kamu sampaikan..."></textarea>
         <button class="btn-send" id="btnSend">Kirim 💌</button>
+        <button class="btn-continue" id="btnContinue">atau lanjut aja →</button>
         <div class="response-message" id="responseMessage"></div>
         <a href="#" class="btn-back-map" id="btnBackMap">Kembali ke Peta</a>
       </div>
@@ -320,11 +333,11 @@
       const responseMessage = document.getElementById('responseMessage');
       const heartMessage = document.getElementById('heartMessage');
       const btnSend = document.getElementById('btnSend');
+      const btnContinue = document.getElementById('btnContinue');
       const btnBackMap = document.getElementById('btnBackMap');
       const typewriterElements = document.querySelectorAll('.typewriter-text');
       const confessionEl = document.getElementById('confessionText');
 
-      // ===== Typewriter untuk paragraf biasa =====
       function typeParagraph(element, delay, onDone) {
         const text = element.getAttribute('data-text') || '';
         element.textContent = '';
@@ -342,35 +355,6 @@
         typeChar();
       }
 
-      // ===== Urutan typewriter =====
-      function startSequence() {
-        let index = 0;
-
-        function next() {
-          if (index >= typewriterElements.length) {
-            // Semua paragraf selesai → tampilkan signature, lalu response area
-            signature.style.opacity = '1';
-            setTimeout(() => {
-              responseArea.classList.add('visible');
-            }, 900);
-            return;
-          }
-
-          const el = typewriterElements[index];
-          const delay = parseInt(el.getAttribute('data-delay')) || 28;
-          index++;
-
-          typeParagraph(el, delay, () => {
-            setTimeout(next, 320);
-          });
-        }
-
-        next();
-      }
-
-      // ===== Confession highlight =====
-      // Munculkan confession setelah 2 paragraf pertama selesai.
-      // Supaya ritme storytelling-nya pas, kita trigger manual setelah paragraf ke-2.
       function playConfession(onDone) {
         const text = confessionEl.getAttribute('data-text') || '';
         const delay = parseInt(confessionEl.getAttribute('data-delay')) || 60;
@@ -389,7 +373,6 @@
         typeChar();
       }
 
-      // ===== Kontrol urutan: paragraph 1-2 dulu, lalu confession, lalu sisanya =====
       function startStory() {
         const paragraphs = Array.from(typewriterElements);
         let i = 0;
@@ -410,7 +393,6 @@
           i++;
           typeParagraph(el, delay, () => {
             if (isSecondParagraph) {
-              // Setelah 2 paragraf awal, mainkan confession highlight
               setTimeout(() => {
                 playConfession(() => {
                   setTimeout(typeNext, 400);
@@ -431,7 +413,7 @@
       btnSend.addEventListener('click', function() {
         const message = heartMessage.value.trim();
         if (!message) {
-          responseMessage.textContent = 'Tulis dulu kalau ada yang mau kamu sampaikan. Kalau nggak ada, nggak apa-apa.';
+          responseMessage.textContent = 'Tulis dulu kalau ada yang mau kamu sampaikan. Kalau nggak ada, tinggal lanjut aja.';
           return;
         }
 
@@ -456,6 +438,7 @@
             responseMessage.textContent = 'Pesanmu sudah terkirim. Makasih ya. 💌';
             heartMessage.style.display = 'none';
             btnSend.style.display = 'none';
+            btnContinue.style.display = 'none';
             btnBackMap.classList.add('visible');
             completeIsland('island4');
           } else {
@@ -469,7 +452,12 @@
         });
       });
 
-      // ===== Tombol Kembali ke Peta =====
+      // ===== Continue (skip nulis) =====
+      btnContinue.addEventListener('click', function() {
+        completeIslandAndReturn('island4');
+      });
+
+      // ===== Back to Map (setelah kirim) =====
       btnBackMap.addEventListener('click', function(e) {
         e.preventDefault();
         completeIslandAndReturn('island4');
