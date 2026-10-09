@@ -111,6 +111,16 @@
     }
 
     .input-group { display: flex; flex-direction: column; gap: 12px; }
+
+    /* Hint di atas kolom input */
+    .hint {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 6px;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
     input[type="text"] {
       padding: 14px 18px;
       border: 1px solid rgba(255,255,255,0.3);
@@ -148,7 +158,6 @@
 
     .message { margin-top: 15px; min-height: 24px; font-weight: 600; color: #ffb3c1; font-size: 0.9rem; }
     .message.success { color: #7ff0a1; }
-    .hint { margin-top: 8px; font-size: 0.75rem; color: rgba(255,255,255,0.5); }
 
     .btn-sail {
       position: relative;
@@ -232,14 +241,16 @@
     </p>
 
     <div class="input-group">
-      <input type="text" id="passwordInput" placeholder="Masukin jawabannya di sini..." autocomplete="off">
+      <!-- Hint di atas kolom input -->
+      <div class="hint">
+        Coba inget nama random yang kepikiran kalau lihat emoji itu 😉
+      </div>
+
+      <input type="text" id="passwordInput" placeholder="Masukin nama..." autocomplete="off">
       <button id="submitBtn">Coba masuk →</button>
     </div>
 
     <div id="message" class="message"></div>
-    <div class="hint">
-      Coba inget nama random yang kepikiran kalau lihat emoji itu 😉
-    </div>
 
     <button class="btn-sail" id="btnSail">Lanjut →</button>
   </div>
@@ -271,12 +282,12 @@
       function checkAnswer() {
         const userAnswer = cleanText(input.value);
         if (userAnswer === "") {
-          message.textContent = "Ketik dulu jawabannya ya 😭";
+          message.textContent = "Ketik dulu nama nya yaa 😭";
           message.className = "message";
           return;
         }
         if (userAnswer === cleanText(correctAnswer)) {
-          message.textContent = "Nah, bener. Kamu masih inget. 🥰";
+          message.textContent = "Nah, bener. Kamu masih inget. 🥹";
           message.className = "message success";
           answerCorrect = true;
           input.style.display = 'none';
