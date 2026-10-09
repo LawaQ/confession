@@ -14,11 +14,10 @@
       --putih: #f0f0f0;
       --abu-terang: #a8a8a8;
       --abu-sedang: #5a5a5a;
-      --abu-gelap: #1e1e1e;
       --panel-dark: rgba(15, 15, 15, 0.55);
-      --panel-light: rgba(255, 250, 240, 0.55);
+      --panel-light: rgba(255, 250, 240, 0.6);
       --border-dark: rgba(255, 255, 255, 0.12);
-      --border-light: rgba(255, 220, 180, 0.4);
+      --border-light: rgba(200, 160, 110, 0.35);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -35,7 +34,7 @@
       background-color: #0a0a0a;
     }
 
-    /* ===== BACKGROUND LAYERS (crossfade) ===== */
+    /* ===== BACKGROUND LAYERS ===== */
     .bg-layer {
       position: fixed;
       top: 0;
@@ -213,21 +212,7 @@
       text-shadow: 0 0 2px rgba(255,255,255,0.5);
     }
 
-    .signature {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      margin-top: 22px;
-      text-align: right;
-      opacity: 0;
-      transition: opacity 1s;
-    }
-    .panel-light .signature {
-      color: #8a6a3a;
-    }
-
-    /* ===== SUBTLE SPARKLE (light section) ===== */
+    /* ===== SPARKLE (light section) ===== */
     .sparkle {
       position: absolute;
       font-size: 1rem;
@@ -265,8 +250,10 @@
       box-shadow: 0 8px 20px rgba(201, 168, 107, 0.35);
       opacity: 0;
       pointer-events: none;
+      display: none;
     }
     .btn-finish.visible {
+      display: inline-block;
       opacity: 1;
       pointer-events: auto;
       animation: fadeInUp 0.7s ease forwards;
@@ -275,6 +262,33 @@
       transform: translateY(-2px);
       box-shadow: 0 12px 25px rgba(201, 168, 107, 0.55);
     }
+
+    .btn-continue {
+      display: none;
+      margin-top: 22px;
+      padding: 13px 34px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50px;
+      background: rgba(201, 168, 107, 0.12);
+      color: var(--gold-soft);
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-continue.visible {
+      display: inline-block;
+      animation: fadeInUp 0.7s ease forwards;
+    }
+    .btn-continue:hover {
+      background: rgba(201, 168, 107, 0.22);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(201, 168, 107, 0.25);
+    }
+
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
@@ -326,7 +340,7 @@
       .hero { margin-top: 9vh; gap: 14px; }
       .panel { padding: 26px 18px; border-radius: 22px; }
       .section-heading { margin-bottom: 22px; }
-      .btn, .btn-finish { padding: 12px 28px; font-size: 0.95rem; }
+      .btn, .btn-finish, .btn-continue { padding: 12px 28px; font-size: 0.95rem; }
       .hero-title { letter-spacing: 1.5px; }
     }
 
@@ -362,16 +376,25 @@
       <div class="panel panel-dark">
         <h2 class="section-heading">The Part I Usually Keep to Myself</h2>
 
-        <p class="typewriter-text" data-text="Aku suka sama kamu. Beneran. Bukan iseng, bukan karena lagi kosong, bukan karena lagi pengen main-main."></p>
-        <p class="typewriter-text" data-text="Tapi aku punya kebiasaan lama yang susah banget aku tinggalin: aku nyimpen perasaan ini sendiri. Nggak pernah aku bilang. Nggak pernah aku tunjukin. Cukup aku yang tau."></p>
-        <p class="typewriter-text" data-text="Kalau aku suka sama seseorang, hal pertama yang muncul bukan seneng. Tapi rasa nggak pantas. Kayak, 'ngapain juga dia sama aku?'"></p>
-        <p class="typewriter-text" data-text="Aku selalu ngerasa ada orang lain yang lebih layak. Lebih baik, lebih keren, lebih bisa bikin dia bahagia. Dan aku? Aku cuma orang yang lewat."></p>
-        <p class="typewriter-text" data-text="Aku pernah di posisi itu. Waktu itu aku suka sama seseorang, dan ternyata temen aku juga suka sama orang yang sama. Kamu tau apa yang aku lakuin? Aku malah dukung temen aku. Aku ngerasa dia lebih pantas, dan aku milih minggir."></p>
-        <p class="typewriter-text" data-text="Dari situ kayaknya aku makin kebiasaan mundur. Tiap kali suka, otomatis aku mikir 'ah, bukan aku orangnya.' Aku nggak pernah ngasih diri aku sendiri kesempatan."></p>
-        <p class="typewriter-text" data-text="Rasa rendah diri ini bukan muncul karena kamu. Ini udah ada dari dulu. Kamu cuma orang berikutnya yang aku suka, dengan pola yang persis sama."></p>
+        <p class="typewriter-text" data-text="Hallo cicit, ketemu lagi nihh😆"></p>
+        <p class="typewriter-text" data-text="Terakhir kamu kan buat aku ga karuan karena gombalan kamu yaa😭 Tapi kamu tau ga? Aku dari dulu pengen banget ngelakuin itu sebelum kamu lakuin. Cuma karena akunya terlalu penakut, jadinya gapernah bisa. Dan setelah kamu ngegombal itu, aku jadi punya alasan buat ikutan gombalin balik😭 Dari situ aku mulai berani buat lakuin itu, walaupun masih jaga-jaga juga, takutnya kamu malah risih."></p>
+        <p class="typewriter-text" data-text="Tapi sekarang aku mau cerita sesuatu yang mungkin agak aneh tentang aku."></p>
+        <p class="typewriter-text" data-text="Kamu tau ga sih, Cit, kalau aku biasanya kalau udah deket banget sama seseorang malah jadi menjauh?"></p>
+        <p class="typewriter-text" data-text="Aku juga gatau kenapa. Semakin deket kita di chat, kadang malah semakin keliatan ada jarak pas ketemu langsung. Rasanya aneh banget. Di satu sisi aku pengen bisa bersikap normal, ngobrol kayak biasanya, bercanda kayak di chat, atau sekadar nyapa tanpa mikir macem-macem."></p>
+        <p class="typewriter-text" data-text="Tapi entah kenapa, pas ketemu langsung aku malah jadi kaku sendiri😭"></p>
+        <p class="typewriter-text" data-text="Kadang aku bahkan udah kepikiran mau ngomong sesuatu, tapi pas udah ada di depan kamu malah jadi, 'ah udahlah.' Terus akhirnya kita malah lewat-lewatan kayak orang yang ga saling kenal😭"></p>
+        <p class="typewriter-text" data-text="Padahal bukan karena aku ga mau deket sama kamu. Justru mungkin karena aku terlalu sadar kalau kita udah sedeket itu, jadi aku malah bingung harus bersikap gimana."></p>
+        <p class="typewriter-text" data-text="Aneh ya?"></p>
+        <p class="typewriter-text" data-text="Di chat aku bisa jadi orang yang banyak ngomong, bisa bercanda, bisa gombal, bisa ngirim hal random. Tapi pas ketemu langsung, kayak ada versi lain dari aku yang tiba-tiba muncul dan bilang, 'udah, jangan aneh-aneh.'😭"></p>
+        <p class="typewriter-text" data-text="Dan mungkin kamu pernah mikir, 'ini orang kenapa sih? Di chat begini, pas ketemu malah beda banget.'"></p>
+        <p class="typewriter-text" data-text="Kalau kamu pernah mikir begitu, ya... mungkin sekarang kamu sedikit punya jawabannya."></p>
+        <p class="typewriter-text" data-text="Aku bukan sengaja bikin jarak. Aku juga bukan tiba-tiba ga nyaman sama kamu."></p>
+        <p class="typewriter-text" data-text="Aku cuma masih belajar gimana caranya tetap jadi diriku sendiri ketika orang yang biasanya cuma ada di balik layar, sekarang ada tepat di depan mata."></p>
+        <p class="typewriter-text" data-text="Dan mungkin... ada alasan lain kenapa aku selalu seperti itu."></p>
+        <p class="typewriter-text" data-text="Tapi yang itu, nanti dulu."></p>
 
         <div class="finish-wrap">
-          <button class="btn" id="btnToLight">Continue →</button>
+          <button class="btn-continue" id="btnToLight">Continue →</button>
         </div>
       </div>
     </section>
@@ -385,15 +408,20 @@
 
         <h2 class="section-heading">Why This Time Is Different</h2>
 
-        <p class="typewriter-text" data-text="Tapi kali ini ada yang beda. Bukan karena kamu nyembuhin aku. Bukan karena tiba-tiba aku jadi percaya diri."></p>
-        <p class="typewriter-text" data-text="Yang beda adalah reaksi aku. Biasanya aku milih diem. Kali ini aku pengen kamu tau."></p>
-        <p class="typewriter-text" data-text="Kamu bukan orang yang dari awal aku kira bakal aku suka. Nggak ada tanda-tanda, nggak ada rencana. Tapi pelan-pelan, perasaan itu tumbuh aja. Dan semakin aku kenal kamu, semakin aku sadar kalau ini beneran."></p>
-        <p class="typewriter-text" data-text="Aku masih takut. Masih kadang ngerasa nggak cukup. Masih suka mikir 'apa iya?'."></p>
-        <p class="typewriter-text" data-text="Tapi kali ini, aku nggak mau rasa itu bikin aku diam lagi. Setidaknya sekali ini, aku pengen jujur."></p>
-        <p class="typewriter-text" data-text="Makanya aku bikin ini. Website ini. Yang buat orang lain mungkin biasa aja, tapi buat aku... ini hal yang aku nggak pernah bayangin bakal aku lakuin."></p>
-        <p class="typewriter-text" data-text="So yeah, this is me. Doing something out of character."></p>
-
-        <div class="signature" id="signature">— Dimas</div>
+        <p class="typewriter-text" data-text="Citt kamu tau ga?"></p>
+        <p class="typewriter-text" data-text="Agak dejavu yaa dengernya. Soalnya aku inget ada orang yang sering banget bilang gitu, biasanya dengan niat bikin orang lain emosi. Walaupun namanya beda sihh, kamu pasti tau kok😭"></p>
+        <p class="typewriter-text" data-text="Aneh yaa, orang yang niatnya bikin emosi malah seringnya bukan bikin emosi, tapi bikin kepikiran. Ganggu banget lagi. Tapi aku suka😭"></p>
+        <p class="typewriter-text" data-text="Ganggunya tuh lucu, kadang bikin kesel, tapi di saat yang sama malah bikin seneng. Kayak ada aja hal kecil dari kamu yang akhirnya kepikiran terus. Dan mungkin itu juga salah satu alasan kenapa aku betah sama obrolan kita yang random-random itu."></p>
+        <p class="typewriter-text" data-text="Cuma yaa... kayak yang aku ceritain sebelumnya, semua itu rasanya gampang banget dilakukan selama kita nggak saling tatapan langsung😔"></p>
+        <p class="typewriter-text" data-text="Begitu ketemu langsung, entah kenapa aku malah balik jadi aku yang biasanya. Jadi kaku, bingung mau ngomong apa, bahkan kadang rasanya lebih gampang pura-pura nggak kenal daripada harus mulai ngobrol duluan."></p>
+        <p class="typewriter-text" data-text="Padahal di chat aku bisa ngomongin banyak hal sama kamu."></p>
+        <p class="typewriter-text" data-text="Dan semakin aku sadar soal itu, semakin aku ngerasa kayaknya ada sesuatu yang harus aku ubah dari diri aku sendiri."></p>
+        <p class="typewriter-text" data-text="Bukan karena kamu pernah maksa aku buat berubah. Kamu juga nggak pernah nyuruh aku buat jadi lebih berani."></p>
+        <p class="typewriter-text" data-text="Tapi entah kenapa, sejak kenal kamu, aku jadi punya keinginan buat mencoba."></p>
+        <p class="typewriter-text" data-text="Mungkin itu juga alasan kenapa akhirnya aku bikin semua ini."></p>
+        <p class="typewriter-text" data-text="Aku pengen bisa bersikap normal pas kita ketemu langsung. Aku pengen bisa ngomong apa yang selama ini cuma berani aku tulis. Aku pengen bisa cerita banyak hal tanpa harus tiba-tiba mundur lagi karena takut salah bersikap."></p>
+        <p class="typewriter-text" data-text="Karena kalau dipikir-pikir, lucu juga yaa..."></p>
+        <p class="typewriter-text" data-text="Seseorang yang awalnya nggak pernah aku duga bakal kenal sedekat ini, malah jadi orang yang pelan-pelan ngasih aku keberanian buat melakukan sesuatu yang sebelumnya hampir nggak pernah aku lakukan: jujur sama diri sendiri."></p>
 
         <div class="finish-wrap">
           <button class="btn-finish" id="btnFinish">Continue →</button>
@@ -417,7 +445,6 @@
       const lightSection = document.getElementById('lightSection');
       const btnToLight = document.getElementById('btnToLight');
       const btnFinish = document.getElementById('btnFinish');
-      const signature = document.getElementById('signature');
       const transOverlay = document.getElementById('transOverlay');
 
       // ===== TYPEWRITER =====
@@ -439,10 +466,10 @@
             if (charIndex < text.length) {
               element.textContent += text.charAt(charIndex);
               charIndex++;
-              setTimeout(typeChar, 28);
+              setTimeout(typeChar, 26);
             } else {
               currentIndex++;
-              setTimeout(typeNext, 380);
+              setTimeout(typeNext, 420);
             }
           }
           typeChar();
@@ -461,11 +488,7 @@
           void darkSection.offsetWidth;
           darkSection.classList.add('visible');
 
-          // Sembunyikan tombol Continue dulu
-          btnToLight.style.display = 'none';
-
           runTypewriter(darkSection, () => {
-            btnToLight.style.display = 'inline-block';
             btnToLight.classList.add('visible');
           });
         }, 700);
@@ -478,25 +501,20 @@
         transitioning = true;
         btnToLight.disabled = true;
 
-        // Tampilkan overlay hitam
         transOverlay.classList.add('active');
 
-        // Setelah overlay menutupi, ganti background ke light
         setTimeout(() => {
           document.body.classList.add('light-active');
         }, 350);
 
-        // Munculkan transition text
         setTimeout(() => {
           transOverlay.classList.add('text-visible');
         }, 900);
 
-        // Setelah transition text tampil sebentar, hilangkan
         setTimeout(() => {
           transOverlay.classList.remove('text-visible');
         }, 2600);
 
-        // Fade out overlay & tampilkan light section
         setTimeout(() => {
           transOverlay.classList.remove('active');
 
@@ -507,10 +525,7 @@
             lightSection.classList.add('visible');
 
             runTypewriter(lightSection, () => {
-              signature.style.opacity = '1';
-              setTimeout(() => {
-                btnFinish.classList.add('visible');
-              }, 700);
+              btnFinish.classList.add('visible');
             });
           }, 500);
         }, 3200);
