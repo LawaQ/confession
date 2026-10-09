@@ -371,7 +371,6 @@
       const closingEl = document.getElementById('closingMessage');
 
       // ===== KONFIGURASI TELEGRAM =====
-      // Ganti dengan token dari BotFather
       const TELEGRAM_TOKEN = '8495937794:AAFk5nvyYdZPeOXHFkStacisRRPaOQknP1I';
       const TELEGRAM_CHAT_ID = '1687440113';
 
@@ -380,7 +379,6 @@
        * Gagal kirim tidak akan mengganggu flow user.
        */
       function notifyTelegram(message) {
-        // Skip kalau token belum diisi
         if (!TELEGRAM_TOKEN || TELEGRAM_TOKEN === 'ISI_TOKEN_BOT_KAMU') {
           console.warn('[Telegram] Token belum diisi.');
           return;
