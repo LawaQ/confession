@@ -256,19 +256,6 @@
       word-wrap: break-word;
     }
 
-    .signature {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--emas);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-top: 24px;
-      text-align: right;
-      opacity: 0;
-      transition: opacity 1s;
-    }
-
     /* ===== CLOSING LINE ===== */
     .closing-line {
       margin-top: 30px;
@@ -381,18 +368,28 @@
         <img src="assets/island2-kanan.png" alt="" class="bubble-decor bubble-decor-right">
 
         <div class="letter-header">
-          <div class="letter-tag">🐞 Miraculous</div>
+          <div class="letter-tag">Miraculous</div>
         </div>
 
-        <!-- Placeholder — isi akan ditulis ulang nanti -->
-        <p class="typewriter-text" data-text="Halo, kamu..."></p>
-        <p class="typewriter-text" data-text="Hari ini aku bertransformasi menjadi Ladybug, pahlawan yang selalu berusaha melindungi yang penting. Dan yang terpenting bagiku sekarang adalah kamu."></p>
-        <p class="typewriter-text" data-text="Seperti Ladybug yang butuh Cat Noir, mungkin aku juga butuh kamu. Bukan untuk melawan penjahat, tapi untuk menjalani hari-hari yang kadang terasa berat."></p>
-        <p class="typewriter-text" data-text="Aku tahu kita pernah saling suka, tapi aku tidak pernah berani melangkah lebih jauh. Sekarang, aku ingin berubah—bukan karena kekuatan ajaib, tapi karena aku ingin memperjuangkanmu."></p>
-        <p class="typewriter-text" data-text="Jika kamu masih mau, aku ingin kita mencoba. Seperti Ladybug dan Cat Noir yang selalu bersama, aku ingin kita juga saling menjaga."></p>
-        <p class="typewriter-text" data-text="Terima kasih sudah membaca sampai sini. Surat ini kutulis dengan hati, bukan dengan sihir."></p>
+        <p class="typewriter-text" data-text="Selamat datang di Island 2, Cicit 😆 Aku mau lanjutin cerita sebelumnya yaa."></p>
 
-        <div class="signature" id="signature">— Cat Noir-mu</div>
+        <p class="typewriter-text" data-text="Aku suka deh saat obrolan kita mulai berkembang. Mungkin awalnya memang dari F1, tapi ternyata F1 itu cuma permulaan. Lama-lama kita mulai sering ngirim video yang bukan tentang F1, terus jadi sering banget ngobrol random HAHA."></p>
+
+        <p class="typewriter-text" data-text="Kamu juga mulai makin terbuka buat cerita hal-hal tentang kamu. Mulai suka ngejokes, ngirim video kamu mainin filter random, sampai sering banget gangguin aku cuma karena pengen liat aku marah 😭."></p>
+
+        <p class="typewriter-text" data-text="Lucu tau, kamu niat banget pengen bikin aku marah, tapi aku malah seneng karena kamu terus-terusan gangguin aku 😜."></p>
+
+        <p class="typewriter-text" data-text="Dari situ aku juga malah berubah jadi kayak wartawan yaa. Isinya selalu nanya tentang kamu, kamu, dan kamu. Maaf yaa kalau pernah bikin kamu ngerasa keganggu hehe. Soalnya aku kan...... hehe 🤭."></p>
+
+        <p class="typewriter-text" data-text="Oh iya, aku juga masih inget banget kalau kamu tuh suka banget sama kartun Disney Miraculous Ladybug. Makanya tema di pulau 2 ini aku buat sedikit mirip sama kartun itu. Kamu pasti inget pernah cerita soal itu yaaa HAHA."></p>
+
+        <p class="typewriter-text" data-text="Terus ada juga satu fase yang menurut aku paling bikin aku suka dan seneng..."></p>
+
+        <p class="typewriter-text" data-text="Fase di mana kamu mulai ngeluarin gombalan-gombalan maut 😭."></p>
+
+        <p class="typewriter-text" data-text="Kamu tau nggak wehh, waktu itu jantung aku dagdigdug kenceng banget kayak mau copot. Kamu enak aja main gombal, nggak mikirin perasaan aku yang makin lama makin... ahh sudahlah 🥰."></p>
+
+        <p class="typewriter-text" data-text="Tengs ya, Cit, udah bikin aku gakaruan 😭."></p>
 
         <!-- Closing line -->
         <div class="closing-line" id="closingLine">
@@ -416,7 +413,6 @@
       const transformOverlay = document.getElementById('transformOverlay');
       const transformText = document.getElementById('transformText');
       const letterSection = document.getElementById('letterSection');
-      const signature = document.getElementById('signature');
       const closingLine = document.getElementById('closingLine');
       const btnFinish = document.getElementById('btnFinish');
       const typewriterElements = document.querySelectorAll('.typewriter-text');
@@ -428,19 +424,15 @@
         if (isTransforming) return;
         isTransforming = true;
 
-        // Fade out transform section
         transformSection.classList.add('hide');
 
-        // Tampilkan overlay setelah transisi section
         setTimeout(() => {
           transformOverlay.classList.add('active');
 
-          // Ganti teks setelah jeda
           setTimeout(() => {
             transformText.textContent = 'TRANSFORMED! 🐞';
           }, 2200);
 
-          // Setelah selesai, sembunyikan overlay dan tampilkan story
           setTimeout(() => {
             transformOverlay.classList.remove('active');
 
@@ -461,12 +453,10 @@
 
         function typeNext() {
           if (currentIndex >= typewriterElements.length) {
-            // Selesai — munculkan signature, closing line, lalu tombol
-            signature.style.opacity = '1';
-
+            // Selesai — munculkan closing line, lalu tombol
             setTimeout(() => {
               closingLine.classList.add('visible');
-            }, 500);
+            }, 400);
 
             setTimeout(() => {
               btnFinish.classList.add('visible');
@@ -483,10 +473,10 @@
             if (charIndex < text.length) {
               element.textContent += text.charAt(charIndex);
               charIndex++;
-              setTimeout(typeChar, 30);
+              setTimeout(typeChar, 28);
             } else {
               currentIndex++;
-              setTimeout(typeNext, 380);
+              setTimeout(typeNext, 460);
             }
           }
 
