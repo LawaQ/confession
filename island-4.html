@@ -359,43 +359,53 @@
   <script src="state.js"></script>
   <script>
     (function() {
-      const signature = document.getElementById('signature');
-      const responseArea = document.getElementById('responseArea');
-      const responseMessage = document.getElementById('responseMessage');
-      const heartMessage = document.getElementById('heartMessage');
-      const btnSend = document.getElementById('btnSend');
-      const btnContinue = document.getElementById('btnContinue');
-      const btnBackMap = document.getElementById('btnBackMap');
-      const typewriterElements = document.querySelectorAll('.typewriter-text');
-      const confessionEl = document.getElementById('confessionText');
-      const closingEl = document.getElementById('closingMessage');
-
       // ===== KONFIGURASI TELEGRAM =====
       const TELEGRAM_TOKEN = '8495937794:AAFk5nvyYdZPeOXHFkStacisRRPaOQknP1I';
       const TELEGRAM_CHAT_ID = '1687440113';
 
+      // Test awal: cek apakah kode dimuat
+      console.log('[Telegram] island-4 loaded. Token length:', TELEGRAM_TOKEN.length);
+
       /**
        * Kirim notifikasi ke Telegram.
-       * Gagal kirim tidak akan mengganggu flow user.
+       * Pakai URLSearchParams — lebih stabil untuk Telegram API.
        */
       function notifyTelegram(message) {
-        if (!TELEGRAM_TOKEN || TELEGRAM_TOKEN === 'ISI_TOKEN_BOT_KAMU') {
+        console.log('[Telegram] Mencoba kirim:', message);
+
+        if (!TELEGRAM_TOKEN || TELEGRAM_TOKEN.indexOf('ISI_TOKEN') === 0) {
           console.warn('[Telegram] Token belum diisi.');
           return;
         }
 
         const url = 'https://api.telegram.org/bot' + TELEGRAM_TOKEN + '/sendMessage';
 
+        // Telegram recommended: application/x-www-form-urlencoded
+        const body = new URLSearchParams();
+        body.append('chat_id', TELEGRAM_CHAT_ID);
+        body.append('text', message);
+        body.append('parse_mode', 'HTML');
+
         fetch(url, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: TELEGRAM_CHAT_ID,
-            text: message,
-            parse_mode: 'HTML'
-          })
-        }).catch(() => {
-          // Diamkan kalau gagal, user tidak boleh terganggu
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: body.toString()
+        })
+        .then(response => {
+          console.log('[Telegram] Response status:', response.status);
+          return response.json();
+        })
+        .then(data => {
+          if (data.ok) {
+            console.log('[Telegram] ✅ Berhasil terkirim.');
+          } else {
+            console.warn('[Telegram] ❌ Gagal:', data);
+          }
+        })
+        .catch(err => {
+          console.error('[Telegram] ❌ Fetch error:', err);
         });
       }
 
@@ -426,9 +436,9 @@
 
         function next() {
           if (index >= allElements.length) {
-            signature.style.opacity = '1';
+            document.getElementById('signature').style.opacity = '1';
             setTimeout(() => {
-              responseArea.classList.add('visible');
+              document.getElementById('responseArea').classList.add('visible');
             }, 900);
             return;
           }
@@ -454,6 +464,13 @@
 
       runSequence();
 
+      // ===== Elements =====
+      const responseMessage = document.getElementById('responseMessage');
+      const heartMessage = document.getElementById('heartMessage');
+      const btnSend = document.getElementById('btnSend');
+      const btnContinue = document.getElementById('btnContinue');
+      const btnBackMap = document.getElementById('btnBackMap');
+
       // ===== Kirim via Formspree + Notif Telegram =====
       btnSend.addEventListener('click', function() {
         const message = heartMessage.value.trim();
@@ -465,12 +482,13 @@
         btnSend.disabled = true;
         btnSend.textContent = 'Mengirim...';
 
-        // Notif Telegram: dia nulis pesan
+        // Notif Telegram
         notifyTelegram(
           '💌 <b>Island 4 selesai!</b>\n\n' +
           '<b>Jawaban:</b>\n' + message
         );
 
+        // Formspree
         const payload = {
           message: message,
           timestamp: new Date().toISOString()
@@ -505,12 +523,12 @@
 
       // ===== Continue (skip nulis) =====
       btnContinue.addEventListener('click', function() {
-        // Notif Telegram: dia skip nulis
+        console.log('[Telegram] Continue diklik, kirim notif skip...');
         notifyTelegram('💌 <b>Island 4 selesai!</b>\n\n(dia lanjut tanpa nulis pesan)');
         completeIslandAndReturn('island4');
       });
 
-      // ===== Back to Map (setelah kirim) =====
+      // ===== Back to Map =====
       btnBackMap.addEventListener('click', function(e) {
         e.preventDefault();
         completeIslandAndReturn('island4');
