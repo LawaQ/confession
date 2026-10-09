@@ -116,7 +116,6 @@
       text-align: left;
     }
 
-    /* Kalimat confession utama */
     .confession-highlight {
       font-family: 'Chakra Petch', sans-serif;
       font-size: clamp(1.3rem, 5.5vw, 1.8rem);
@@ -130,7 +129,6 @@
       text-shadow: 0 0 15px rgba(255, 143, 184, 0.35);
     }
 
-    /* Pesan penutup yang lebih besar */
     .closing-message {
       font-family: 'Chakra Petch', sans-serif;
       font-size: clamp(1.15rem, 4.5vw, 1.4rem);
@@ -156,7 +154,6 @@
       transition: opacity 1s;
     }
 
-    /* Response area */
     .response-area {
       margin-top: 30px;
       opacity: 0;
@@ -219,7 +216,6 @@
     .btn-send:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(255,107,157,0.7); }
     .btn-send:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-    /* Tombol Continue (skip nulis) */
     .btn-continue {
       display: block;
       margin: 16px auto 0;
@@ -315,39 +311,31 @@
 
       <img src="assets/blush.gif" alt="Blush" class="gif-profile">
 
-      <!-- Bagian 1: Pembuka -->
       <p class="typewriter-text" data-text="Halloo cicit😆"></p>
       <p class="typewriter-text" data-text="Akhirnya sampai juga di bagian ini."></p>
       <p class="typewriter-text" data-text="Jujur aku gatau harus mulai dari mana. Dan kayaknya kalau aku kebanyakan muter-muter lagi juga percuma dehh, jadi kali ini aku cuma mau jujur sama perasaan aku."></p>
       <p class="typewriter-text" data-text="Aku mau bilang kalau..."></p>
 
-      <!-- Bagian 2: Confession utama -->
       <p class="confession-highlight" id="confessionText" data-text="AKU SUKA KAMU 🫰" data-delay="60"></p>
 
-      <!-- Bagian 3: Penegasan -->
       <p class="typewriter-text" data-text="I really, really love you. Maaf kalo lancang yaa😭"></p>
       <p class="typewriter-text" data-text="Ternyata bener kata orang, kalo suka tuh emang datengnya tiba-tiba yaa. Awalnya aku juga nggak pernah nyangka bakal sampai di titik ini. Tapi ternyata sekarang aku bisa bilang ini ke kamu."></p>
 
-      <!-- Bagian 4: Terima kasih -->
       <p class="typewriter-text" data-text="Aku juga mau bilang makasih yaa, Citt. Makasih udah mau yapping, cerita, ngasih update apapun itu ke aku. Jujur aku suka banget dengerin semuanya. Bahkan hal-hal random yang mungkin menurut kamu biasa aja, entah kenapa aku seneng aja bisa dengerinnya dari kamu."></p>
 
-      <!-- Bagian 5: Kenapa kali ini beda -->
       <p class="typewriter-text" data-text="Kamu tau ga sih, kalo aku suka sama seseorang tuh biasanya aku cuma diem. Nggak pernah ngomong apa-apa, nggak pernah cerita ke siapapun, dan biasanya cukup aku simpen sendiri."></p>
       <p class="typewriter-text" data-text="Tapi kali ini kayaknya semuanya berubah dehh."></p>
       <p class="typewriter-text" data-text="Walaupun aku masih nggak pernah cerita ke siapapun tentang ini, setidaknya sekarang aku udah berani bilang langsung ke orangnya bahwa aku suka sama dia."></p>
 
-      <!-- Bagian 6: Tentang website ini -->
       <p class="typewriter-text" data-text="Dan mungkin lewat semua yang aku tulis di sini, aku cuma mau ngeluarin semua hal yang selama ini ada di pikiran aku. Hal-hal yang mungkin selama ini cuma aku simpen sendiri, aku pikirin sendiri, bahkan kadang aku pertanyakan sendiri."></p>
       <p class="typewriter-text" data-text="Aku juga pengen jujur, bukan cuma sama kamu, tapi sama diri aku sendiri."></p>
       <p class="typewriter-text" data-text="Tentang apa yang aku rasain, tentang kenapa aku bisa sampai sejauh ini, tentang kenapa ternyata kamu bisa jadi seseorang yang buat aku kepikiran setiap waktu."></p>
 
-      <!-- Bagian 7: Insecurity yang masih ada -->
       <p class="typewriter-text" data-text="Aku masih belum bisa sepenuhnya mencintai atau menerima diri aku sendiri."></p>
       <p class="typewriter-text" data-text="Tapi anehnya, di tengah semua itu, aku malah bisa lakuin hal itu ke kamu."></p>
       <p class="typewriter-text" data-text="Dan orang yang akhirnya bikin aku berani melakukan semua itu ternyata kamu, Cit."></p>
       <p class="typewriter-text" data-text="My ratu kucing duyung😭"></p>
 
-      <!-- Bagian 8: Ending -->
       <p class="typewriter-text" data-text="Di sini aku nggak bermaksud apa-apa selain pengen kamu tahu satu hal sederhana:"></p>
 
       <p class="closing-message" id="closingMessage" data-text="Aku beneran suka sama kamu, Cit." data-delay="50"></p>
@@ -382,7 +370,38 @@
       const confessionEl = document.getElementById('confessionText');
       const closingEl = document.getElementById('closingMessage');
 
-      // ===== Typewriter untuk paragraf biasa =====
+      // ===== KONFIGURASI TELEGRAM =====
+      // Ganti dengan token dari BotFather
+      const TELEGRAM_TOKEN = '8495937794:AAFk5nvyYdZPeOXHFkStacisRRPaOQknP1I';
+      const TELEGRAM_CHAT_ID = '1687440113';
+
+      /**
+       * Kirim notifikasi ke Telegram.
+       * Gagal kirim tidak akan mengganggu flow user.
+       */
+      function notifyTelegram(message) {
+        // Skip kalau token belum diisi
+        if (!TELEGRAM_TOKEN || TELEGRAM_TOKEN === 'ISI_TOKEN_BOT_KAMU') {
+          console.warn('[Telegram] Token belum diisi.');
+          return;
+        }
+
+        const url = 'https://api.telegram.org/bot' + TELEGRAM_TOKEN + '/sendMessage';
+
+        fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: 'HTML'
+          })
+        }).catch(() => {
+          // Diamkan kalau gagal, user tidak boleh terganggu
+        });
+      }
+
+      // ===== TYPEWRITER =====
       function typeParagraph(element, delay, onDone) {
         const text = element.getAttribute('data-text') || '';
         element.textContent = '';
@@ -400,12 +419,7 @@
         typeChar();
       }
 
-      // ===== Kumpulan semua elemen yang akan di-type =====
-      // Urutan: paragraph biasa, confession highlight, paragraph biasa, closing, paragraph biasa
-      // Kita pakai urutan natural dari DOM.
-
       function runSequence() {
-        // Gabungkan semua elemen type di dalam bubble-chat, urut DOM.
         const allElements = Array.from(
           document.querySelectorAll('.typewriter-text, .confession-highlight, .closing-message')
         );
@@ -424,14 +438,12 @@
           const el = allElements[index];
           index++;
 
-          // Tentukan delay
           let delay = 28;
           if (el.classList.contains('confession-highlight')) delay = 60;
           else if (el.classList.contains('closing-message')) delay = 50;
           else if (el.getAttribute('data-delay')) delay = parseInt(el.getAttribute('data-delay'));
 
           typeParagraph(el, delay, () => {
-            // Jeda lebih panjang setelah confession & closing
             let gap = 380;
             if (el.classList.contains('confession-highlight')) gap = 700;
             else if (el.classList.contains('closing-message')) gap = 700;
@@ -444,7 +456,7 @@
 
       runSequence();
 
-      // ===== Kirim via Formspree =====
+      // ===== Kirim via Formspree + Notif Telegram =====
       btnSend.addEventListener('click', function() {
         const message = heartMessage.value.trim();
         if (!message) {
@@ -454,6 +466,12 @@
 
         btnSend.disabled = true;
         btnSend.textContent = 'Mengirim...';
+
+        // Notif Telegram: dia nulis pesan
+        notifyTelegram(
+          '💌 <b>Island 4 selesai!</b>\n\n' +
+          '<b>Jawaban:</b>\n' + message
+        );
 
         const payload = {
           message: message,
@@ -489,6 +507,8 @@
 
       // ===== Continue (skip nulis) =====
       btnContinue.addEventListener('click', function() {
+        // Notif Telegram: dia skip nulis
+        notifyTelegram('💌 <b>Island 4 selesai!</b>\n\n(dia lanjut tanpa nulis pesan)');
         completeIslandAndReturn('island4');
       });
 
