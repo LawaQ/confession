@@ -245,6 +245,21 @@
       background: rgba(255, 95, 122, 0.12);
     }
 
+    /* ===== CLOSING LINE (di bawah tag) ===== */
+    .closing-line {
+      margin-top: 16px;
+      text-align: center;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(0.95rem, 3.6vw, 1.08rem);
+      font-weight: 600;
+      color: #ffe4ec;
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+      font-style: italic;
+      text-shadow: 0 0 12px rgba(255, 95, 122, 0.55);
+      padding: 0 8px;
+    }
+
     .typewriter-text {
       font-size: clamp(1rem, 4vw, 1.12rem);
       line-height: 1.85;
@@ -254,27 +269,6 @@
       font-weight: 500;
       text-shadow: 0 0 4px rgba(0,0,0,0.5);
       word-wrap: break-word;
-    }
-
-    /* ===== CLOSING LINE ===== */
-    .closing-line {
-      margin-top: 30px;
-      text-align: center;
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: clamp(1rem, 3.8vw, 1.12rem);
-      font-weight: 600;
-      color: #ffe4ec;
-      letter-spacing: 0.5px;
-      line-height: 1.6;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 1s ease, transform 1s ease;
-      text-shadow: 0 0 12px rgba(255, 95, 122, 0.55);
-      padding: 0 8px;
-    }
-    .closing-line.visible {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     /* ===== CONTINUE BUTTON ===== */
@@ -369,6 +363,9 @@
 
         <div class="letter-header">
           <div class="letter-tag">Miraculous</div>
+          <div class="closing-line" id="closingLine">
+            I guess I know your world a little better now.
+          </div>
         </div>
 
         <p class="typewriter-text" data-text="Selamat datang di Island 2, Cicit 😆 Aku mau lanjutin cerita sebelumnya yaa."></p>
@@ -391,11 +388,6 @@
 
         <p class="typewriter-text" data-text="Tengs ya, Cit, udah bikin aku gakaruan 😭."></p>
 
-        <!-- Closing line -->
-        <div class="closing-line" id="closingLine">
-          I guess I know your world a little better now.
-        </div>
-
         <!-- Continue button -->
         <div class="finish-wrap">
           <button class="btn-finish" id="btnFinish">Continue →</button>
@@ -413,7 +405,6 @@
       const transformOverlay = document.getElementById('transformOverlay');
       const transformText = document.getElementById('transformText');
       const letterSection = document.getElementById('letterSection');
-      const closingLine = document.getElementById('closingLine');
       const btnFinish = document.getElementById('btnFinish');
       const typewriterElements = document.querySelectorAll('.typewriter-text');
 
@@ -453,14 +444,10 @@
 
         function typeNext() {
           if (currentIndex >= typewriterElements.length) {
-            // Selesai — munculkan closing line, lalu tombol
-            setTimeout(() => {
-              closingLine.classList.add('visible');
-            }, 400);
-
+            // Selesai — munculkan tombol Continue
             setTimeout(() => {
               btnFinish.classList.add('visible');
-            }, 1400);
+            }, 600);
             return;
           }
 
